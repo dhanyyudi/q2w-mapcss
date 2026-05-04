@@ -10,10 +10,10 @@ For a local copy:
 <link rel="stylesheet" href="css/q2w-mapcss.css">
 ```
 
-For a deployed docs copy:
+For the hosted Cloudflare Pages copy:
 
 ```html
-<link rel="stylesheet" href="https://YOUR-CLOUDFLARE-PAGES-URL/dist/q2w-mapcss.css">
+<link rel="stylesheet" href="https://q2w-mapcss.pages.dev/dist/q2w-mapcss.css">
 ```
 
 ## Using with plain Leaflet (without qgis2web)

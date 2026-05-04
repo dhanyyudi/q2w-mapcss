@@ -31,8 +31,9 @@ extraHead: |
     content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
     width: 1100px; height: 480px;
     background: radial-gradient(ellipse at center,
-      color-mix(in oklch, var(--q2w-accent) 18%, transparent) 0%,
-      transparent 60%);
+      color-mix(in oklch, var(--q2w-accent) 12%, transparent) 0%,
+      transparent 58%);
+    opacity: 0.75;
     pointer-events: none; z-index: -1;
   }
   .ln-eyebrow {
@@ -125,13 +126,16 @@ extraHead: |
   /* Feature grid */
   .ln-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .ln-feat {
+    display: block;
     border: 1px solid var(--q2w-border);
     border-radius: var(--q2w-radius-md);
     padding: 24px;
     background: var(--q2w-surface);
-    transition: border-color 0.15s, transform 0.15s;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
   }
-  .ln-feat:hover { border-color: var(--q2w-border-strong); transform: translateY(-2px); }
+  .ln-feat:hover { border-color: var(--q2w-border-strong); transform: translateY(-2px); box-shadow: var(--q2w-shadow-sm); }
   .ln-feat__icon { width: 36px; height: 36px; border-radius: var(--q2w-radius-sm); background: var(--q2w-accent-soft); color: var(--q2w-accent); display: grid; place-items: center; margin-bottom: 14px; }
   .ln-feat h3 { margin: 0 0 6px; font-size: 15px; font-weight: 600; }
   .ln-feat p { margin: 0; font-size: 13px; color: var(--q2w-text-muted); line-height: 1.55; }
@@ -185,6 +189,15 @@ extraHead: |
   .ln-footer a:hover { color: var(--q2w-text); }
   .ln-footer__bot { display: flex; justify-content: space-between; align-items: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--q2w-border); font-size: 12px; color: var(--q2w-text-faint); }
 
+  @media (prefers-color-scheme: dark) {
+    .ln-hero::before {
+      background: radial-gradient(ellipse at center,
+        color-mix(in oklch, var(--q2w-accent) 8%, transparent) 0%,
+        transparent 52%);
+      opacity: 0.5;
+    }
+  }
+
   @media (max-width: 800px) {
     .ln-hero h1 { font-size: 40px; }
     .ln-features, .ln-origin, .ln-footer__grid { grid-template-columns: 1fr; }
@@ -206,7 +219,7 @@ extraHead: |
         See live example
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-      <a href="index.html" class="q2w-btn q2w-btn--pill">Browse components</a>
+      <a href="docs.html" class="q2w-btn q2w-btn--pill">Browse components</a>
     </div>
 
     <!-- Code preview -->
@@ -353,60 +366,60 @@ extraHead: |
     </div>
 
     <div class="ln-features">
-      <div class="ln-feat">
+      <a class="ln-feat" href="docs.html#layers">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polygon points="12,3 21,8 12,13 3,8"/><polyline points="3,12 12,17 21,12"/><polyline points="3,16 12,21 21,16"/></svg></div>
         <h3>Layer panel</h3>
         <p>Categorical, graduated, point. Drag-to-reorder. Per-layer opacity. Sub-symbology.</p>
         <span class="ln-feat__count">3 variants</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="docs.html#popup">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
         <h3>Popups</h3>
         <p>Tabular, rich (image + actions), tabbed, with charts. Six variants out of the box.</p>
         <span class="ln-feat__count">6 variants</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="docs.html#legend">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="6" width="18" height="4" rx="1"/><rect x="3" y="14" width="12" height="4" rx="1"/></svg></div>
         <h3>Legends</h3>
         <p>Categorical swatches, graduated bars, diverging scales, point symbols.</p>
         <span class="ln-feat__count">4 variants</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="docs.html#search">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
         <h3>Search &amp; geocoder</h3>
         <p>Result list, keyboard hint, debounced input. Wire to any geocoding API.</p>
         <span class="ln-feat__count">2 states</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="docs.html#zoom">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
         <h3>Map controls</h3>
         <p>Zoom, locate, measure, compass, drawing toolbar, coordinate go-to.</p>
         <span class="ln-feat__count">7 controls</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="examples/dashboard.html">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
         <h3>Layouts</h3>
         <p>Floating panels, sidebar, bottom sheet, full dashboard. Mobile-ready.</p>
         <span class="ln-feat__count">4 layouts</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="docs.html#tokens">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div>
         <h3>Themes</h3>
         <p>Light, dark, slate, ocean, forest, sunset. Override any token via CSS variables.</p>
         <span class="ln-feat__count">6 themes</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="docs.html#phase2">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 12h16M12 4v16"/></svg></div>
         <h3>Compare &amp; minimap</h3>
         <p>Swipe between two layers. Inset overview map. Time slider.</p>
         <span class="ln-feat__count">3 advanced</span>
-      </div>
-      <div class="ln-feat">
+      </a>
+      <a class="ln-feat" href="docs.html#quick-start">
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
         <h3>Built for qgis2web</h3>
         <p>Class names map 1-to-1 to the elements qgis2web outputs. Minimum rewriting.</p>
         <span class="ln-feat__count">drop-in</span>
-      </div>
+      </a>
     </div>
   </div>
 </section>

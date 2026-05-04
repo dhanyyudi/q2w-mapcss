@@ -6,7 +6,13 @@ It turns the default qgis2web map chrome into a cleaner interface with design to
 
 ## Quick Start
 
-Copy the built CSS into your qgis2web export:
+Use the hosted Cloudflare Pages copy:
+
+```html
+<link rel="stylesheet" href="https://q2w-mapcss.pages.dev/dist/q2w-mapcss.css">
+```
+
+Or copy the built CSS into your qgis2web export:
 
 ```html
 <link rel="stylesheet" href="css/q2w-mapcss.css">
@@ -98,6 +104,7 @@ npm run dev
 
 Cloudflare Pages:
 
+- URL: <https://q2w-mapcss.pages.dev/>
 - build command: `npm run build`
 - output directory: `site`
 - deploy branch: `main`
