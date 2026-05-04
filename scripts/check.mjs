@@ -397,6 +397,23 @@ assertIncludes("site/snippets/templates/dashboard.html", dashboardTemplate, [
   "Chart placeholder",
 ]);
 
+const quickStart = readOutput("docs/quick-start.md");
+assertIncludes("docs/quick-start.md", quickStart, [
+  'script src="css/q2w-interactions.js"',
+  "modal open and close helpers",
+  "snippets/templates/",
+  "with-panel.html",
+  "dashboard.html",
+]);
+
+const docsOverview = readOutput("site/docs.html");
+assertIncludes("site/docs.html", docsOverview, [
+  "Templates",
+  "basic.html",
+  "with-panel.html",
+  "dashboard.html",
+]);
+
 const sourceFiles = walk(join(root, "src/site")).filter((path) => /\.(html|njk)$/.test(path));
 const legacyRefs = [];
 for (const file of sourceFiles) {

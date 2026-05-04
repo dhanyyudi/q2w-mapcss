@@ -61,6 +61,23 @@ Use the files in `snippets/` as copy paste starting points:
 <link rel="stylesheet" href="css/q2w-plugins.css">
 ```
 
+## Optional: JS interactions
+
+If you want lightweight behavior helpers for demos and map chrome, add:
+
+```html
+<script src="css/q2w-interactions.js"></script>
+```
+
+This optional file enables:
+
+- modal open and close helpers
+- toast auto-dismiss
+- tab switching
+- popup close button behavior
+- layer panel binding helpers for Leaflet
+- coordinate display updates for a footer target
+
 ## 5. Icons (optional)
 
 q2w-mapcss does not require an icon library. Place any SVG inside a component:
@@ -73,6 +90,14 @@ q2w-mapcss does not require an icon library. Place any SVG inside a component:
 ```
 
 The docs use [Lucide](https://lucide.dev) icons (MIT, inline SVG).
+
+## Templates
+
+Use the starter templates in `snippets/templates/` when you want a complete app shell instead of a single snippet:
+
+- `basic.html` — floating header + map + footer
+- `with-panel.html` — map shell with a collapsible layer panel
+- `dashboard.html` — map plus summary sidebar layout
 
 ## 5. Verify the export
 
