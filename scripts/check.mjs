@@ -111,6 +111,31 @@ if (!siteIndex.includes('/brand/icon.png') || !siteIndex.includes('og:image')) {
   console.error("Landing page must include branded icon and social metadata.");
   process.exit(1);
 }
+const landingMotionNeedles = [
+  'html { scroll-behavior: smooth; }',
+  '.reveal {',
+  '.reveal.is-visible',
+  'reveal-delay-1',
+  'reveal-delay-2',
+  'reveal-delay-3',
+  '@keyframes btn-breathe',
+  '@media (prefers-reduced-motion: reduce)',
+  'IntersectionObserver',
+  "document.querySelectorAll('.reveal')",
+  'observer.unobserve',
+];
+for (const needle of landingMotionNeedles) {
+  if (!siteIndex.includes(needle)) {
+    console.error(`Landing page must include Phase 3 motion output: ${needle}`);
+    process.exit(1);
+  }
+}
+
+const revealCardCount = (siteIndex.match(/ln-card(?: ln-card--lg)? reveal reveal-delay-/g) || []).length;
+if (revealCardCount < 12) {
+  console.error(`Landing page must include reveal classes on at least 12 showcase cards; found ${revealCardCount}.`);
+  process.exit(1);
+}
 
 const popupDoc = readFileSync(join(root, "site/docs/popup.html"), "utf8");
 for (const needle of ['q2w-popup--striped', 'q2w-popup--governmental']) {
