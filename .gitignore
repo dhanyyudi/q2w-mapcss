@@ -15,6 +15,7 @@ npm-debug.log*
 /qgis2web_redesign/
 /.superpowers/
 /.pi/
+/.claude/
 docs/superpowers/
 .eleventy-cache/
 /.cache/
