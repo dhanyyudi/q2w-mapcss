@@ -508,6 +508,35 @@ assertIncludes("site/docs.html", docsOverview, [
   "dashboard.html",
 ]);
 
+const gitignore = readOutput(".gitignore");
+assertIncludes(".gitignore", gitignore, [
+  "/qgis2web-wireframe-framework/",
+  "/web-branding/",
+  "/qgis2web_redesign/",
+]);
+
+assertIncludes("dist/q2w-mapcss.css", css, [
+  ".q2w-header--pill-left",
+  ".q2w-btn--help",
+  ".q2w-panel.is-collapsed",
+  ".q2w-popup--striped",
+  ".q2w-popup--governmental",
+]);
+
+const qgis2webAdapter = readOutput("src/adapter-qgis2web.css");
+assertIncludes("src/adapter-qgis2web.css", qgis2webAdapter, [
+  "body.q2w-labels-box .leaflet-tooltip",
+]);
+
+assertIncludes("site/index.html", siteIndex, [
+  "v0.2",
+  "Tailwind token plugin",
+  "v0.3",
+  "WebGIS starter templates",
+  "v0.4",
+  "Optional JS interactions bundle",
+]);
+
 const sourceFiles = walk(join(root, "src/site")).filter((path) => /\.(html|njk)$/.test(path));
 const legacyRefs = [];
 for (const file of sourceFiles) {
