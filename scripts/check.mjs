@@ -56,6 +56,10 @@ if (headerDoc.includes('href="dist/q2w-mapcss.css"') || headerDoc.includes('href
   console.error("Component docs must not use root-page relative dist CSS paths.");
   process.exit(1);
 }
+if (!headerDoc.includes("const key = 'q2w-theme'") || !headerDoc.includes('cs-theme-dot') || !headerDoc.includes('theme-toggle')) {
+  console.error("Docs pages must include persisted theme controls and theme dots.");
+  process.exit(1);
+}
 
 const siteIndex = readFileSync(join(root, "site/index.html"), "utf8");
 if (siteIndex.includes("ln-strip") || siteIndex.includes("ln-tile") || siteIndex.includes("ln-marquee")) {
@@ -64,6 +68,16 @@ if (siteIndex.includes("ln-strip") || siteIndex.includes("ln-tile") || siteIndex
 }
 if (!siteIndex.includes("ln-showcase__grid") || !siteIndex.includes("docs/header.html")) {
   console.error("Landing page must ship the component showcase grid after Audit 4.");
+  process.exit(1);
+}
+const landingNav = siteIndex.match(/<nav class="ln-nav">[\s\S]*?<\/nav>/)?.[0] || "";
+const githubMatches = landingNav.match(/>\s*GitHub\s*</g) || [];
+if (githubMatches.length !== 1) {
+  console.error("Landing nav must expose GitHub exactly once.");
+  process.exit(1);
+}
+if (!siteIndex.includes('class="theme-toggle"')) {
+  console.error("Landing page must include the minimal theme toggle.");
   process.exit(1);
 }
 

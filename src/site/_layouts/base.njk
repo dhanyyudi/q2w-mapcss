@@ -4,13 +4,80 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{{ title }} — q2w-mapcss</title>
+<script>
+(function() {
+  const key = 'q2w-theme';
+  const saved = localStorage.getItem(key);
+  const fallback = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : '';
+  const theme = saved !== null ? saved : fallback;
+  if (theme) document.documentElement.dataset.theme = theme;
+  else document.documentElement.removeAttribute('data-theme');
+})();
+</script>
 <link rel="stylesheet" href="{{ cssPath | default('dist/q2w-mapcss.css') }}" />
 {% if showcaseCss %}<link rel="stylesheet" href="{{ showcasePath | default('dist/q2w-mapcss.showcase.css') }}" />{% endif %}
 {% if extraHead %}{{ extraHead | safe }}{% endif %}
+<style>
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--q2w-border);
+  background: var(--q2w-surface);
+  color: var(--q2w-text-muted);
+  cursor: pointer;
+}
+.theme-toggle:hover { color: var(--q2w-text); background: var(--q2w-surface-soft); }
+.theme-toggle__sun { display: none; }
+html[data-theme="dark"] .theme-toggle__sun { display: inline; }
+html[data-theme="dark"] .theme-toggle__moon { display: none; }
+html:not([data-theme="dark"]) .theme-toggle__moon { display: inline; }
+html:not([data-theme="dark"]) .theme-toggle__sun { display: none; }
+</style>
 </head>
 <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
 
 {{ content | safe }}
 
+<script>
+(function() {
+  const key = 'q2w-theme';
+  const root = document.documentElement;
+  function applyTheme(theme) {
+    if (theme) root.dataset.theme = theme;
+    else root.removeAttribute('data-theme');
+    document.querySelectorAll('[data-theme]').forEach((dot) => {
+      dot.classList.toggle('active', (dot.dataset.theme || '') === (theme || ''));
+    });
+    document.querySelectorAll('.theme-toggle').forEach((btn) => {
+      const isDark = (theme || '') === 'dark';
+      btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      btn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+  }
+  applyTheme(root.dataset.theme || '');
+  document.addEventListener('click', (event) => {
+    const dot = event.target.closest('[data-theme]');
+    if (dot && dot.classList.contains('cs-theme-dot')) {
+      const theme = dot.dataset.theme || '';
+      if (theme) localStorage.setItem(key, theme);
+      else localStorage.removeItem(key);
+      applyTheme(theme);
+      return;
+    }
+    const toggle = event.target.closest('.theme-toggle');
+    if (toggle) {
+      const current = root.dataset.theme || '';
+      const next = current === 'dark' ? '' : 'dark';
+      if (next) localStorage.setItem(key, next);
+      else localStorage.removeItem(key);
+      applyTheme(next);
+    }
+  });
+})();
+</script>
 </body>
 </html>

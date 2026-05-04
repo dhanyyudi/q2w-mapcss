@@ -3,6 +3,19 @@
     <a href="../index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--q2w-text); font-weight: 700;">
       <span class="ln-brand__mark">q2</span> q2w-mapcss
     </a>
+    <div class="doc-side__themes">
+      <button class="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <span class="theme-toggle__sun">{% icon "sun", "16" %}</span>
+        <span class="theme-toggle__moon">{% icon "moon", "16" %}</span>
+      </button>
+      <span class="cs-mono">theme</span>
+      <span class="cs-theme-dot active" data-theme="" style="background:#0f7a78"></span>
+      <span class="cs-theme-dot" data-theme="ocean" style="background:#1d6fc4"></span>
+      <span class="cs-theme-dot" data-theme="forest" style="background:#2f7d4a"></span>
+      <span class="cs-theme-dot" data-theme="sunset" style="background:#d8632a"></span>
+      <span class="cs-theme-dot" data-theme="slate" style="background:#3f4a5c"></span>
+      <span class="cs-theme-dot" data-theme="dark" style="background:#0f1520; border-color:#3f4a5c"></span>
+    </div>
   </div>
 
   <nav style="padding: 0 24px;">
@@ -64,6 +77,8 @@
   .doc-side__link { display: block; padding: 6px 0; font-size: 13px; color: var(--q2w-text-muted); text-decoration: none; border-radius: 4px; }
   .doc-side__link:hover { color: var(--q2w-text); }
   .doc-side__link.is-active { color: var(--q2w-accent); font-weight: 600; }
+  .doc-side__themes { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+  .doc-side__themes .theme-toggle { width: 30px; height: 30px; }
 </style>
 <script>
   (function() {
