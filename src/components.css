@@ -116,6 +116,18 @@ html, body {
 .q2w-header--technical .q2w-header__title { color: var(--q2w-neutral-50); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
 .q2w-header--technical .q2w-header__sub { color: var(--q2w-neutral-400); font-size: 11px; }
 .q2w-header--technical .q2w-header__logo { background: var(--q2w-accent); border-radius: var(--q2w-radius-xs); }
+.q2w-header--pill-left {
+  top: 14px;
+  left: 0;
+  right: auto;
+  border-left: 0;
+  border-radius: 0 var(--q2w-radius-full) var(--q2w-radius-full) 0;
+  padding-left: 14px;
+  max-width: calc(100vw - 180px);
+}
+@media (max-width: 640px) {
+  .q2w-header--pill-left .q2w-header__sub { display: none; }
+}
 
 /* ---------- Footer ---------------------------------------- */
 .q2w-footer {
@@ -178,6 +190,29 @@ html, body {
 .q2w-btn--ghost:hover { background: var(--q2w-surface-soft); }
 .q2w-btn--icon { padding: 6px; width: 30px; height: 30px; justify-content: center; }
 .q2w-btn--pill { border-radius: var(--q2w-radius-full); padding: 6px 14px; }
+.q2w-btn--help {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: var(--q2w-z-panel);
+  border-radius: var(--q2w-radius-full);
+  height: 38px;
+  padding: 0 14px 0 10px;
+  gap: 7px;
+}
+.q2w-btn--help .q2w-btn__badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--q2w-accent);
+  color: var(--q2w-accent-fg);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: italic;
+  flex: none;
+}
 
 /* Button states ------------------------------------------- */
 .q2w-btn:disabled,
@@ -260,6 +295,22 @@ html, body {
   color: var(--q2w-text-muted);
 }
 .q2w-panel__header .q2w-panel__close { margin-left: auto; }
+.q2w-panel__header--collapsible {
+  cursor: pointer;
+  user-select: none;
+}
+.q2w-panel__header--collapsible .q2w-panel__chevron {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--q2w-text-faint);
+  transition: transform var(--q2w-duration-fast) var(--q2w-ease);
+}
+.q2w-panel.is-collapsed .q2w-panel__chevron {
+  transform: rotate(-90deg);
+}
+.q2w-panel.is-collapsed .q2w-panel__body {
+  display: none;
+}
 .q2w-panel__body { padding: 8px 12px 12px; max-height: 480px; overflow: auto; }
 .q2w-panel__section { padding: 6px 0; }
 .q2w-panel__section + .q2w-panel__section { border-top: 1px dashed var(--q2w-border); }
@@ -421,6 +472,38 @@ html, body {
 .q2w-popup--technical { border-radius: var(--q2w-radius-xs); border: 1px solid var(--q2w-border); }
 .q2w-popup--technical .q2w-popup__header { background: var(--q2w-neutral-900); color: var(--q2w-neutral-50); font-family: var(--q2w-font-mono); }
 .q2w-popup--technical .q2w-attr__val { font-size: 11.5px; }
+.q2w-popup--striped .q2w-attr:nth-child(even) {
+  background: var(--q2w-surface-soft);
+}
+.q2w-popup--governmental .q2w-popup__header {
+  background: linear-gradient(135deg, #0f3a5f 0%, #163f63 100%);
+  position: relative;
+}
+.q2w-popup--governmental .q2w-popup__header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--q2w-accent);
+}
+.q2w-governmental .leaflet-popup-content table tr:first-child td {
+  background: linear-gradient(135deg, #0f3a5f 0%, #163f63 100%);
+  position: relative;
+}
+.q2w-governmental .leaflet-popup-content table tr:first-child td::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--q2w-accent);
+}
+.q2w-governmental .leaflet-popup-tip {
+  background: #0f3a5f !important;
+}
 
 /* ---------- Welcome modal --------------------------------- */
 .q2w-modal-backdrop {

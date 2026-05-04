@@ -94,6 +94,17 @@ body.q2w-labels-halo .leaflet-tooltip {
     1px 1px 0 var(--q2w-surface);
 }
 
+body.q2w-labels-box .leaflet-tooltip {
+  background: rgba(255, 255, 255, 0.90) !important;
+  border: 1px solid var(--q2w-border) !important;
+  color: var(--q2w-text) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 2px 6px !important;
+  border-radius: var(--q2w-radius-xs) !important;
+  text-shadow: none !important;
+}
+
 @media (max-width: 640px) {
   .q2w-header {
     left: 8px;
