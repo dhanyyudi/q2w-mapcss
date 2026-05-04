@@ -8,7 +8,7 @@
   "homepage": "https://q2w-mapcss.pages.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dhanyyudi/q2w-mapcss.git"
+    "url": "git+https://github.com/dhanyyudi/q2w-mapcss.git"
   },
   "bugs": {
     "url": "https://github.com/dhanyyudi/q2w-mapcss/issues"
