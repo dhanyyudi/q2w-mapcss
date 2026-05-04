@@ -7,6 +7,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
   "dist/q2w-mapcss.css",
   "dist/q2w-mapcss.min.css",
+  "dist/q2w-leaflet.css",
+  "dist/q2w-leaflet.min.css",
+  "dist/q2w-plugins.css",
   "dist/q2w-mapcss.showcase.css",
   "site/index.html",
   "site/docs.html",
@@ -43,6 +46,16 @@ if (absent.length) {
 const minSize = statSync(join(root, "dist/q2w-mapcss.min.css")).size;
 if (minSize <= 1000) {
   console.error("Minified CSS looks too small.");
+  process.exit(1);
+}
+
+const leafletCss = readFileSync(join(root, "dist/q2w-leaflet.css"), "utf8");
+if (!leafletCss.includes(".leaflet-container") || !leafletCss.includes(".leaflet-popup-content")) {
+  console.error("Universal Leaflet CSS missing expected Leaflet selectors.");
+  process.exit(1);
+}
+if (leafletCss.includes("body.q2w-qgis2web")) {
+  console.error("Universal Leaflet CSS must not include qgis2web body helpers.");
   process.exit(1);
 }
 

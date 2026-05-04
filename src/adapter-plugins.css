@@ -1,0 +1,46 @@
+/* ============================================================
+   q2w-mapcss plugin adapters
+   Optional — include only if you use these Leaflet plugins.
+   ============================================================ */
+
+/* leaflet-draw -------------------------------------------- */
+.leaflet-draw-toolbar a {
+  background-color: var(--q2w-surface) !important;
+  border-bottom-color: var(--q2w-border) !important;
+}
+.leaflet-draw-toolbar a:hover {
+  background-color: var(--q2w-surface-soft) !important;
+}
+.leaflet-draw-section { border-top: 1px solid var(--q2w-border) !important; }
+.leaflet-draw-guide-dash { background: var(--q2w-accent) !important; }
+
+/* leaflet-markercluster ----------------------------------- */
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+  background-color: var(--q2w-accent) !important;
+  color: var(--q2w-accent-fg) !important;
+  font-family: var(--q2w-font-sans);
+  font-size: 12px;
+  font-weight: 600;
+}
+.marker-cluster-small  { background-color: var(--q2w-accent-soft) !important; }
+.marker-cluster-medium { background-color: color-mix(in srgb, var(--q2w-accent) 25%, transparent) !important; }
+.marker-cluster-large  { background-color: color-mix(in srgb, var(--q2w-accent) 40%, transparent) !important; }
+
+/* leaflet-fullscreen -------------------------------------- */
+.leaflet-control-fullscreen a {
+  background-color: var(--q2w-surface) !important;
+}
+.leaflet-control-fullscreen a:hover {
+  background-color: var(--q2w-surface-soft) !important;
+}
+
+/* leaflet-locate ------------------------------------------ */
+.leaflet-control-locate a {
+  background-color: var(--q2w-surface) !important;
+  color: var(--q2w-text) !important;
+}
+.leaflet-control-locate.active a {
+  color: var(--q2w-accent) !important;
+}

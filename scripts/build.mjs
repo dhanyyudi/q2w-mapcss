@@ -9,13 +9,9 @@ const publicDir = join(root, "public");
 const distDir = join(root, "dist");
 const siteDir = join(root, "site");
 const siteDistDir = join(siteDir, "dist");
-
-const banner = `/*!
- * q2w-mapcss v0.1.0
- * Lightweight CSS framework for qgis2web Leaflet exports.
- * License: MIT
- */
-`;
+const version = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version;
+const header = `/* q2w-mapcss v${version} | MIT License | https://github.com/dhanyyudi/q2w-mapcss */\n`;
+const minHeader = `/* q2w-mapcss v${version} | MIT */\n`;
 
 function read(path) {
   return readFileSync(path, "utf8");
@@ -157,13 +153,24 @@ function quickStartSection() {
 </section>`;
 }
 
+function bundleCss(sources, outputName) {
+  const concatenated = sources.map((path) => read(join(root, path))).join("\n\n");
+  write(join(distDir, `${outputName}.css`), `${header}${concatenated}\n`);
+  write(join(distDir, `${outputName}.min.css`), `${minHeader}${minify(concatenated)}\n`);
+}
+
 function buildCss() {
-  const framework = [
-    banner,
-    read(join(srcDir, "tokens.css")),
-    read(join(srcDir, "components.css")),
-    read(join(srcDir, "adapter-qgis2web.css")),
-  ].join("\n\n");
+  const fullSources = [
+    "src/tokens.css",
+    "src/components.css",
+    "src/adapter-leaflet.css",
+    "src/adapter-qgis2web.css",
+  ];
+  const leafletSources = [
+    "src/tokens.css",
+    "src/components.css",
+    "src/adapter-leaflet.css",
+  ];
   const showcase = [
     "/* q2w-mapcss docs showcase styles, not required for map exports. */",
     read(join(srcDir, "showcase.css")),
@@ -171,8 +178,9 @@ function buildCss() {
 
   rmSync(distDir, { recursive: true, force: true });
   mkdirSync(distDir, { recursive: true });
-  write(join(distDir, "q2w-mapcss.css"), framework);
-  write(join(distDir, "q2w-mapcss.min.css"), `${banner}${minify(framework)}\n`);
+  bundleCss(fullSources, "q2w-mapcss");
+  bundleCss(leafletSources, "q2w-leaflet");
+  write(join(distDir, "q2w-plugins.css"), read(join(srcDir, "adapter-plugins.css")) + "\n");
   write(join(distDir, "q2w-mapcss.showcase.css"), showcase);
 }
 

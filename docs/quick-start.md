@@ -16,6 +16,16 @@ For a deployed docs copy:
 <link rel="stylesheet" href="https://YOUR-CLOUDFLARE-PAGES-URL/dist/q2w-mapcss.css">
 ```
 
+## Using with plain Leaflet (without qgis2web)
+
+If you are not using qgis2web, use the universal Leaflet build:
+
+```html
+<link rel="stylesheet" href="css/q2w-leaflet.css">
+```
+
+Omit `q2w-qgis2web` from body helpers. Use `.q2w-header`, `.q2w-panel`, and other component classes directly.
+
 ## 2. Add body helpers
 
 ```html
@@ -42,6 +52,13 @@ Use the files in `snippets/` as copy paste starting points:
   --q2w-accent-hover: #0f6669;
   --q2w-radius-md: 8px;
 }
+```
+
+## Adding plugin support
+
+```html
+<!-- After the main CSS — only needed if you use leaflet-draw or markercluster -->
+<link rel="stylesheet" href="css/q2w-plugins.css">
 ```
 
 ## 5. Verify the export
