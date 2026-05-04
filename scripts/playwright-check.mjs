@@ -43,6 +43,13 @@ try {
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
     throw new Error("Landing theme toggle did not set data-theme=dark.");
   }
+  await page.locator(".theme-toggle").first().click();
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Landing theme toggle did not switch back to explicit light mode.");
+  }
+  if ((await page.evaluate(() => localStorage.getItem("q2w-theme"))) !== "light") {
+    throw new Error("Landing theme toggle did not persist q2w-theme=light.");
+  }
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
   mobile.on("pageerror", (error) => errors.push(error.message));
@@ -55,11 +62,15 @@ try {
   if ((await mobile.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
     throw new Error("Landing mobile theme toggle did not set data-theme=dark.");
   }
+  await mobileToggle.click();
+  if ((await mobile.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Landing mobile theme toggle did not switch back to explicit light mode.");
+  }
   await mobile.close();
 
   await page.goto(`${baseUrl}/docs.html`, { waitUntil: "networkidle" });
-  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
-    throw new Error("Docs overview did not restore persisted dark theme.");
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Docs overview did not restore persisted light theme.");
   }
   await page.locator('.cs-theme-dot[data-theme="forest"]').first().click();
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "forest") {
@@ -68,10 +79,18 @@ try {
   if ((await page.evaluate(() => localStorage.getItem("q2w-theme"))) !== "forest") {
     throw new Error("Docs forest theme dot did not persist q2w-theme=forest.");
   }
+  await page.locator(".theme-toggle").first().click();
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
+    throw new Error("Docs overview theme toggle did not switch from preset theme to dark.");
+  }
+  await page.locator(".theme-toggle").first().click();
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Docs overview theme toggle did not switch back to explicit light.");
+  }
 
   await page.goto(`${baseUrl}/docs/header.html`, { waitUntil: "networkidle" });
-  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "forest") {
-    throw new Error("Component docs did not restore persisted forest theme.");
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Component docs did not restore persisted light theme.");
   }
   const brandBox = await page.locator(".doc-side__brand .cs-nav__mark").boundingBox();
   if (!brandBox || brandBox.width < 20 || brandBox.height < 20) {
@@ -81,14 +100,22 @@ try {
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
     throw new Error("Component docs theme toggle did not switch to dark.");
   }
+  await page.locator(".theme-toggle").first().click();
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Component docs theme toggle did not switch back to explicit light.");
+  }
 
   await page.goto(`${baseUrl}/examples/choropleth.html`, { waitUntil: "networkidle" });
-  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
-    throw new Error("Example page did not restore persisted dark theme.");
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Example page did not restore persisted light theme.");
   }
   await page.locator(".theme-toggle").first().click();
-  if (await page.evaluate(() => document.documentElement.getAttribute("data-theme")) !== null) {
-    throw new Error("Example theme toggle did not switch back to default/light.");
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
+    throw new Error("Example theme toggle did not switch to dark.");
+  }
+  await page.locator(".theme-toggle").first().click();
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Example theme toggle did not switch back to explicit light.");
   }
 
   if (errors.length) {
