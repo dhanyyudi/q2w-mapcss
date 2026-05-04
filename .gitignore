@@ -9,5 +9,6 @@ docs/audit-2.md
 npm-debug.log*
 /.superpowers/
 /.pi/
+docs/superpowers/
 .eleventy-cache/
 /.cache/
