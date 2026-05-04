@@ -85,6 +85,23 @@ body.q2w-controls-below-header .leaflet-top.leaflet-right {
   box-shadow: var(--q2w-shadow-md);
 }
 
+body.q2w-qgis2web .leaflet-control-layers-expanded {
+  width: min(340px, calc(100vw - 24px));
+}
+
+body.q2w-qgis2web .leaflet-layerstree-header.leaflet-layerstree-nevershow {
+  display: none;
+}
+
+body.q2w-qgis2web .leaflet-layerstree-header-name {
+  font-weight: 600;
+}
+
+body.q2w-qgis2web .leaflet-layerstree-header-name table {
+  font-weight: 400;
+  font-size: 11px;
+}
+
 .q2w-label-halo,
 body.q2w-labels-halo .leaflet-tooltip {
   text-shadow:

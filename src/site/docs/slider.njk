@@ -7,24 +7,37 @@ permalink: "/docs/slider.html"
 
 <span class="doc-tag">.q2w-slider</span>
 <h1 class="doc-h1">Slider</h1>
-<p class="doc-lead">Range control for opacity, thresholds, time, and filters.</p>
+<p class="doc-lead">Range control for opacity, thresholds, time windows, and interactive map filters.</p>
 
 <section class="doc-section">
   <h2>Preview</h2>
   <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/slider.njk" %}
+    <div class="q2w-slider q2w-slider--panel" style="width:340px; --q2w-slider-value:75%;">
+      <div class="q2w-slider__head">
+        <div>
+          <div class="q2w-slider__title">Layer opacity</div>
+          <div class="q2w-slider__sub">Zona Nilai Tanah overlay</div>
+        </div>
+        <strong class="q2w-slider__live" data-doc-slider-value>75%</strong>
+      </div>
+      <input class="q2w-slider__input" type="range" min="0" max="100" value="75" data-doc-slider aria-label="Layer opacity">
+      <div class="q2w-slider__scale"><span>0%</span><span>100%</span></div>
+    </div>
   </div>
 </section>
 
 <section class="doc-section">
   <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-slider&quot;&gt;
-  Slider content
-&lt;/div&gt;</pre>
-  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-slider q2w-slider--panel" style="--q2w-slider-value:75%;"&gt;
+  &lt;div class="q2w-slider__head"&gt;
+    &lt;div&gt;
+      &lt;div class="q2w-slider__title"&gt;Layer opacity&lt;/div&gt;
+      &lt;div class="q2w-slider__sub"&gt;Zona Nilai Tanah overlay&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;strong class="q2w-slider__live"&gt;75%&lt;/strong&gt;
+  &lt;/div&gt;
+  &lt;input class="q2w-slider__input" type="range" min="0" max="100" value="75" aria-label="Layer opacity"&gt;
+&lt;/div&gt;</pre></div>
 </section>
 
 <section class="doc-section">
@@ -32,23 +45,10 @@ permalink: "/docs/slider.html"
   <table class="doc-table">
     <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
     <tbody>
-      <tr><td><code>.q2w-slider</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-slider--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-slider--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-slider</code></td><td>Root element for the slider component</td></tr>
-      <tr><td><code>.q2w-slider__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-slider__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-slider__actions</code></td><td>Optional action group</td></tr>
+      <tr><td><code>.q2w-slider</code></td><td>Inline slider row for simple controls</td></tr>
+      <tr><td><code>.q2w-slider--panel</code></td><td>Panel/card presentation with title, value, and scale</td></tr>
+      <tr><td><code>.q2w-slider__input</code></td><td>Native range input styled with q2w tokens</td></tr>
+      <tr><td><code>--q2w-slider-value</code></td><td>Optional custom property for synced filled-track previews</td></tr>
     </tbody>
   </table>
 </section>

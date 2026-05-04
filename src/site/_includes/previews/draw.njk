@@ -1,9 +1,10 @@
-<div class="q2w-draw">
-  <button class="q2w-draw__btn" title="Point"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></button>
-  <button class="q2w-draw__btn" title="Line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 20 6"/></svg></button>
-  <button class="q2w-draw__btn" title="Polygon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 21 9 18 21H6L3 9z"/></svg></button>
-  <button class="q2w-draw__btn" title="Rectangle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="6" width="14" height="12" rx="1"/></svg></button>
-  <span class="q2w-draw__sep"></span>
-  <button class="q2w-draw__btn">Edit</button>
-  <button class="q2w-draw__btn">Delete</button>
+<div class="q2w-draw-demo">
+  <div class="q2w-draw q2w-draw--floating">
+    <button class="q2w-draw__btn is-active" title="Point" data-doc-draw-tool="Point"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></button>
+    <button class="q2w-draw__btn" title="Line" data-doc-draw-tool="Line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 20 6"/></svg></button>
+    <button class="q2w-draw__btn" title="Polygon" data-doc-draw-tool="Polygon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 21 9 18 21H6L3 9z"/></svg></button>
+    <span class="q2w-draw__sep"></span>
+    <button class="q2w-draw__btn" data-doc-draw-tool="Edit">Edit</button>
+  </div>
+  <div class="q2w-draw__status" data-doc-draw-status>Point tool active — click map to start.</div>
 </div>

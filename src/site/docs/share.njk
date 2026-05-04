@@ -7,50 +7,51 @@ permalink: "/docs/share.html"
 
 <span class="doc-tag">.q2w-share</span>
 <h1 class="doc-h1">Share</h1>
-<p class="doc-lead">Copyable map URL and share action for collaboration.</p>
+<p class="doc-lead">Copyable map URL, current-view metadata, and share action for collaborative WebGIS workflows.</p>
 
 <section class="doc-section">
   <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/share.njk" %}
+  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 260px;">
+    <div class="q2w-share q2w-share--floating" style="width:420px;">
+      <div class="q2w-share__head">
+        <div>
+          <div class="q2w-share__title">Share current map view</div>
+          <div class="q2w-share__meta">Zoom 13 · Cirebon Land Value · 4 layers visible</div>
+        </div>
+        <span class="q2w-share__badge">Live URL</span>
+      </div>
+      <div class="q2w-share__field">
+        <code data-doc-share-url>https://q2w-mapcss.pages.dev/examples/categorized-real/#13/-6.7797/108.4714</code>
+        <button class="q2w-btn q2w-btn--primary q2w-btn--sm" data-doc-share-copy>Copy link</button>
+      </div>
+      <div class="q2w-share__actions">
+        <button class="q2w-btn q2w-btn--ghost q2w-btn--sm">Embed</button>
+        <button class="q2w-btn q2w-btn--ghost q2w-btn--sm">Open preview</button>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="doc-section">
   <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-share&quot;&gt;
-  Share content
-&lt;/div&gt;</pre>
-  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-share q2w-share--floating"&gt;
+  &lt;div class="q2w-share__head"&gt;
+    &lt;div&gt;
+      &lt;div class="q2w-share__title"&gt;Share current map view&lt;/div&gt;
+      &lt;div class="q2w-share__meta"&gt;Zoom 13 · 4 layers visible&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="q2w-share__badge"&gt;Live URL&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="q2w-share__field"&gt;
+    &lt;code&gt;https://example.com/map/#13/-6.7797/108.4714&lt;/code&gt;
+    &lt;button class="q2w-btn q2w-btn--primary q2w-btn--sm"&gt;Copy link&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></div>
 </section>
 
 <section class="doc-section">
-  <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-share</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-share--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-share--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-share</code></td><td>Root element for the share component</td></tr>
-      <tr><td><code>.q2w-share__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-share__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-share__actions</code></td><td>Optional action group</td></tr>
-    </tbody>
-  </table>
+  <h2>Behavior</h2>
+  <p>The framework styles the share UI. Your app can update the URL from Leaflet state using <code>map.getCenter()</code>, <code>map.getZoom()</code>, or a hash plugin. The docs preview demonstrates copy feedback.</p>
 </section>
 
 <div class="doc-prev-next">

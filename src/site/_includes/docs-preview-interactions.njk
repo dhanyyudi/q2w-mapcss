@@ -1,0 +1,67 @@
+<script>
+(function () {
+  function flash(button, text, fallback) {
+    if (!button) return;
+    const original = fallback || button.textContent;
+    button.textContent = text;
+    button.classList.add('is-active');
+    setTimeout(() => {
+      button.textContent = original;
+      button.classList.remove('is-active');
+    }, 1200);
+  }
+
+  document.addEventListener('input', (event) => {
+    const slider = event.target.closest('[data-doc-slider]');
+    if (!slider) return;
+    const root = slider.closest('.q2w-slider');
+    const value = slider.value;
+    root?.querySelectorAll('[data-doc-slider-value]').forEach((el) => {
+      el.textContent = `${value}%`;
+    });
+    root?.style.setProperty('--q2w-slider-value', `${value}%`);
+  });
+
+  document.addEventListener('click', (event) => {
+    const share = event.target.closest('[data-doc-share-copy]');
+    if (share) {
+      const root = share.closest('.q2w-share');
+      const text = root?.querySelector('[data-doc-share-url]')?.textContent?.trim() || '';
+      if (text && navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+      flash(share, 'Copied', 'Copy link');
+      return;
+    }
+
+    const draw = event.target.closest('[data-doc-draw-tool]');
+    if (draw) {
+      const root = draw.closest('.q2w-draw-demo');
+      root?.querySelectorAll('[data-doc-draw-tool]').forEach((btn) => btn.classList.remove('is-active'));
+      draw.classList.add('is-active');
+      const status = root?.querySelector('[data-doc-draw-status]');
+      if (status) status.textContent = `${draw.dataset.docDrawTool} tool active — click map to start.`;
+      return;
+    }
+
+    const basemap = event.target.closest('[data-doc-basemap]');
+    if (basemap) {
+      const root = basemap.closest('.q2w-basemap-demo') || basemap.closest('.q2w-basemap-grid');
+      root?.querySelectorAll('[data-doc-basemap]').forEach((item) => item.classList.remove('q2w-basemap--active'));
+      basemap.classList.add('q2w-basemap--active');
+      const label = root?.querySelector('[data-doc-basemap-label]') || document.querySelector('[data-doc-basemap-label]');
+      if (label) label.textContent = basemap.dataset.docBasemap || basemap.textContent.trim();
+      return;
+    }
+  });
+
+  document.addEventListener('change', (event) => {
+    const input = event.target.closest('[data-doc-filter]');
+    if (!input) return;
+    const root = input.closest('.q2w-filter');
+    if (!root) return;
+    const checked = root.querySelectorAll('[data-doc-filter]:checked').length;
+    root.querySelectorAll('[data-doc-filter-count]').forEach((el) => {
+      el.textContent = `${checked} active`;
+    });
+  });
+})();
+</script>

@@ -1,8 +1,12 @@
-<div class="q2w-basemap-grid" style="width:280px;">
-  <div class="q2w-basemap q2w-basemap--active"><div class="q2w-basemap__thumb q2w-bm-satellite"></div><div class="q2w-basemap__label">Esri Imagery</div></div>
-  <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-voyager"></div><div class="q2w-basemap__label">Voyager</div></div>
-  <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-streets"></div><div class="q2w-basemap__label">Streets</div></div>
-  <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-terrain"></div><div class="q2w-basemap__label">Terrain</div></div>
-  <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-light"></div><div class="q2w-basemap__label">Light</div></div>
-  <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-dark"></div><div class="q2w-basemap__label">Dark</div></div>
+<div class="q2w-basemap-demo" style="width:300px;">
+  <div class="q2w-basemap-demo__map q2w-basemap-demo__map--osm">
+    <div class="q2w-basemap-demo__pin"></div>
+    <span data-doc-basemap-label>OSM Streets</span>
+  </div>
+  <div class="q2w-basemap-grid q2w-basemap-grid--compact">
+    <button class="q2w-basemap q2w-basemap--active" data-doc-basemap="OSM Streets"><div class="q2w-basemap__thumb q2w-bm-osm"></div><div class="q2w-basemap__label">Streets</div></button>
+    <button class="q2w-basemap" data-doc-basemap="Esri Terrain"><div class="q2w-basemap__thumb q2w-bm-esri-terrain"></div><div class="q2w-basemap__label">Terrain</div></button>
+    <button class="q2w-basemap" data-doc-basemap="Esri Imagery"><div class="q2w-basemap__thumb q2w-bm-esri-imagery"></div><div class="q2w-basemap__label">Imagery</div></button>
+    <button class="q2w-basemap" data-doc-basemap="Carto Light"><div class="q2w-basemap__thumb q2w-bm-carto-light"></div><div class="q2w-basemap__label">Light</div></button>
+  </div>
 </div>

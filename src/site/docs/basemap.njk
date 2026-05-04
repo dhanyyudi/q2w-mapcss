@@ -3,25 +3,76 @@ layout: component.njk
 title: "Basemap — q2w-mapcss"
 component: "basemap"
 permalink: "/docs/basemap.html"
+extraHead: |
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 ---
 
 <span class="doc-tag">.q2w-basemap</span>
 <h1 class="doc-h1">Basemap</h1>
-<p class="doc-lead">Basemap picker with public swatch classes and active state.</p>
+<p class="doc-lead">Basemap picker with real tile-backed mini previews for common WebGIS defaults.</p>
 
 <section class="doc-section">
-  <h2>Variants</h2>
-  <div class="doc-preview">
-    <div class="q2w-basemap-grid">
-      <div class="q2w-basemap q2w-basemap--active"><div class="q2w-basemap__thumb q2w-bm-satellite"></div><div class="q2w-basemap__label">Esri Imagery</div></div>
-      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-voyager"></div><div class="q2w-basemap__label">Voyager</div></div>
-      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-streets"></div><div class="q2w-basemap__label">Streets</div></div>
-      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-terrain"></div><div class="q2w-basemap__label">Terrain</div></div>
-      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-light"></div><div class="q2w-basemap__label">Light</div></div>
-      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-dark"></div><div class="q2w-basemap__label">Dark</div></div>
+  <h2>Preview</h2>
+  <div class="doc-preview" style="padding:24px; min-height: 360px; place-items: stretch;">
+    <div class="q2w-basemap-demo">
+      <div id="docs-basemap-map" style="height: 220px; border-radius: 12px; overflow: hidden; border: 1px solid var(--q2w-border);"></div>
+      <div class="q2w-basemap-demo__caption">Active basemap: <strong data-doc-basemap-label>OSM Streets</strong></div>
+      <div class="q2w-basemap-grid q2w-basemap-grid--compact">
+        <button class="q2w-basemap q2w-basemap--active" data-doc-basemap="OSM Streets" data-doc-tile="osm"><div class="q2w-basemap__thumb q2w-bm-osm"></div><div class="q2w-basemap__label">OSM Streets</div></button>
+        <button class="q2w-basemap" data-doc-basemap="Carto Light" data-doc-tile="light"><div class="q2w-basemap__thumb q2w-bm-carto-light"></div><div class="q2w-basemap__label">Carto Light</div></button>
+        <button class="q2w-basemap" data-doc-basemap="Esri Terrain" data-doc-tile="terrain"><div class="q2w-basemap__thumb q2w-bm-esri-terrain"></div><div class="q2w-basemap__label">Esri Terrain</div></button>
+        <button class="q2w-basemap" data-doc-basemap="Esri Imagery" data-doc-tile="imagery"><div class="q2w-basemap__thumb q2w-bm-esri-imagery"></div><div class="q2w-basemap__label">Esri Imagery</div></button>
+      </div>
     </div>
   </div>
 </section>
+
+<section class="doc-section">
+  <h2>Usage</h2>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;button class="q2w-basemap q2w-basemap--active"&gt;
+  &lt;div class="q2w-basemap__thumb q2w-bm-osm"&gt;&lt;/div&gt;
+  &lt;div class="q2w-basemap__label"&gt;OSM Streets&lt;/div&gt;
+&lt;/button&gt;</pre></div>
+</section>
+
+<section class="doc-section">
+  <h2>Suggested sources</h2>
+  <table class="doc-table">
+    <thead><tr><th>Style</th><th>Suggested provider</th></tr></thead>
+    <tbody>
+      <tr><td><code>Streets</code></td><td>OpenStreetMap standard tiles</td></tr>
+      <tr><td><code>Light</code></td><td>Carto Positron / light-gray tiles</td></tr>
+      <tr><td><code>Terrain</code></td><td>Esri World Terrain base + reference labels if needed</td></tr>
+      <tr><td><code>Imagery</code></td><td>Esri World Imagery</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<script>
+(function () {
+  if (!window.L) return;
+  const mapEl = document.getElementById('docs-basemap-map');
+  if (!mapEl || mapEl.dataset.ready) return;
+  mapEl.dataset.ready = 'true';
+  const map = L.map(mapEl, { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, tap: false }).setView([-6.7797, 108.4714], 13);
+  const layers = {
+    osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }),
+    light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 20 }),
+    terrain: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 13 }),
+    imagery: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20 })
+  };
+  let active = layers.osm.addTo(map);
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-doc-tile]');
+    if (!button) return;
+    const next = layers[button.dataset.docTile];
+    if (!next || next === active) return;
+    map.removeLayer(active);
+    active = next.addTo(map);
+  });
+})();
+</script>
 
 <div class="doc-prev-next">
   <a href="measure.html">← Measure</a>

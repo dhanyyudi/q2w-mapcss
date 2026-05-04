@@ -80,6 +80,44 @@ async function expectDocsFooterStyled(page, baseUrl) {
   }
 }
 
+async function expectInteractiveDocs(page, baseUrl) {
+  await page.goto(`${baseUrl}/docs/slider.html`, { waitUntil: "networkidle" });
+  await page.locator("[data-doc-slider]").fill("42");
+  if ((await page.locator("[data-doc-slider-value]").first().textContent())?.trim() !== "42%") {
+    throw new Error("Slider docs preview must update the displayed value when dragged.");
+  }
+
+  await page.goto(`${baseUrl}/docs/share.html`, { waitUntil: "networkidle" });
+  await page.locator("[data-doc-share-copy]").click();
+  if ((await page.locator("[data-doc-share-copy]").textContent())?.trim() !== "Copied") {
+    throw new Error("Share docs preview must show copied feedback.");
+  }
+
+  await page.goto(`${baseUrl}/docs/draw.html`, { waitUntil: "networkidle" });
+  await page.locator('[data-doc-draw-tool="Polygon"]').click();
+  if (!((await page.locator('[data-doc-draw-tool="Polygon"]').getAttribute("class")) || "").includes("is-active")) {
+    throw new Error("Draw docs preview must update active tool state.");
+  }
+  if (!((await page.locator("[data-doc-draw-status]").textContent()) || "").includes("Polygon tool active")) {
+    throw new Error("Draw docs preview must update status text.");
+  }
+
+  await page.goto(`${baseUrl}/docs/filter.html`, { waitUntil: "networkidle" });
+  await page.locator("[data-doc-filter]").nth(2).check();
+  if ((await page.locator("[data-doc-filter-count]").textContent())?.trim() !== "3 active") {
+    throw new Error("Filter docs preview must update active count.");
+  }
+
+  await page.goto(`${baseUrl}/docs/basemap.html`, { waitUntil: "networkidle" });
+  await page.locator('[data-doc-tile="terrain"]').click();
+  if (!((await page.locator('[data-doc-tile="terrain"]').getAttribute("class")) || "").includes("q2w-basemap--active")) {
+    throw new Error("Basemap docs preview must update active basemap state.");
+  }
+  if (!((await page.locator("[data-doc-basemap-label]").textContent()) || "").includes("Esri Terrain")) {
+    throw new Error("Basemap docs preview must update active basemap label.");
+  }
+}
+
 async function expectRealExampleChrome(page, baseUrl) {
   await page.goto(`${baseUrl}/examples/categorized-real/`, { waitUntil: "networkidle" });
   await page.waitForSelector(".q2w-header");
@@ -100,6 +138,29 @@ async function expectRealExampleChrome(page, baseUrl) {
   await page.locator(".q2w-theme-toggle").click();
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
     throw new Error("Real categorized example theme toggle must be able to restore explicit light mode.");
+  }
+
+  await page.locator("#welcomeStart").click().catch(() => {});
+  await page.locator(".leaflet-control-layers-toggle").click();
+  await page.waitForSelector(".leaflet-control-layers-expanded");
+  const layerMetrics = await page.locator(".leaflet-control-layers-expanded").evaluate((el) => {
+    const list = el.querySelector(".leaflet-control-layers-list");
+    const hiddenRootHeader = getComputedStyle(el.querySelector(".leaflet-layerstree-header.leaflet-layerstree-nevershow")).display;
+    return {
+      width: el.getBoundingClientRect().width,
+      listWidth: list ? list.getBoundingClientRect().width : 0,
+      scrollWidth: list ? list.scrollWidth : 0,
+      hiddenRootHeader,
+    };
+  });
+  if (layerMetrics.width > 360) {
+    throw new Error(`Real categorized example layer control is too wide: ${layerMetrics.width}px.`);
+  }
+  if (layerMetrics.scrollWidth - layerMetrics.listWidth > 8) {
+    throw new Error("Real categorized example layer control must not expose a large horizontal gutter/overflow.");
+  }
+  if (layerMetrics.hiddenRootHeader !== "none") {
+    throw new Error("Real categorized example must hide the empty qgis2web layer-tree root header.");
   }
 }
 
@@ -171,6 +232,7 @@ try {
   }
 
   await expectDocsFooterStyled(page, baseUrl);
+  await expectInteractiveDocs(page, baseUrl);
 
   await page.goto(`${baseUrl}/docs/header.html`, { waitUntil: "networkidle" });
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {

@@ -289,6 +289,49 @@ assertIncludes("site/docs/loading.html", loadingDoc, [
   "q2w-skeleton",
 ]);
 
+const sliderDoc = readOutput("site/docs/slider.html");
+assertIncludes("site/docs/slider.html", sliderDoc, [
+  "data-doc-slider",
+  "data-doc-slider-value",
+  "q2w-slider__input",
+  "Layer opacity",
+  "75%",
+]);
+
+const shareDoc = readOutput("site/docs/share.html");
+assertIncludes("site/docs/share.html", shareDoc, [
+  "data-doc-share-copy",
+  "data-doc-share-url",
+  "Share current map view",
+  "Copy link",
+]);
+
+const filterDoc = readOutput("site/docs/filter.html");
+assertIncludes("site/docs/filter.html", filterDoc, [
+  "data-doc-filter",
+  "data-doc-filter-count",
+  "Parcel filter",
+  "2 active",
+]);
+
+const drawDoc = readOutput("site/docs/draw.html");
+assertIncludes("site/docs/draw.html", drawDoc, [
+  "data-doc-draw-tool",
+  "data-doc-draw-status",
+  "Point tool active",
+]);
+
+const basemapDoc = readOutput("site/docs/basemap.html");
+assertIncludes("site/docs/basemap.html", basemapDoc, [
+  "docs-basemap-map",
+  "data-doc-tile=\"osm\"",
+  "data-doc-tile=\"terrain\"",
+  "tile.openstreetmap.org",
+  "World_Terrain_Base",
+  "World_Imagery",
+  "light_all",
+]);
+
 const printDoc = readOutput("site/docs/print.html");
 assertIncludes("site/docs/print.html", printDoc, [
   "q2w-print",
@@ -419,12 +462,11 @@ const docsVariantRequirements = {
     "q2w-basemap-grid",
     "q2w-basemap",
     "q2w-basemap--active",
-    "q2w-bm-satellite",
-    "q2w-bm-voyager",
-    "q2w-bm-streets",
-    "q2w-bm-terrain",
-    "q2w-bm-light",
-    "q2w-bm-dark",
+    "q2w-bm-osm",
+    "q2w-bm-esri-terrain",
+    "q2w-bm-esri-imagery",
+    "q2w-bm-carto-light",
+    "docs-basemap-map",
   ],
   "site/docs/measure.html": [
     "Distance",
@@ -501,6 +543,14 @@ assertIncludes("dist/q2w-mapcss.css", css, [
   ".q2w-spinner",
   ".q2w-loadbar",
   ".q2w-skeleton",
+  ".q2w-slider__input",
+  ".q2w-share__title",
+  ".q2w-filter__count",
+  ".q2w-draw__status",
+  ".q2w-bm-osm",
+  ".q2w-bm-esri-terrain",
+  ".leaflet-layerstree-header-label",
+  ".leaflet-layerstree-header-name table",
 ]);
 
 const minCss = readOutput("dist/q2w-mapcss.min.css");

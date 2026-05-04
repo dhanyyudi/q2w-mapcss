@@ -98,7 +98,7 @@ body {
 }
 
 .leaflet-control-layers-expanded {
-  width: var(--q2w-panel-w);
+  width: min(320px, calc(100vw - 24px));
   padding: 0 !important;
 }
 
@@ -108,26 +108,102 @@ body {
   padding: 10px 12px 12px;
 }
 
+.leaflet-control-layers-overlays,
+.leaflet-control-layers-base {
+  display: grid;
+  gap: 10px;
+}
+
+.leaflet-layerstree-node {
+  display: block;
+}
+
 .leaflet-layerstree-header {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 8px;
   min-height: 24px;
   color: var(--q2w-text);
 }
 
+.leaflet-layerstree-header > span:first-child {
+  flex: 0 0 auto;
+  min-width: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px;
+}
+
+.leaflet-layerstree-header > span:last-child {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.leaflet-layerstree-header-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
 .leaflet-layerstree-header input {
   accent-color: var(--q2w-accent);
+  margin: 2px 0 0;
+  flex: 0 0 auto;
 }
 
 .leaflet-layerstree-header-name {
+  display: block;
+  min-width: 0;
   font-size: 12px;
+  line-height: 1.45;
+}
+
+.leaflet-layerstree-header-name > br:first-of-type {
+  display: none;
+}
+
+.leaflet-layerstree-header-name table {
+  width: 100%;
+  margin-top: 6px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.leaflet-layerstree-header-name tr + tr td {
+  border-top: 1px dashed var(--q2w-border);
+}
+
+.leaflet-layerstree-header-name td {
+  padding: 5px 0;
+  vertical-align: middle;
+  color: var(--q2w-text-muted);
+  word-break: break-word;
+}
+
+.leaflet-layerstree-header-name td:first-child {
+  width: 28px;
+  padding-right: 8px;
+}
+
+.leaflet-layerstree-header-name td img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .leaflet-layerstree-children {
-  margin-left: 16px;
-  padding-left: 8px;
+  margin-left: 10px;
+  padding-left: 10px;
   border-left: 1px dashed var(--q2w-border);
+}
+
+.leaflet-layerstree-children-nopad {
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
 }
 
 .leaflet-layerstree-closed,
