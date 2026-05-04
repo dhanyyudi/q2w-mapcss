@@ -7,6 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ dist: "dist" });
   eleventyConfig.addPassthroughCopy({ "public/uploads": "uploads" });
+  eleventyConfig.addPassthroughCopy({ "public/brand": "brand" });
   eleventyConfig.addPassthroughCopy({ "src/site/examples/_data": "examples/_data" });
   eleventyConfig.addPassthroughCopy({ snippets: "snippets" });
   eleventyConfig.addPassthroughCopy({
