@@ -23,6 +23,28 @@ const server = spawn(process.execPath, ["-e", `
   }).listen(${port}, '127.0.0.1', () => console.log('ready'));
 `], { stdio: ["ignore", "pipe", "pipe"] });
 
+async function expectLandingRevealWorks(page, baseUrl) {
+  await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+
+  const revealCount = await page.locator(".reveal").count();
+  if (revealCount < 13) {
+    throw new Error(`Landing page should expose at least 13 reveal elements; found ${revealCount}.`);
+  }
+
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(700);
+
+  const visibleCount = await page.locator(".reveal.is-visible").count();
+  if (visibleCount < 8) {
+    throw new Error(`Landing reveal should mark visible elements after scrolling; found ${visibleCount}.`);
+  }
+
+  const firstCardTransform = await page.locator(".ln-card").first().evaluate((el) => getComputedStyle(el).transitionDuration);
+  if (firstCardTransform === "0s") {
+    throw new Error("Landing card transitions should be enabled in normal motion mode.");
+  }
+}
+
 let browser;
 try {
   await Promise.race([
@@ -50,6 +72,8 @@ try {
   if ((await page.evaluate(() => localStorage.getItem("q2w-theme"))) !== "light") {
     throw new Error("Landing theme toggle did not persist q2w-theme=light.");
   }
+
+  await expectLandingRevealWorks(page, baseUrl);
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
   mobile.on("pageerror", (error) => errors.push(error.message));
