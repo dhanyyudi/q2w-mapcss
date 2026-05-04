@@ -83,3 +83,9 @@ Cloudflare Pages:
 ## Scope
 
 V1 supports Leaflet qgis2web exports. OpenLayers support is intentionally deferred.
+
+## Support
+
+If q2w-mapcss saved you time, consider buying me a coffee:
+
+[☕ tiptap.gg/dhanypedia/tip](https://tiptap.gg/dhanypedia/tip)
