@@ -2,8 +2,22 @@
 permalink: "/index.html"
 layout: base.njk
 title: "Polished map UI for your qgis2web exports"
+theme: "light"
 extraHead: |
   <style>
+  :root,
+  html[data-theme="light"] {
+    color-scheme: light;
+    --q2w-surface: #ffffff;
+    --q2w-surface-soft: #f7f8fa;
+    --q2w-surface-sunken: #eef1f5;
+    --q2w-surface-tint: #eef8f7;
+    --q2w-border: #dde1e7;
+    --q2w-border-strong: #c9d0da;
+    --q2w-text: #1b2230;
+    --q2w-text-muted: #5b6577;
+    --q2w-text-faint: #8a93a3;
+  }
   body { background: var(--q2w-surface); color: var(--q2w-text); }
 
   /* Top nav */
