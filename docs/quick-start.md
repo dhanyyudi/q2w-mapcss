@@ -61,6 +61,19 @@ Use the files in `snippets/` as copy paste starting points:
 <link rel="stylesheet" href="css/q2w-plugins.css">
 ```
 
+## 5. Icons (optional)
+
+q2w-mapcss does not require an icon library. Place any SVG inside a component:
+
+```html
+<button class="q2w-btn">
+  <!-- any SVG here -->
+  Open map
+</button>
+```
+
+The docs use [Lucide](https://lucide.dev) icons (MIT, inline SVG).
+
 ## 5. Verify the export
 
 Check these items:

@@ -5,9 +5,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build:css": "node scripts/build.mjs",
+    "build:site": "npx @11ty/eleventy",
+    "build": "npm run build:css && npm run build:site",
     "check": "npm run build && node scripts/check.mjs",
-    "dev": "npm run build && node scripts/serve.mjs",
+    "dev": "npm run build:css && npx @11ty/eleventy --serve --port=4173",
     "deploy": "npm run build && npx wrangler pages deploy site --project-name q2w-mapcss"
   },
   "keywords": [
@@ -18,5 +20,9 @@
     "css",
     "tailwind"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.5",
+    "lucide-static": "^1.14.0"
+  }
 }

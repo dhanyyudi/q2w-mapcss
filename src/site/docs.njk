@@ -1,0 +1,1242 @@
+---
+permalink: "/docs.html"
+layout: base.njk
+title: "Component Gallery"
+showcaseCss: true
+bodyClass: "cs-page"
+extraHead: |
+  <style>
+  /* Local icon helpers */
+  .ic { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.7; fill: none; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .ic-lg { width: 18px; height: 18px; }
+  </style>
+---
+
+<!-- ============ Top nav ============ -->
+{% include "nav-docs.njk" %}
+
+<!-- ============ Hero ============ -->
+<section class="cs-hero">
+  <div class="cs-mono" style="color: var(--q2w-text-faint); margin-bottom: 12px;">v0.1 · brand-neutral · MIT</div>
+  <h1>A component kit for qgis2web exports.</h1>
+  <p>q2w is a lightweight Tailwind + Leaflet UI framework. Drop it on top of an exported qgis2web map and get a polished header, footer, layer panel, popup, legend, and the rest — all theme-able, dark-mode ready, and built for production.</p>
+  <div class="cs-hero__chips">
+    <span class="cs-chip">Tailwind · @apply</span>
+    <span class="cs-chip">Leaflet</span>
+    <span class="cs-chip">~12kb gzip target</span>
+    <span class="cs-chip">light + dark + 4 presets</span>
+    <span class="cs-chip">a11y first</span>
+  </div>
+</section>
+
+{% include "quickstart-section.njk" %}
+
+<!-- ============ Tokens ============ -->
+<section class="cs-section" id="tokens">
+  <div class="cs-section__head">
+    <span class="cs-num">01</span>
+    <h2>Design tokens</h2>
+    <p>CSS custom properties. Override any of them at <code>:root</code> or <code>[data-theme]</code>.</p>
+  </div>
+
+  <div class="cs-grid cs-grid--2">
+    <!-- neutrals -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Neutrals</div><div class="cs-card__tag">--q2w-neutral-*</div></div>
+      <div class="cs-card__body" style="padding: 16px; align-items: stretch; flex-direction: column; gap: 12px;">
+        <div style="display:grid; grid-template-columns: repeat(10, 1fr); gap: 4px; width: 100%;">
+          <div style="background:#ffffff; height:36px; border:1px solid var(--q2w-border); border-radius:4px;"></div>
+          <div style="background:#f7f8fa; height:36px; border:1px solid var(--q2w-border); border-radius:4px;"></div>
+          <div style="background:#eef0f3; height:36px; border-radius:4px;"></div>
+          <div style="background:#dde1e7; height:36px; border-radius:4px;"></div>
+          <div style="background:#c2c8d2; height:36px; border-radius:4px;"></div>
+          <div style="background:#8a93a3; height:36px; border-radius:4px;"></div>
+          <div style="background:#5b6577; height:36px; border-radius:4px;"></div>
+          <div style="background:#3f4a5c; height:36px; border-radius:4px;"></div>
+          <div style="background:#2a3344; height:36px; border-radius:4px;"></div>
+          <div style="background:#0f1520; height:36px; border-radius:4px;"></div>
+        </div>
+        <div style="display:flex; justify-content: space-between; font-family: var(--q2w-font-mono); font-size: 10px; color: var(--q2w-text-faint);">
+          <span>0</span><span>50</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>900</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- accents / themes -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Theme accents</div><div class="cs-card__tag">--q2w-accent</div></div>
+      <div class="cs-card__body" style="padding: 16px; flex-direction: column; gap: 10px; align-items: stretch;">
+        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+          <div style="text-align:center"><div style="background:#0f7a78; height:48px; border-radius:6px;"></div><div class="cs-mono" style="margin-top:6px">teal</div></div>
+          <div style="text-align:center"><div style="background:#1d6fc4; height:48px; border-radius:6px;"></div><div class="cs-mono" style="margin-top:6px">ocean</div></div>
+          <div style="text-align:center"><div style="background:#2f7d4a; height:48px; border-radius:6px;"></div><div class="cs-mono" style="margin-top:6px">forest</div></div>
+          <div style="text-align:center"><div style="background:#d8632a; height:48px; border-radius:6px;"></div><div class="cs-mono" style="margin-top:6px">sunset</div></div>
+          <div style="text-align:center"><div style="background:#3f4a5c; height:48px; border-radius:6px;"></div><div class="cs-mono" style="margin-top:6px">slate</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- choropleth -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Choropleth · sequential</div><div class="cs-card__tag">--q2w-seq-*</div></div>
+      <div class="cs-card__body" style="padding: 16px; flex-direction: column; align-items: stretch; gap: 8px;">
+        <div class="q2w-grad" style="height: 18px;"></div>
+        <div class="q2w-grad__labels"><span>low</span><span>med</span><span>high</span></div>
+      </div>
+    </div>
+
+    <!-- diverging + qual -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Diverging + qualitative</div><div class="cs-card__tag">--q2w-div-*, --q2w-qual-*</div></div>
+      <div class="cs-card__body" style="padding: 16px; flex-direction: column; align-items: stretch; gap: 12px;">
+        <div style="height: 14px; border-radius: 2px; background: linear-gradient(90deg, #2c7bb6, #abd9e9, #ffffbf, #fdae61, #d7191c);"></div>
+        <div style="display:flex; gap: 6px;">
+          <div style="background:#2a6f97; flex:1; height: 14px; border-radius: 2px;"></div>
+          <div style="background:#d6802b; flex:1; height: 14px; border-radius: 2px;"></div>
+          <div style="background:#4a8c3b; flex:1; height: 14px; border-radius: 2px;"></div>
+          <div style="background:#b34a6c; flex:1; height: 14px; border-radius: 2px;"></div>
+          <div style="background:#6b4ea0; flex:1; height: 14px; border-radius: 2px;"></div>
+          <div style="background:#c4a23b; flex:1; height: 14px; border-radius: 2px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- radii / shadows -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Radii</div><div class="cs-card__tag">--q2w-radius-*</div></div>
+      <div class="cs-card__body" style="gap: 14px;">
+        <div style="width:48px; height:48px; background:var(--q2w-accent-soft); border:1px solid var(--q2w-accent); border-radius:4px;"></div>
+        <div style="width:48px; height:48px; background:var(--q2w-accent-soft); border:1px solid var(--q2w-accent); border-radius:6px;"></div>
+        <div style="width:48px; height:48px; background:var(--q2w-accent-soft); border:1px solid var(--q2w-accent); border-radius:10px;"></div>
+        <div style="width:48px; height:48px; background:var(--q2w-accent-soft); border:1px solid var(--q2w-accent); border-radius:14px;"></div>
+        <div style="width:48px; height:48px; background:var(--q2w-accent-soft); border:1px solid var(--q2w-accent); border-radius:50%;"></div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Type scale</div><div class="cs-card__tag">Inter / JetBrains Mono</div></div>
+      <div class="cs-card__body" style="flex-direction: column; align-items: flex-start; padding: 20px; gap: 4px;">
+        <div style="font-size: 24px; font-weight: 700; letter-spacing: -0.02em;">Display 24 / 700</div>
+        <div style="font-size: 16px; font-weight: 600;">Title 16 / 600</div>
+        <div style="font-size: 14px;">Body 14 / 400</div>
+        <div style="font-size: 12px; color: var(--q2w-text-muted);">Caption 12 / muted</div>
+        <div style="font-family: var(--q2w-font-mono); font-size: 11px; color: var(--q2w-text-muted);">mono 11 · -7.7868°, 108.4670°</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Header ============ -->
+<section class="cs-section" id="header">
+  <div class="cs-section__head">
+    <span class="cs-num">02</span>
+    <h2>Header</h2>
+    <p>Floating, full-bar, minimal, expressive, technical — pick one per project.</p>
+  </div>
+
+  <div class="cs-grid cs-grid--2">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Floating · default</div><div class="cs-card__tag">.q2w-header</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 0; min-height: 140px;">
+        <div class="q2w-header" style="position: relative; top: auto; left: auto; right: auto; margin: 16px;">
+          <div class="q2w-header__brand">
+            <div class="q2w-header__logo">q2</div>
+            <div>
+              <div class="q2w-header__title">WebGIS Zona Nilai Tanah</div>
+              <div class="q2w-header__sub">Land value zoning · Cirebon</div>
+            </div>
+          </div>
+          <div class="q2w-header__actions">
+            <button class="q2w-btn q2w-btn--ghost"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Help</button>
+            <button class="q2w-btn q2w-btn--primary q2w-btn--pill">Get started</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Full-width bar</div><div class="cs-card__tag">.q2w-header--bar</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 0; min-height: 140px;">
+        <div class="q2w-header q2w-header--bar" style="position: relative; top: 0; left: 0; right: 0;">
+          <div class="q2w-header__brand">
+            <div class="q2w-header__logo">q2</div>
+            <div class="q2w-header__title">Land Value Atlas</div>
+          </div>
+          <div class="q2w-header__divider"></div>
+          <div class="q2w-header__sub">Updated · 04 May 2026</div>
+          <div class="q2w-header__actions">
+            <button class="q2w-btn q2w-btn--ghost">Share</button>
+            <button class="q2w-btn">Export</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Minimal floating</div><div class="cs-card__tag">.q2w-header--minimal</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 0; min-height: 140px;">
+        <div class="q2w-header q2w-header--minimal" style="position: relative; top: auto; left: auto; right: auto; margin: 20px;">
+          <div class="q2w-header__title">Land Value Atlas · Cirebon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Expressive · pill</div><div class="cs-card__tag">.q2w-header--expressive</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 0; min-height: 140px;">
+        <div class="q2w-header q2w-header--expressive" style="position: relative; top: auto; left: auto; right: auto; margin: 16px;">
+          <div class="q2w-header__brand">
+            <div class="q2w-header__logo">L</div>
+            <div>
+              <div class="q2w-header__title">Land Atlas</div>
+              <div class="q2w-header__sub">A friendly map of value</div>
+            </div>
+          </div>
+          <div class="q2w-header__actions">
+            <button class="q2w-btn q2w-btn--primary q2w-btn--pill">Explore →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card" style="grid-column: span 2;">
+      <div class="cs-card__head"><div class="cs-card__title">Technical · monospace</div><div class="cs-card__tag">.q2w-header--technical</div></div>
+      <div class="cs-card__body cs-card__body--map dark" style="padding: 0; min-height: 100px;">
+        <div class="q2w-header q2w-header--technical" style="position: relative; top: 0; left: 0; right: 0;">
+          <div class="q2w-header__brand">
+            <div class="q2w-header__logo">▣</div>
+            <div>
+              <div class="q2w-header__title">ZNT_CIREBON_2026.geojson</div>
+              <div class="q2w-header__sub">EPSG:4326 · 1284 features · 2.3 MB</div>
+            </div>
+          </div>
+          <div class="q2w-header__actions">
+            <button class="q2w-btn q2w-btn--ghost" style="color:var(--q2w-neutral-50)">[?]</button>
+            <button class="q2w-btn q2w-btn--ghost" style="color:var(--q2w-neutral-50)">[≡]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<section class="cs-section" id="footer">
+  <div class="cs-section__head">
+    <span class="cs-num">03</span>
+    <h2>Footer</h2>
+    <p>Attribution, coordinates, scale bar.</p>
+  </div>
+
+  <div class="cs-grid cs-grid--2">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Standard</div><div class="cs-card__tag">.q2w-footer</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 0; min-height: 100px; align-items: flex-end;">
+        <div class="q2w-footer" style="position: relative; left: 0; right: 0; bottom: 0;">
+          <div class="q2w-footer__group">© 2026 Aksara Lab</div>
+          <div class="q2w-footer__group">Powered by qgis2web · Leaflet · QGIS</div>
+          <div class="q2w-footer__push"></div>
+          <div class="q2w-footer__group q2w-footer__coord">-7.7868°, 108.4670°</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">With scale bar</div><div class="cs-card__tag">.q2w-scalebar</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 0; min-height: 100px; align-items: flex-end;">
+        <div class="q2w-footer" style="position: relative; left: 0; right: 0; bottom: 0; height: 36px;">
+          <div class="q2w-footer__group">
+            <div class="q2w-scalebar">
+              <div>
+                <div class="q2w-scalebar__bar"></div>
+                <div style="display:flex; justify-content: space-between; width: 80px;"><span>0</span><span>500m</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="q2w-footer__group">1 : 24,000</div>
+          <div class="q2w-footer__push"></div>
+          <div class="q2w-footer__group q2w-footer__coord">Z 15 · -7.7868°, 108.4670°</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Layers ============ -->
+<section class="cs-section" id="layers">
+  <div class="cs-section__head">
+    <span class="cs-num">04</span>
+    <h2>Layer panel</h2>
+    <p>Where qgis2web's most-used UI lives. Sub-symbology rolled in.</p>
+  </div>
+
+  <div class="cs-grid cs-grid--3">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Default</div><div class="cs-card__tag">.q2w-panel</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-panel">
+          <div class="q2w-panel__header">
+            <svg class="ic" viewBox="0 0 24 24"><polygon points="12,3 21,8 12,13 3,8"/><polyline points="3,12 12,17 21,12"/><polyline points="3,16 12,21 21,16"/></svg>
+            <span>Layer &amp; Basemap</span>
+            <button class="q2w-btn q2w-btn--ghost q2w-btn--icon q2w-panel__close" aria-label="close">×</button>
+          </div>
+          <div class="q2w-panel__body">
+            <div class="q2w-panel__section">
+              <div class="q2w-panel__section-title">Layers</div>
+              <div class="q2w-layer">
+                <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+                <span class="q2w-layer__name">Jaringan Jalan</span>
+                <span class="q2w-layer__opacity">100%</span>
+              </div>
+              <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-qual-2)"></span><span>Jalan Kolektor</span></div>
+              <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-text-muted)"></span><span>Jalan Lain</span></div>
+              <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-text-faint); border-top-style: dashed;"></span><span>Jalan Lokal</span></div>
+
+              <div class="q2w-layer" style="margin-top:6px">
+                <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+                <span class="q2w-layer__name">Sungai</span>
+                <span class="q2w-layer__opacity">80%</span>
+              </div>
+              <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-info)"></span><span>Alur Sungai</span></div>
+
+              <div class="q2w-layer" style="margin-top:6px">
+                <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+                <span class="q2w-layer__name">Zona Nilai Tanah</span>
+                <span class="q2w-layer__opacity">90%</span>
+              </div>
+              <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-1)"></span><span>&lt; 100.000</span></div>
+              <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-2)"></span><span>100.000 – 200.000</span></div>
+              <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-3)"></span><span>200.000 – 500.000</span></div>
+              <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-4)"></span><span>500.000 – 1.000.000</span></div>
+              <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-5)"></span><span>1.000.000 – 2.000.000</span></div>
+              <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-6)"></span><span>2.000.000 – 5.000.000</span></div>
+            </div>
+
+            <div class="q2w-panel__section">
+              <div class="q2w-panel__section-title">Basemap</div>
+              <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on" style="border-radius:50%">●</span><span class="q2w-layer__name">Esri Imagery</span></div>
+              <div class="q2w-layer"><span class="q2w-layer__check" style="border-radius:50%"></span><span class="q2w-layer__name">Carto Voyager</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Compact / minimal</div><div class="cs-card__tag">no symbology</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-panel" style="width: 220px;">
+          <div class="q2w-panel__header"><span>Layers</span></div>
+          <div class="q2w-panel__body" style="max-height: none;">
+            <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
+            <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Rivers</span></div>
+            <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land Value Zones</span></div>
+            <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Admin Boundaries</span></div>
+            <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Points of Interest</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Technical · dense</div><div class="cs-card__tag">mono labels</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-panel" style="width: 240px; font-family: var(--q2w-font-mono);">
+          <div class="q2w-panel__header" style="font-family: var(--q2w-font-mono);">layers.json</div>
+          <div class="q2w-panel__body">
+            <div class="q2w-layer" style="font-family: var(--q2w-font-mono); font-size: 11px;"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">roads_lines</span><span class="q2w-layer__opacity">1.0</span></div>
+            <div class="q2w-layer" style="font-family: var(--q2w-font-mono); font-size: 11px;"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">rivers_lines</span><span class="q2w-layer__opacity">0.8</span></div>
+            <div class="q2w-layer" style="font-family: var(--q2w-font-mono); font-size: 11px;"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">znt_polygons</span><span class="q2w-layer__opacity">0.9</span></div>
+            <div class="q2w-layer" style="font-family: var(--q2w-font-mono); font-size: 11px;"><span class="q2w-layer__check"></span><span class="q2w-layer__name">admin_polygons</span><span class="q2w-layer__opacity">--</span></div>
+            <div class="q2w-layer" style="font-family: var(--q2w-font-mono); font-size: 11px;"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">poi_points</span><span class="q2w-layer__opacity">1.0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Legend ============ -->
+<section class="cs-section" id="legend">
+  <div class="cs-section__head">
+    <span class="cs-num">05</span>
+    <h2>Legend</h2>
+    <p>Categorical, graduated, floating, accordion.</p>
+  </div>
+
+  <div class="cs-grid cs-grid--4">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Categorical</div><div class="cs-card__tag">.q2w-legend-row</div></div>
+      <div class="cs-card__body" style="padding: 18px; align-items: flex-start; flex-direction: column;">
+        <div class="q2w-minilegend" style="width: 100%;">
+          <div class="q2w-minilegend__title">Land use</div>
+          <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background: var(--q2w-qual-3)"></span><span>Forest</span></div>
+          <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background: var(--q2w-qual-6)"></span><span>Agriculture</span></div>
+          <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background: var(--q2w-qual-2)"></span><span>Settlement</span></div>
+          <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background: var(--q2w-qual-1)"></span><span>Water</span></div>
+          <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background: var(--q2w-qual-4)"></span><span>Industrial</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Graduated</div><div class="cs-card__tag">.q2w-grad</div></div>
+      <div class="cs-card__body" style="padding: 18px; align-items: flex-start; flex-direction: column;">
+        <div class="q2w-minilegend" style="width: 100%;">
+          <div class="q2w-minilegend__title">Population density</div>
+          <div class="q2w-grad"></div>
+          <div class="q2w-grad__labels"><span>0</span><span>2k</span><span>10k+</span></div>
+          <div style="margin-top: 8px; font-size: 10.5px; color: var(--q2w-text-muted);">people / km²</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Diverging</div><div class="cs-card__tag">--q2w-div-*</div></div>
+      <div class="cs-card__body" style="padding: 18px; align-items: flex-start; flex-direction: column;">
+        <div class="q2w-minilegend" style="width: 100%;">
+          <div class="q2w-minilegend__title">Δ vs 2020</div>
+          <div style="height: 10px; border-radius: 2px; background: linear-gradient(90deg, #2c7bb6, #abd9e9, #ffffbf, #fdae61, #d7191c);"></div>
+          <div class="q2w-grad__labels"><span>−50%</span><span>0</span><span>+50%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Point symbols</div><div class="cs-card__tag">.q2w-legend-dot</div></div>
+      <div class="cs-card__body" style="padding: 18px; align-items: flex-start; flex-direction: column;">
+        <div class="q2w-minilegend" style="width: 100%;">
+          <div class="q2w-minilegend__title">Facilities</div>
+          <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-info)"></span><span>School</span></div>
+          <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-danger)"></span><span>Hospital</span></div>
+          <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-success)"></span><span>Park</span></div>
+          <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-warning)"></span><span>Market</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Popup ============ -->
+<section class="cs-section" id="popup">
+  <div class="cs-section__head">
+    <span class="cs-num">06</span>
+    <h2>Popup</h2>
+    <p>Tabular, rich, multi-tab. Each variant inherits the same shell.</p>
+  </div>
+
+  <div class="cs-grid cs-grid--3">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Tabular</div><div class="cs-card__tag">.q2w-popup</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-popup">
+          <div class="q2w-popup__header">
+            <div>
+              <div class="q2w-popup__title">Zona Nilai Tanah</div>
+              <div class="q2w-popup__sub">Kab. Cirebon</div>
+            </div>
+            <button class="q2w-popup__close" aria-label="close">×</button>
+          </div>
+          <div class="q2w-popup__body">
+            <div class="q2w-attr"><span class="q2w-attr__key">Kisaran nilai (Rp/m²)</span><span class="q2w-attr__val">500.000 – 1.000.000</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">Tahun data</span><span class="q2w-attr__val">2026</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">Luas zona</span><span class="q2w-attr__val">2.4 ha</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">Kode</span><span class="q2w-attr__val">ZNT-021</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Rich · image + actions</div><div class="cs-card__tag">.q2w-popup__media</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-popup q2w-popup--expressive">
+          <div class="q2w-popup__media">[ feature image ]</div>
+          <div class="q2w-popup__header" style="border-radius: 0;">
+            <div>
+              <div class="q2w-popup__title">SMA Negeri 3 Cirebon</div>
+              <div class="q2w-popup__sub">Education · public</div>
+            </div>
+          </div>
+          <div class="q2w-popup__body">
+            <div class="q2w-attr"><span class="q2w-attr__key">Students</span><span class="q2w-attr__val">1,284</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">Built</span><span class="q2w-attr__val">1972</span></div>
+          </div>
+          <div class="q2w-popup__actions">
+            <button class="q2w-btn" style="flex:1; justify-content: center;">Directions</button>
+            <button class="q2w-btn q2w-btn--primary" style="flex:1; justify-content: center;">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Tabbed</div><div class="cs-card__tag">.q2w-tabs</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-popup">
+          <div class="q2w-popup__header">
+            <div>
+              <div class="q2w-popup__title">Sungai Cisanggarung</div>
+              <div class="q2w-popup__sub">Water body</div>
+            </div>
+            <button class="q2w-popup__close">×</button>
+          </div>
+          <div class="q2w-tabs">
+            <div class="q2w-tab q2w-tab--active">Info</div>
+            <div class="q2w-tab">Data</div>
+            <div class="q2w-tab">Chart</div>
+          </div>
+          <div class="q2w-popup__body">
+            <div class="q2w-attr"><span class="q2w-attr__key">Length</span><span class="q2w-attr__val">68 km</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">Order</span><span class="q2w-attr__val">3</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">Status</span><span class="q2w-attr__val">Perennial</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Minimal</div><div class="cs-card__tag">.q2w-popup--minimal</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-popup q2w-popup--minimal">
+          <div class="q2w-popup__header">
+            <div>
+              <div class="q2w-popup__title">Plot 4023</div>
+              <div class="q2w-popup__sub" style="color: var(--q2w-text-muted)">Land parcel</div>
+            </div>
+            <button class="q2w-popup__close" style="color: var(--q2w-text-muted)">×</button>
+          </div>
+          <div class="q2w-popup__body">
+            <div class="q2w-attr"><span class="q2w-attr__key">Area</span><span class="q2w-attr__val">820 m²</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">Owner</span><span class="q2w-attr__val">Pemda</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Technical</div><div class="cs-card__tag">.q2w-popup--technical</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-popup q2w-popup--technical">
+          <div class="q2w-popup__header">
+            <div>
+              <div class="q2w-popup__title">FEATURE_ID 4023</div>
+              <div class="q2w-popup__sub">layer: znt_polygons</div>
+            </div>
+            <button class="q2w-popup__close">×</button>
+          </div>
+          <div class="q2w-popup__body">
+            <div class="q2w-attr"><span class="q2w-attr__key">geom_type</span><span class="q2w-attr__val">Polygon</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">area_m2</span><span class="q2w-attr__val">8.20e2</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">value_idr</span><span class="q2w-attr__val">7.5e5</span></div>
+            <div class="q2w-attr"><span class="q2w-attr__key">centroid</span><span class="q2w-attr__val" style="font-size:10.5px;">-7.79, 108.47</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">With chart</div><div class="cs-card__tag">popup body</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-popup">
+          <div class="q2w-popup__header">
+            <div>
+              <div class="q2w-popup__title">Cirebon · 5y trend</div>
+              <div class="q2w-popup__sub">Average ZNT</div>
+            </div>
+            <button class="q2w-popup__close">×</button>
+          </div>
+          <div class="q2w-popup__body" style="padding: 12px;">
+            <svg viewBox="0 0 240 80" style="width: 100%; height: auto; display: block;">
+              <polyline fill="none" stroke="var(--q2w-accent)" stroke-width="2" points="0,60 40,55 80,48 120,40 160,30 200,20 240,15"/>
+              <polyline fill="var(--q2w-accent-soft)" stroke="none" points="0,60 40,55 80,48 120,40 160,30 200,20 240,15 240,80 0,80"/>
+              <g font-family="var(--q2w-font-mono)" font-size="8" fill="var(--q2w-text-faint)">
+                <text x="0" y="78">'21</text><text x="200" y="78">'26</text>
+              </g>
+            </svg>
+            <div class="q2w-attr" style="border:0; padding: 8px 0 0;"><span class="q2w-attr__key">Δ 5y</span><span class="q2w-attr__val" style="color: var(--q2w-success)">+62%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Modal ============ -->
+<section class="cs-section" id="modal">
+  <div class="cs-section__head">
+    <span class="cs-num">07</span>
+    <h2>Welcome modal</h2>
+    <p>First-time intro / instructions / consent.</p>
+  </div>
+  <div class="cs-grid cs-grid--2">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Instructions</div><div class="cs-card__tag">.q2w-modal</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-modal" style="width: 380px;">
+          <div class="q2w-modal__header">
+            <div class="q2w-header__logo">q2</div>
+            <div>
+              <div class="q2w-modal__title">WebGIS Zona Nilai Tanah</div>
+              <div class="q2w-modal__sub">Aksara Lab · Collaborative Surveying</div>
+            </div>
+            <button class="q2w-btn q2w-btn--ghost q2w-btn--icon q2w-modal__close">×</button>
+          </div>
+          <div class="q2w-modal__body">
+            <p><strong>Navigasi.</strong> Geser peta dengan drag. Gunakan <code>+</code> / <code>−</code> atau scroll mouse untuk zoom.</p>
+            <p><strong>Layer.</strong> Buka panel di kanan atas untuk menyalakan / mematikan layer dan mengganti basemap.</p>
+            <p><strong>Informasi objek.</strong> Klik objek apa pun (zona, jalan, sungai, batas desa) untuk melihat atribut detail.</p>
+            <p><strong>Pencarian.</strong> Gunakan ikon kaca pembesar di kiri atas untuk mencari alamat.</p>
+          </div>
+          <div class="q2w-modal__footer">
+            <button class="q2w-btn q2w-btn--primary">Mulai gunakan peta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Compact splash</div><div class="cs-card__tag">centered short</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-modal" style="width: 320px; text-align: center;">
+          <div class="q2w-modal__body" style="padding: 28px 24px 8px;">
+            <div class="q2w-header__logo" style="margin: 0 auto 14px; width: 44px; height: 44px; font-size: 18px;">L</div>
+            <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;">Land Atlas</div>
+            <p style="color: var(--q2w-text-muted); margin: 0;">An interactive zoning map of Cirebon. Click any zone to see value &amp; year.</p>
+          </div>
+          <div class="q2w-modal__footer" style="display: flex; gap: 8px;">
+            <button class="q2w-btn" style="flex:1; justify-content:center;">Tour</button>
+            <button class="q2w-btn q2w-btn--primary" style="flex:1; justify-content:center;">Open map</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Sidebar ============ -->
+<section class="cs-section" id="sidebar">
+  <div class="cs-section__head">
+    <span class="cs-num">08</span>
+    <h2>Sidebar</h2>
+    <p>Persistent info panel for dashboard-style maps.</p>
+  </div>
+  <div class="cs-stage cs-stage--map" style="height: 360px;">
+    <div class="q2w-sidebar" style="top: 12px; bottom: 36px;">
+      <div class="q2w-sidebar__header">
+        <div class="q2w-sidebar__title">Cirebon Land Value</div>
+        <div class="q2w-sidebar__sub">Selected: Mekarjaya · 4 zones</div>
+      </div>
+      <div class="q2w-sidebar__body">
+        <div class="cs-mono" style="margin-bottom: 6px;">SUMMARY</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+          <div style="padding: 10px; background: var(--q2w-surface-soft); border-radius: 6px;">
+            <div class="cs-mono">avg</div>
+            <div style="font-size: 18px; font-weight: 600;">Rp 720k</div>
+          </div>
+          <div style="padding: 10px; background: var(--q2w-surface-soft); border-radius: 6px;">
+            <div class="cs-mono">range</div>
+            <div style="font-size: 13px;">200k – 1.2m</div>
+          </div>
+        </div>
+
+        <div class="cs-mono" style="margin-bottom: 6px;">DISTRIBUTION</div>
+        <svg viewBox="0 0 260 80" style="width: 100%; height: auto; display:block; margin-bottom: 16px;">
+          <g fill="var(--q2w-accent)">
+            <rect x="0"   y="50" width="36" height="30"/>
+            <rect x="40"  y="20" width="36" height="60"/>
+            <rect x="80"  y="10" width="36" height="70"/>
+            <rect x="120" y="32" width="36" height="48"/>
+            <rect x="160" y="56" width="36" height="24"/>
+            <rect x="200" y="68" width="36" height="12"/>
+          </g>
+        </svg>
+
+        <div class="cs-mono" style="margin-bottom: 6px;">LAYERS IN VIEW</div>
+        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value</span></div>
+        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
+        <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Rivers</span></div>
+      </div>
+    </div>
+    <div class="q2w-footer" style="position: absolute;">
+      <div class="q2w-footer__group">© 2026 Aksara Lab</div>
+      <div class="q2w-footer__push"></div>
+      <div class="q2w-footer__group q2w-footer__coord">-7.7868°, 108.4670°</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Search ============ -->
+<section class="cs-section" id="search">
+  <div class="cs-section__head">
+    <span class="cs-num">09</span>
+    <h2>Search</h2>
+    <p>Geocoder input + result list.</p>
+  </div>
+  <div class="cs-grid cs-grid--2">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Idle</div><div class="cs-card__tag">.q2w-search</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-search">
+          <svg class="ic q2w-search__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input placeholder="Search address, place or coordinates…" />
+          <span class="cs-mono" style="font-size: 10px; padding: 2px 5px; border: 1px solid var(--q2w-border); border-radius: 3px;">⌘K</span>
+        </div>
+      </div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Active · with results</div><div class="cs-card__tag">.q2w-search__results</div></div>
+      <div class="cs-card__body" style="padding: 24px; align-items: flex-start; flex-direction: column; gap: 0;">
+        <div class="q2w-search">
+          <svg class="ic q2w-search__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input value="cireb" />
+        </div>
+        <div class="q2w-search__results" style="width: 280px;">
+          <div class="q2w-search__item"><strong>Kabupaten Cirebon</strong><small>regency · West Java</small></div>
+          <div class="q2w-search__item"><strong>Kota Cirebon</strong><small>city · West Java</small></div>
+          <div class="q2w-search__item"><strong>Cirebon Pelabuhan</strong><small>port · station</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Measure / Zoom / Basemap row ============ -->
+<section class="cs-section" id="measure">
+  <div class="cs-section__head">
+    <span class="cs-num">10</span>
+    <h2>Map controls</h2>
+    <p>Measure, zoom, basemap, print.</p>
+  </div>
+  <div class="cs-grid cs-grid--4">
+    <div class="cs-card" id="zoom">
+      <div class="cs-card__head"><div class="cs-card__title">Zoom · stack</div><div class="cs-card__tag">.q2w-control</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-toolbar">
+          <div class="q2w-control">
+            <button class="q2w-control__btn">+</button>
+            <button class="q2w-control__btn">−</button>
+          </div>
+          <div class="q2w-control">
+            <button class="q2w-control__btn"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M5 19l3-3"/></svg></button>
+          </div>
+          <div class="q2w-control">
+            <button class="q2w-control__btn"><svg class="ic" viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Zoom · pill</div><div class="cs-card__tag">.q2w-control--rounded</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-control q2w-control--rounded" style="display:flex;">
+          <button class="q2w-control__btn">−</button>
+          <button class="q2w-control__btn" style="font-family: var(--q2w-font-mono); font-size: 11px;">15</button>
+          <button class="q2w-control__btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Measure</div><div class="cs-card__tag">.q2w-measure</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-measure">
+          <div class="q2w-measure__header">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+            <div class="q2w-measure__title">Measure</div>
+          </div>
+          <div class="q2w-measure__modes">
+            <div class="q2w-measure__mode q2w-measure__mode--active">Distance</div>
+            <div class="q2w-measure__mode">Area</div>
+          </div>
+          <div class="q2w-measure__readout">
+            <div class="q2w-measure__readout-row"><span>Total</span><strong>4.82 km</strong></div>
+            <div class="q2w-measure__readout-row"><span>Last segment</span><span>820 m</span></div>
+            <div class="q2w-measure__readout-row"><span>Bearing</span><span>137°</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cs-card" id="print">
+      <div class="cs-card__head"><div class="cs-card__title">Print / export</div><div class="cs-card__tag">.q2w-print</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-print">
+          <div class="q2w-print__header">Export map</div>
+          <div class="q2w-print__row"><span>Format</span><select><option>PNG</option><option>PDF</option><option>GeoJSON</option></select></div>
+          <div class="q2w-print__row"><span>Size</span><select><option>A4</option><option>A3</option><option>Custom</option></select></div>
+          <div class="q2w-print__row"><span>Include legend</span><span class="q2w-layer__check q2w-layer__check--on">✓</span></div>
+          <div class="q2w-print__footer">
+            <button class="q2w-btn q2w-btn--primary">Download</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Basemap ============ -->
+<section class="cs-section" id="basemap">
+  <div class="cs-section__head">
+    <span class="cs-num">11</span>
+    <h2>Basemap switcher</h2>
+    <p>Thumbnails · uses pure CSS swatches; swap in real raster previews in production.</p>
+  </div>
+  <div class="cs-grid cs-grid--2">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Grid</div><div class="cs-card__tag">.q2w-basemap-grid</div></div>
+      <div class="cs-card__body" style="padding: 24px; align-items: stretch;">
+        <div class="q2w-panel" style="width: 100%;">
+          <div class="q2w-panel__header">Basemap</div>
+          <div class="q2w-panel__body">
+            <div class="q2w-basemap-grid">
+              <div class="q2w-basemap q2w-basemap--active"><div class="q2w-basemap__thumb q2w-bm-satellite"></div><div class="q2w-basemap__label">Esri Imagery</div></div>
+              <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-voyager"></div><div class="q2w-basemap__label">Carto Voyager</div></div>
+              <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-streets"></div><div class="q2w-basemap__label">OSM Streets</div></div>
+              <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-terrain"></div><div class="q2w-basemap__label">Terrain</div></div>
+              <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-light"></div><div class="q2w-basemap__label">Light</div></div>
+              <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-dark"></div><div class="q2w-basemap__label">Dark</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Markers &amp; clusters</div><div class="cs-card__tag">.q2w-marker / .q2w-cluster</div></div>
+      <div class="cs-card__body cs-card__body--map" style="gap: 28px;">
+        <div class="q2w-marker"></div>
+        <div class="q2w-marker" style="background: var(--q2w-danger);"></div>
+        <div class="q2w-marker" style="background: var(--q2w-success);"></div>
+        <div class="q2w-cluster">12</div>
+        <div class="q2w-cluster" style="width: 44px; height: 44px; font-size: 13px;">128</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Loading ============ -->
+<section class="cs-section" id="load">
+  <div class="cs-section__head">
+    <span class="cs-num">12</span>
+    <h2>Loading states</h2>
+    <p>Spinner, progress bar, skeleton.</p>
+  </div>
+  <div class="cs-grid cs-grid--3">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Spinner</div><div class="cs-card__tag">.q2w-spinner</div></div>
+      <div class="cs-card__body"><div class="q2w-spinner"></div></div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Loading bar</div><div class="cs-card__tag">.q2w-loadbar</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-loadbar"><div class="q2w-spinner"></div><span>Loading layer…</span><span class="cs-mono" style="margin-left:auto">62%</span></div>
+      </div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Skeleton</div><div class="cs-card__tag">.q2w-skeleton</div></div>
+      <div class="cs-card__body" style="padding: 24px; align-items: stretch; flex-direction: column; gap: 8px;">
+        <div class="q2w-skeleton" style="height: 14px; width: 60%;"></div>
+        <div class="q2w-skeleton" style="height: 10px; width: 90%;"></div>
+        <div class="q2w-skeleton" style="height: 10px; width: 80%;"></div>
+        <div class="q2w-skeleton" style="height: 10px; width: 65%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Tooltip ============ -->
+<section class="cs-section" id="tip">
+  <div class="cs-section__head">
+    <span class="cs-num">13</span>
+    <h2>Tooltip</h2>
+    <p>Hover labels for features.</p>
+  </div>
+  <div class="cs-card">
+    <div class="cs-card__body cs-card__body--map" style="gap: 24px;">
+      <div class="q2w-tooltip">Mekarjaya · 720k Rp/m²</div>
+      <div class="q2w-tooltip">Sungai Cisanggarung</div>
+      <div class="q2w-tooltip">SMA Negeri 3 · click for details</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Mobile ============ -->
+<section class="cs-section" id="mobile">
+  <div class="cs-section__head">
+    <span class="cs-num">14</span>
+    <h2>Mobile / bottom sheet</h2>
+    <p>Touch-first layout. Layer panel + popup collapse into a bottom sheet.</p>
+  </div>
+  <div class="cs-grid cs-grid--3">
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Bottom sheet · popup</div><div class="cs-card__tag">.q2w-sheet</div></div>
+      <div class="cs-card__body" style="padding: 16px; align-items: stretch;">
+        <div style="margin: 0 auto; width: 280px; height: 460px; border-radius: 28px; border: 8px solid var(--q2w-neutral-900); overflow: hidden; position: relative; background: linear-gradient(135deg, #5a7a5a 0%, #3d5a3d 100%);">
+          <div class="q2w-header q2w-header--minimal" style="position: absolute; top: 12px; left: 12px; right: 12px;">
+            <div class="q2w-header__title">Land Atlas</div>
+          </div>
+          <div class="q2w-sheet">
+            <div class="q2w-sheet__handle"></div>
+            <div class="q2w-sheet__title">Mekarjaya</div>
+            <div class="q2w-sheet__body">
+              <div class="q2w-attr" style="padding: 6px 0;"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">500k–1m</span></div>
+              <div class="q2w-attr" style="padding: 6px 0; border:0;"><span class="q2w-attr__key">year</span><span class="q2w-attr__val">2026</span></div>
+              <button class="q2w-btn q2w-btn--primary" style="width: 100%; justify-content: center; margin-top: 8px;">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Bottom sheet · layers</div><div class="cs-card__tag">peek state</div></div>
+      <div class="cs-card__body" style="padding: 16px; align-items: stretch;">
+        <div style="margin: 0 auto; width: 280px; height: 460px; border-radius: 28px; border: 8px solid var(--q2w-neutral-900); overflow: hidden; position: relative; background: linear-gradient(135deg, #5a7a5a 0%, #3d5a3d 100%);">
+          <div class="q2w-toolbar" style="position: absolute; top: 12px; right: 12px;">
+            <div class="q2w-control"><button class="q2w-control__btn">+</button><button class="q2w-control__btn">−</button></div>
+          </div>
+          <div class="q2w-sheet" style="bottom: 0; left: 0; right: 0; border-radius: 18px 18px 0 0; padding-bottom: 24px;">
+            <div class="q2w-sheet__handle"></div>
+            <div class="q2w-sheet__title">Layers</div>
+            <div class="q2w-sheet__body">
+              <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value</span><span class="q2w-layer__opacity">90%</span></div>
+              <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
+              <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Rivers</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Mobile chrome</div><div class="cs-card__tag">FAB controls</div></div>
+      <div class="cs-card__body" style="padding: 16px; align-items: stretch;">
+        <div style="margin: 0 auto; width: 280px; height: 460px; border-radius: 28px; border: 8px solid var(--q2w-neutral-900); overflow: hidden; position: relative; background: radial-gradient(circle at 30% 40%, #f0c060 0 14%, transparent 16%), radial-gradient(circle at 60% 60%, #c4302a 0 18%, transparent 20%), linear-gradient(135deg, #5a7a5a 0%, #3d5a3d 100%);">
+          <div class="q2w-header q2w-header--bar" style="position: absolute; top: 0; left: 0; right: 0; height: 44px;">
+            <div class="q2w-header__title" style="font-size: 13px;">Land Atlas</div>
+            <div class="q2w-header__actions"><button class="q2w-btn q2w-btn--ghost q2w-btn--icon">≡</button></div>
+          </div>
+          <button class="q2w-btn q2w-btn--primary" style="position: absolute; right: 12px; bottom: 12px; border-radius: 50%; width: 48px; height: 48px; padding: 0; justify-content: center; box-shadow: var(--q2w-shadow-md);">
+            <svg class="ic ic-lg" viewBox="0 0 24 24" style="stroke: white;"><polygon points="12,3 21,8 12,13 3,8"/><polyline points="3,12 12,17 21,12"/></svg>
+          </button>
+          <div class="q2w-search" style="position: absolute; left: 12px; right: 70px; top: 56px; width: auto;">
+            <svg class="ic q2w-search__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input placeholder="Search…" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Phase 2 ============ -->
+<section class="cs-section" id="phase2">
+  <div class="cs-section__head">
+    <span class="cs-num">15</span>
+    <h2>Phase 2 components</h2>
+    <p>Power-user controls common in production WebGIS deployments.</p>
+  </div>
+
+  <div class="cs-grid cs-grid--3">
+
+    <!-- Layer with opacity slider -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Layer · opacity slider</div><div class="cs-card__tag">.q2w-slider</div></div>
+      <div class="cs-card__body" style="padding: 20px;">
+        <div class="q2w-panel" style="width: 260px;">
+          <div class="q2w-panel__header"><span>Layers</span></div>
+          <div class="q2w-panel__body">
+            <div class="q2w-layer">
+              <span class="q2w-layer__handle">⋮⋮</span>
+              <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+              <span class="q2w-layer__name">Land value</span>
+              <span class="q2w-layer__opacity">90%</span>
+            </div>
+            <div class="q2w-layer__expand">
+              <div class="q2w-slider">
+                <span style="font-size:10px; color: var(--q2w-text-faint)">opacity</span>
+                <div class="q2w-slider__track">
+                  <div class="q2w-slider__fill" style="width: 90%;"></div>
+                  <div class="q2w-slider__thumb" style="left: 90%;"></div>
+                </div>
+                <span class="q2w-slider__val">90</span>
+              </div>
+            </div>
+            <div class="q2w-layer">
+              <span class="q2w-layer__handle">⋮⋮</span>
+              <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+              <span class="q2w-layer__name">Roads</span>
+              <span class="q2w-layer__opacity">100%</span>
+            </div>
+            <div class="q2w-layer">
+              <span class="q2w-layer__handle">⋮⋮</span>
+              <span class="q2w-layer__check"></span>
+              <span class="q2w-layer__name">Rivers</span>
+              <span class="q2w-layer__opacity">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share modal -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Share modal</div><div class="cs-card__tag">.q2w-share</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 16px;">
+        <div class="q2w-modal q2w-share">
+          <div class="q2w-modal__header">
+            <div>
+              <div class="q2w-modal__title">Share map</div>
+              <div class="q2w-modal__sub">Current view · zoom 13</div>
+            </div>
+            <button class="q2w-btn q2w-btn--ghost q2w-btn--icon q2w-modal__close">×</button>
+          </div>
+          <div class="q2w-share__tabs">
+            <div class="q2w-tab q2w-tab--active">Link</div>
+            <div class="q2w-tab">Embed</div>
+            <div class="q2w-tab">Download</div>
+          </div>
+          <div class="q2w-modal__body">
+            <div class="q2w-share__field">
+              <code>https://map.cirebon.id/#15/-7.7868/108.4714</code>
+              <button class="q2w-btn q2w-btn--ghost">Copy</button>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center; margin-top: 12px; font-size: 11px; color: var(--q2w-text-muted);">
+              <label style="display:flex; gap: 6px; align-items: center;"><span class="q2w-layer__check q2w-layer__check--on">✓</span> Include layer state</label>
+              <label style="display:flex; gap: 6px; align-items: center;"><span class="q2w-layer__check"></span> Include popup</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Geolocate + Compass -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Geolocate &amp; compass</div><div class="cs-card__tag">.q2w-compass</div></div>
+      <div class="cs-card__body" style="padding: 24px; gap: 18px;">
+        <div class="q2w-control">
+          <button class="q2w-control__btn" title="Geolocate">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+          </button>
+        </div>
+        <div class="q2w-compass">
+          <span class="q2w-compass__n">N</span>
+          <div class="q2w-compass__needle"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inset minimap -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Inset minimap</div><div class="cs-card__tag">.q2w-minimap</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-minimap">
+          <div class="q2w-minimap__tiles"></div>
+          <div class="q2w-minimap__viewport" style="left: 35%; top: 30%; width: 40%; height: 38%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick-info card -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Hover quick-info</div><div class="cs-card__tag">.q2w-quick</div></div>
+      <div class="cs-card__body cs-card__body--map" style="padding: 24px;">
+        <div class="q2w-quick">
+          <div class="q2w-quick__title">Mekarjaya</div>
+          <div class="q2w-quick__sub">ZNT-021 · zone</div>
+          <div class="q2w-quick__row"><span>value</span><span>720k</span></div>
+          <div class="q2w-quick__row"><span>area</span><span>2.4 ha</span></div>
+          <div class="q2w-quick__row" style="margin-top: 4px; padding-top: 6px; border-top: 1px dashed var(--q2w-border);"><span style="color: var(--q2w-accent) !important; font-family: inherit !important;">click for details →</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Toast notifications</div><div class="cs-card__tag">.q2w-toast</div></div>
+      <div class="cs-card__body" style="padding: 20px; flex-direction: column; align-items: stretch; gap: 8px;">
+        <div class="q2w-toast q2w-toast--success">
+          <div class="q2w-toast__icon">✓</div>
+          <div>
+            <div class="q2w-toast__title">Layer loaded</div>
+            <div class="q2w-toast__msg">znt_polygons · 1,284 features</div>
+          </div>
+          <button class="q2w-toast__close">×</button>
+        </div>
+        <div class="q2w-toast q2w-toast--warning">
+          <div class="q2w-toast__icon">!</div>
+          <div>
+            <div class="q2w-toast__title">Slow connection</div>
+            <div class="q2w-toast__msg">Tiles may take longer to load.</div>
+          </div>
+          <button class="q2w-toast__close">×</button>
+        </div>
+        <div class="q2w-toast q2w-toast--error">
+          <div class="q2w-toast__icon">✕</div>
+          <div>
+            <div class="q2w-toast__title">Export failed</div>
+            <div class="q2w-toast__msg">Try a smaller paper size.</div>
+          </div>
+          <button class="q2w-toast__close">×</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawing toolbar -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Drawing tools</div><div class="cs-card__tag">.q2w-draw</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-draw">
+          <button class="q2w-draw__btn q2w-draw__btn--active" title="Point">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+          </button>
+          <button class="q2w-draw__btn" title="Line">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 18l16-12"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/><circle cx="20" cy="6" r="1.5" fill="currentColor"/></svg>
+          </button>
+          <button class="q2w-draw__btn" title="Polygon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><polygon points="4,8 12,3 20,8 17,20 7,20"/></svg>
+          </button>
+          <button class="q2w-draw__btn" title="Rectangle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="6" width="16" height="12" rx="1"/></svg>
+          </button>
+          <div class="q2w-draw__sep"></div>
+          <button class="q2w-draw__btn" title="Edit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 20h4l10-10-4-4L4 16v4z"/></svg>
+          </button>
+          <button class="q2w-draw__btn" title="Delete">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 7h14M9 7v12M15 7v12M7 7l1-3h8l1 3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coordinate go-to -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Go-to coordinates</div><div class="cs-card__tag">.q2w-goto</div></div>
+      <div class="cs-card__body" style="padding: 24px;">
+        <div class="q2w-goto">
+          <input value="-7.7868" />
+          <span class="cs-mono">,</span>
+          <input value="108.4714" />
+          <button class="q2w-btn q2w-btn--primary">Go</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter / query builder -->
+    <div class="cs-card">
+      <div class="cs-card__head"><div class="cs-card__title">Filter / query</div><div class="cs-card__tag">.q2w-filter</div></div>
+      <div class="cs-card__body" style="padding: 16px;">
+        <div class="q2w-panel q2w-filter">
+          <div class="q2w-panel__header"><span>Filter · Land value</span></div>
+          <div>
+            <div class="q2w-filter__rule">
+              <select><option>value_idr</option><option>area_m2</option><option>year</option></select>
+              <span class="q2w-filter__op">≥</span>
+              <input style="width: 80px;" value="500000" />
+            </div>
+            <div class="q2w-filter__rule">
+              <span class="q2w-filter__op">AND</span>
+              <select><option>year</option></select>
+              <span class="q2w-filter__op">=</span>
+              <input style="width: 60px;" value="2026" />
+            </div>
+            <div style="padding: 10px 12px; display: flex; gap: 6px; background: var(--q2w-surface-soft); border-top: 1px solid var(--q2w-border);">
+              <button class="q2w-btn" style="flex: 1; justify-content: center;">+ Rule</button>
+              <button class="q2w-btn q2w-btn--primary" style="flex: 1; justify-content: center;">Apply · 412</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Compare slider full row -->
+  <div class="cs-section__head" style="margin-top: 36px;">
+    <span class="cs-num">15.b</span>
+    <h2 style="font-size: 16px;">Compare swipe</h2>
+    <p>Reveal a second layer beneath the first.</p>
+  </div>
+  <div class="cs-stage" style="height: 320px;">
+    <!-- left layer (2020) -->
+    <div style="position: absolute; inset: 0; clip-path: inset(0 50% 0 0); background:
+      linear-gradient(135deg, #abd9e9 0%, #ffffbf 50%, #fdae61 100%);"></div>
+    <!-- right layer (2026) -->
+    <div style="position: absolute; inset: 0; clip-path: inset(0 0 0 50%); background:
+      linear-gradient(135deg, #fee08b 0%, #f46d43 50%, #d73027 100%);"></div>
+
+    <div class="q2w-compare__label" style="left: 12px; top: 12px;">2020</div>
+    <div class="q2w-compare__label" style="right: 12px; top: 12px;">2026</div>
+    <div class="q2w-compare__divider" style="left: 50%;"></div>
+    <div class="q2w-compare__handle" style="left: 50%;">⇆</div>
+  </div>
+
+</section>
+
+<!-- ============ Examples link ============ -->
+<section class="cs-section" id="examples">
+  <div class="cs-section__head">
+    <span class="cs-num">15</span>
+    <h2>Example map compositions</h2>
+    <p>Full-page mockups using the kit. Click to open.</p>
+  </div>
+  <div class="cs-grid cs-grid--2">
+    <a class="cs-card" href="examples/choropleth.html" style="text-decoration: none; color: inherit;">
+      <div class="cs-card__head"><div class="cs-card__title">Choropleth · land value</div><div class="cs-card__tag">examples/choropleth.html</div></div>
+      <div class="cs-card__body cs-stage--map" style="padding: 0; min-height: 220px; position: relative;">
+        <div class="q2w-header" style="position: absolute; top: 12px; left: 12px; right: 200px; height: 44px;">
+          <div class="q2w-header__brand"><div class="q2w-header__logo">q2</div><div class="q2w-header__title">Land Value</div></div>
+        </div>
+        <div class="q2w-minilegend" style="position: absolute; right: 12px; bottom: 12px; width: 160px;"><div class="q2w-minilegend__title">value</div><div class="q2w-grad"></div></div>
+      </div>
+    </a>
+    <a class="cs-card" href="examples/poi.html" style="text-decoration: none; color: inherit;">
+      <div class="cs-card__head"><div class="cs-card__title">POI · markers + clusters</div><div class="cs-card__tag">examples/poi.html</div></div>
+      <div class="cs-card__body cs-stage--map" style="padding: 0; min-height: 220px; position: relative;">
+        <div class="q2w-cluster" style="position:absolute; top: 60px; left: 80px;">12</div>
+        <div class="q2w-cluster" style="position:absolute; top: 130px; left: 200px;">8</div>
+        <div class="q2w-marker" style="position: absolute; top: 80px; left: 280px;"></div>
+      </div>
+    </a>
+    <a class="cs-card" href="examples/heatmap.html" style="text-decoration: none; color: inherit;">
+      <div class="cs-card__head"><div class="cs-card__title">Heatmap</div><div class="cs-card__tag">examples/heatmap.html</div></div>
+      <div class="cs-card__body" style="padding: 0; min-height: 220px; background: radial-gradient(circle at 40% 40%, #d7191c 0 8%, transparent 14%), radial-gradient(circle at 55% 50%, #fdae61 0 16%, transparent 24%), radial-gradient(circle at 50% 50%, #ffffbf 0 30%, transparent 40%), linear-gradient(135deg, #1f2e3a 0%, #15212c 100%);"></div>
+    </a>
+    <a class="cs-card" href="examples/dashboard.html" style="text-decoration: none; color: inherit;">
+      <div class="cs-card__head"><div class="cs-card__title">Dashboard · map + sidebar</div><div class="cs-card__tag">examples/dashboard.html</div></div>
+      <div class="cs-card__body cs-stage--map" style="padding: 0; min-height: 220px; position: relative;">
+        <div class="q2w-sidebar" style="position: absolute; top: 12px; bottom: 12px; left: 12px; width: 140px;">
+          <div class="q2w-sidebar__header"><div class="q2w-sidebar__title" style="font-size: 12px;">Stats</div></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer style="padding: 32px 24px 64px; text-align: center; color: var(--q2w-text-faint); font-size: 12px;">
+  <div class="cs-mono">q2w-mapcss · v0.1</div>
+  <div style="margin-top: 4px;">Drop on top of any qgis2web export. <a href="examples/choropleth.html" class="cs-link">See the live example →</a></div>
+</footer>
+
+<script>
+  // Theme switching
+  const root = document.documentElement;
+  document.querySelectorAll('.cs-theme-dot').forEach(d => {
+    d.addEventListener('click', () => {
+      const t = d.dataset.theme;
+      if (t) root.setAttribute('data-theme', t);
+      else root.removeAttribute('data-theme');
+      document.querySelectorAll('.cs-theme-dot').forEach(x => x.classList.toggle('active', x === d));
+    });
+  });
+
+  // Smooth scroll for nav
+  document.querySelectorAll('.cs-nav__links a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      const t = document.querySelector(id);
+      if (!t) return;
+      e.preventDefault();
+      window.scrollTo({ top: t.offsetTop - 60, behavior: 'smooth' });
+      document.querySelectorAll('.cs-nav__links a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+</script>

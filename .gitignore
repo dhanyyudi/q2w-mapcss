@@ -5,4 +5,9 @@
 .DS_Store
 AGENTS.md
 docs/audit.md
+docs/audit-2.md
 npm-debug.log*
+/.superpowers/
+/.pi/
+.eleventy-cache/
+/.cache/

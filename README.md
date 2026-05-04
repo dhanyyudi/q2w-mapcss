@@ -66,6 +66,28 @@ You can also override tokens directly:
 }
 ```
 
+## Icons
+
+`q2w-mapcss` is icon-agnostic — no icon library is bundled. Use any SVG icon set you prefer.
+
+The docs site uses [Lucide](https://lucide.dev) (MIT). To use Lucide in your own project:
+
+```html
+<!-- Option A: inline SVG (recommended — no CDN, no request) -->
+<!-- Copy the SVG directly from lucide.dev into your HTML -->
+<button class="q2w-btn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" ...>...</svg>
+  Open layers
+</button>
+
+<!-- Option B: Lucide CDN script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<i data-lucide="layers"></i>
+<script>lucide.createIcons();</script>
+```
+
+All q2w-mapcss components accept any icon as a child element.
+
 ## Development
 
 ```bash

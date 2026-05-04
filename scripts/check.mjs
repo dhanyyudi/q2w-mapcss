@@ -1,10 +1,11 @@
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const required = [
+  "eleventy.config.js",
   "dist/q2w-mapcss.css",
   "dist/q2w-mapcss.min.css",
   "dist/q2w-leaflet.css",
@@ -13,6 +14,8 @@ const required = [
   "dist/q2w-mapcss.showcase.css",
   "site/index.html",
   "site/docs.html",
+  "site/_headers",
+  "site/_redirects",
   "site/dist/q2w-mapcss.css",
   "site/examples/choropleth.html",
   "site/examples/dashboard.html",
@@ -62,6 +65,27 @@ if (leafletCss.includes("body.q2w-qgis2web")) {
 const example = readFileSync(join(root, "site/examples/choropleth.html"), "utf8");
 if (!example.includes("../dist/q2w-mapcss.css")) {
   console.error("Example pages must consume the hosted dist CSS.");
+  process.exit(1);
+}
+
+function walk(dir) {
+  const entries = readdirSync(dir, { withFileTypes: true });
+  return entries.flatMap((entry) => {
+    const path = join(dir, entry.name);
+    return entry.isDirectory() ? walk(path) : [path];
+  });
+}
+
+const sourceFiles = walk(join(root, "src/site")).filter((path) => /\.(html|njk)$/.test(path));
+const legacyRefs = [];
+for (const file of sourceFiles) {
+  const content = readFileSync(file, "utf8");
+  if (content.includes("assets/tokens.css") || content.includes("assets/q2w.css")) {
+    legacyRefs.push(file.replace(`${root}/`, ""));
+  }
+}
+if (legacyRefs.length) {
+  console.error(`Source site files still reference legacy asset paths:\n${legacyRefs.join("\n")}`);
   process.exit(1);
 }
 
