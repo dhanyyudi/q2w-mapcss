@@ -7,48 +7,52 @@ permalink: "/docs/button.html"
 
 <span class="doc-tag">.q2w-btn</span>
 <h1 class="doc-h1">Button</h1>
-<p class="doc-lead">Action buttons with primary, ghost, pill, icon, disabled, and loading states.</p>
-
-<section class="doc-section">
-  <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/button.njk" %}
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-btn&quot;&gt;
-  Button content
-&lt;/div&gt;</pre>
-  </div>
-</section>
+<p class="doc-lead">Action buttons with primary, ghost, pill, icon, disabled, loading, and SIPETA-inspired floating help states.</p>
 
 <section class="doc-section">
   <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-btn</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-btn--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-btn--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Core button set</h3>
+  <div class="doc-preview" style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start; min-height:160px;">
+    <button class="q2w-btn">Default</button>
+    <button class="q2w-btn q2w-btn--primary">Primary</button>
+    <button class="q2w-btn q2w-btn--ghost">Ghost</button>
+    <button class="q2w-btn q2w-btn--icon">+</button>
+    <button class="q2w-btn q2w-btn--pill">Pill button</button>
+    <button class="q2w-btn" disabled>Disabled</button>
+    <button class="q2w-btn q2w-btn--primary q2w-btn--loading">Loading</button>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;button class="q2w-btn"&gt;Default&lt;/button&gt;
+&lt;button class="q2w-btn q2w-btn--primary"&gt;Primary&lt;/button&gt;
+&lt;button class="q2w-btn q2w-btn--ghost"&gt;Ghost&lt;/button&gt;
+&lt;button class="q2w-btn q2w-btn--icon"&gt;+&lt;/button&gt;
+&lt;button class="q2w-btn q2w-btn--pill"&gt;Pill button&lt;/button&gt;
+&lt;button class="q2w-btn" disabled&gt;Disabled&lt;/button&gt;
+&lt;button class="q2w-btn q2w-btn--primary q2w-btn--loading"&gt;Loading&lt;/button&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">.q2w-btn--help</h3>
+  <div class="doc-preview" style="min-height:180px; overflow:hidden;">
+    <div style="position:relative; width:100%; height:160px;">
+      <button class="q2w-btn q2w-btn--help" style="position:absolute; top:16px; right:16px;">
+        <span class="q2w-btn__badge">i</span>
+        Help
+      </button>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;button class="q2w-btn q2w-btn--help"&gt;
+  &lt;span class="q2w-btn__badge"&gt;i&lt;/span&gt;
+  Help
+&lt;/button&gt;</pre></div>
 </section>
 
 <section class="doc-section">
-  <h2>Sub-elements</h2>
+  <h2>Notes</h2>
   <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
+    <thead><tr><th>Pattern</th><th>Usage</th></tr></thead>
     <tbody>
-      <tr><td><code>.q2w-btn</code></td><td>Root element for the button component</td></tr>
-      <tr><td><code>.q2w-btn__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-btn__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-btn__actions</code></td><td>Optional action group</td></tr>
+      <tr><td><code>.q2w-btn--primary</code></td><td>Use for the most important action in a panel, modal, or popup footer.</td></tr>
+      <tr><td><code>.q2w-btn--loading</code></td><td>Use during async operations; text becomes hidden and spinner is injected with CSS.</td></tr>
+      <tr><td><code>.q2w-btn--help</code></td><td>Use for a fixed help launcher in public-facing exports.</td></tr>
     </tbody>
   </table>
 </section>

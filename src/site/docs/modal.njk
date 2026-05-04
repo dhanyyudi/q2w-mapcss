@@ -10,47 +10,34 @@ permalink: "/docs/modal.html"
 <p class="doc-lead">Welcome, help, and onboarding overlays for map users.</p>
 
 <section class="doc-section">
-  <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/modal.njk" %}
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-modal&quot;&gt;
-  Modal content
-&lt;/div&gt;</pre>
-  </div>
-</section>
-
-<section class="doc-section">
   <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-modal</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-modal--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-modal--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
 
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-modal</code></td><td>Root element for the modal component</td></tr>
-      <tr><td><code>.q2w-modal__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-modal__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-modal__actions</code></td><td>Optional action group</td></tr>
-    </tbody>
-  </table>
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Standard modal</h3>
+  <div class="doc-preview" style="overflow:hidden; min-height:260px;">
+    <div class="q2w-modal-backdrop" style="position:absolute; inset:0;"></div>
+    <div class="q2w-modal" style="position:absolute; inset:32px auto auto 50%; transform:translateX(-50%); width:min(420px, calc(100% - 32px));">
+      <div class="q2w-modal__header"><div><div class="q2w-modal__title">Map help</div><div class="q2w-modal__sub">Quick instructions for first-time users</div></div><button class="q2w-modal__close">×</button></div>
+      <div class="q2w-modal__body"><p><strong>Tip:</strong> Use the layer panel to switch valuation classes and basemaps.</p><p>All content remains plain HTML, so it can be injected into exported qgis2web pages without a build tool.</p></div>
+      <div class="q2w-modal__footer"><button class="q2w-btn q2w-btn--primary">Got it</button></div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-modal-backdrop"&gt;&lt;/div&gt;
+&lt;div class="q2w-modal"&gt;...&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Welcome splash</h3>
+  <div class="doc-preview" style="overflow:hidden; min-height:280px;">
+    <div class="q2w-modal-backdrop" style="position:absolute; inset:0;"></div>
+    <div class="q2w-modal" style="position:absolute; inset:20px auto auto 50%; transform:translateX(-50%); width:min(460px, calc(100% - 32px));">
+      <div class="q2w-modal__header"><div><div class="q2w-modal__title">Welcome to the valuation atlas</div><div class="q2w-modal__sub">SIPETA-style onboarding panel</div></div><button class="q2w-modal__close">×</button></div>
+      <div class="q2w-modal__body"><p><strong>Explore:</strong> Search parcels, inspect popup records, and compare zone values across districts.</p><p>This uses the same core modal shell with richer copy and a prominent primary action.</p></div>
+      <div class="q2w-modal__footer"><button class="q2w-btn q2w-btn--primary">Start exploring</button></div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-modal"&gt;
+  &lt;div class="q2w-modal__header"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-modal__body"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-modal__footer"&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">

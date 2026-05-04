@@ -7,37 +7,70 @@ permalink: "/docs/layer.html"
 
 <span class="doc-tag">.q2w-panel</span>
 <h1 class="doc-h1">Layer panel</h1>
-<p class="doc-lead">Layer stack container for toggles, sublayers, opacity, and legends.</p>
-
-<section class="doc-section">
-  <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/layer.njk" %}
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-panel&quot;&gt;
-  Layer panel content
-&lt;/div&gt;</pre>
-  </div>
-</section>
+<p class="doc-lead">Layer stack container for toggles, grouped sections, collapsible lists, sublayers, opacity hints, and legend rows.</p>
 
 <section class="doc-section">
   <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-panel</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-panel--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-panel--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Default panel</h3>
+  <div class="doc-preview">
+    <div class="q2w-panel">
+      <div class="q2w-panel__header">Layers <button class="q2w-btn q2w-btn--icon q2w-panel__close">×</button></div>
+      <div class="q2w-panel__body">
+        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Zona nilai tanah</span><span class="q2w-layer__opacity">100%</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background:#fbb04c"></span>Residential band</div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background:#d83a2c"></span>Commercial band</div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-panel"&gt;...&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Sectioned panel</h3>
+  <div class="doc-preview">
+    <div class="q2w-panel">
+      <div class="q2w-panel__header">Map overlays</div>
+      <div class="q2w-panel__body">
+        <div class="q2w-panel__section">
+          <div class="q2w-panel__section-title">Base layers</div>
+          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">OSM standard</span></div>
+        </div>
+        <div class="q2w-panel__section">
+          <div class="q2w-panel__section-title">Operational layers</div>
+          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Parcels</span></div>
+          <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Flood zones</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-panel__section"&gt;
+  &lt;div class="q2w-panel__section-title"&gt;Operational layers&lt;/div&gt;
+  ...
+&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Collapsible panel</h3>
+  <div class="doc-preview">
+    <div class="q2w-panel">
+      <div class="q2w-panel__header q2w-panel__header--collapsible">Layer groups <span class="q2w-panel__chevron">▾</span></div>
+      <div class="q2w-panel__body">
+        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">ZNT polygons</span></div>
+        <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Boundary labels</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-panel__header q2w-panel__header--collapsible"&gt;
+  Layer groups &lt;span class="q2w-panel__chevron"&gt;▾&lt;/span&gt;
+&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Collapsed state</h3>
+  <div class="doc-preview">
+    <div class="q2w-panel is-collapsed">
+      <div class="q2w-panel__header q2w-panel__header--collapsible">Layer groups <span class="q2w-panel__chevron">▾</span></div>
+      <div class="q2w-panel__body">
+        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Hidden by collapsed state</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-panel is-collapsed"&gt;...&lt;/div&gt;</pre></div>
 </section>
 
 <section class="doc-section">
@@ -45,10 +78,12 @@ permalink: "/docs/layer.html"
   <table class="doc-table">
     <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
     <tbody>
-      <tr><td><code>.q2w-panel</code></td><td>Root element for the layer panel component</td></tr>
-      <tr><td><code>.q2w-panel__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-panel__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-panel__actions</code></td><td>Optional action group</td></tr>
+      <tr><td><code>.q2w-panel</code></td><td>Root shell for the panel</td></tr>
+      <tr><td><code>.q2w-panel__header</code></td><td>Panel title row</td></tr>
+      <tr><td><code>.q2w-panel__header--collapsible</code></td><td>Interactive collapse header style</td></tr>
+      <tr><td><code>.q2w-panel__body</code></td><td>Scrollable panel contents</td></tr>
+      <tr><td><code>.q2w-panel__section-title</code></td><td>Grouped subsection label</td></tr>
+      <tr><td><code>.is-collapsed</code></td><td>State class that hides the body and rotates the chevron</td></tr>
     </tbody>
   </table>
 </section>

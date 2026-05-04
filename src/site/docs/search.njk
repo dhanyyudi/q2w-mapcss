@@ -10,47 +10,30 @@ permalink: "/docs/search.html"
 <p class="doc-lead">Search field for geocoding, feature lookup, and layer filtering.</p>
 
 <section class="doc-section">
-  <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/search.njk" %}
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-search&quot;&gt;
-  Search content
-&lt;/div&gt;</pre>
-  </div>
-</section>
-
-<section class="doc-section">
   <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-search</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-search--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-search--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
 
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-search</code></td><td>Root element for the search component</td></tr>
-      <tr><td><code>.q2w-search__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-search__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-search__actions</code></td><td>Optional action group</td></tr>
-    </tbody>
-  </table>
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Idle search</h3>
+  <div class="doc-preview">
+    <div class="q2w-search"><span class="q2w-search__icon">⌕</span><input placeholder="Search parcel, street, or zone" /></div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-search"&gt;
+  &lt;span class="q2w-search__icon"&gt;⌕&lt;/span&gt;
+  &lt;input placeholder="Search parcel, street, or zone" /&gt;
+&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Active search with results</h3>
+  <div class="doc-preview" style="min-height:260px; align-items:start; padding-top:48px;">
+    <div class="q2w-search"><span class="q2w-search__icon">⌕</span><input value="Zone B" />
+      <div class="q2w-search__results">
+        <div class="q2w-search__item">Zone B-01 <small>NIR 1.250.000 / m²</small></div>
+        <div class="q2w-search__item">Zone B-02 <small>NIR 1.480.000 / m²</small></div>
+        <div class="q2w-search__item">Boundary B <small>Administrative line</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-search__results"&gt;
+  &lt;div class="q2w-search__item"&gt;Zone B-01 &lt;small&gt;NIR 1.250.000 / m²&lt;/small&gt;&lt;/div&gt;
+&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">

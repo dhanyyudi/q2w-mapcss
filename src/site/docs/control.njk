@@ -10,34 +10,35 @@ permalink: "/docs/control.html"
 <p class="doc-lead">Reusable map control buttons for zoom, reset, locate, and tools.</p>
 
 <section class="doc-section">
-  <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/control.njk" %}
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-control&quot;&gt;
-  Map control content
-&lt;/div&gt;</pre>
-  </div>
-</section>
-
-<section class="doc-section">
   <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-control</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-control--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-control--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Stacked vertical control</h3>
+  <div class="doc-preview">
+    <div class="q2w-control">
+      <button class="q2w-control__btn">+</button>
+      <button class="q2w-control__btn">−</button>
+      <button class="q2w-control__btn">⌂</button>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-control"&gt;
+  &lt;button class="q2w-control__btn"&gt;+&lt;/button&gt;
+  &lt;button class="q2w-control__btn"&gt;−&lt;/button&gt;
+  &lt;button class="q2w-control__btn"&gt;⌂&lt;/button&gt;
+&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">.q2w-control--rounded</h3>
+  <div class="doc-preview">
+    <div class="q2w-control q2w-control--rounded" style="display:flex;">
+      <button class="q2w-control__btn">+</button>
+      <button class="q2w-control__btn">−</button>
+      <button class="q2w-control__btn">⌖</button>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-control q2w-control--rounded" style="display:flex;"&gt;
+  &lt;button class="q2w-control__btn"&gt;+&lt;/button&gt;
+  &lt;button class="q2w-control__btn"&gt;−&lt;/button&gt;
+  &lt;button class="q2w-control__btn"&gt;⌖&lt;/button&gt;
+&lt;/div&gt;</pre></div>
 </section>
 
 <section class="doc-section">
@@ -45,10 +46,9 @@ permalink: "/docs/control.html"
   <table class="doc-table">
     <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
     <tbody>
-      <tr><td><code>.q2w-control</code></td><td>Root element for the map control component</td></tr>
-      <tr><td><code>.q2w-control__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-control__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-control__actions</code></td><td>Optional action group</td></tr>
+      <tr><td><code>.q2w-control</code></td><td>Root control group shell</td></tr>
+      <tr><td><code>.q2w-control__btn</code></td><td>Individual map control action button</td></tr>
+      <tr><td><code>.q2w-control--rounded</code></td><td>Rounded pill-style control group</td></tr>
     </tbody>
   </table>
 </section>

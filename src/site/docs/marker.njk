@@ -10,47 +10,13 @@ permalink: "/docs/marker.html"
 <p class="doc-lead">Point symbols and cluster bubbles for dense POI layers.</p>
 
 <section class="doc-section">
-  <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/marker.njk" %}
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-marker&quot;&gt;
-  Marker &amp; cluster content
-&lt;/div&gt;</pre>
-  </div>
-</section>
-
-<section class="doc-section">
   <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-marker</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-marker--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-marker--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-marker</code></td><td>Root element for the marker & cluster component</td></tr>
-      <tr><td><code>.q2w-marker__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-marker__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-marker__actions</code></td><td>Optional action group</td></tr>
-    </tbody>
-  </table>
+  <div class="doc-preview" style="display:flex; gap:48px; align-items:center;">
+    <div style="text-align:center;"><div class="q2w-marker"></div><div class="q2w-legend-label" style="margin-top:12px;">Single marker</div></div>
+    <div style="text-align:center;"><div class="q2w-cluster">42</div><div class="q2w-legend-label" style="margin-top:12px;">Cluster count</div></div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-marker"&gt;&lt;/div&gt;
+&lt;div class="q2w-cluster"&gt;42&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">

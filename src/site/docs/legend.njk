@@ -7,50 +7,56 @@ permalink: "/docs/legend.html"
 
 <span class="doc-tag">.q2w-grad</span>
 <h1 class="doc-h1">Legend</h1>
-<p class="doc-lead">Categorical, sequential, and diverging legends for thematic maps.</p>
-
-<section class="doc-section">
-  <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
-    {% include "previews/legend.njk" %}
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-grad&quot;&gt;
-  Legend content
-&lt;/div&gt;</pre>
-  </div>
-</section>
+<p class="doc-lead">Categorical, sequential, diverging, line, and point-symbol legends for thematic WebGIS maps.</p>
 
 <section class="doc-section">
   <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-grad</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-grad--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-grad--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
 
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-grad</code></td><td>Root element for the legend component</td></tr>
-      <tr><td><code>.q2w-grad__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-grad__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-grad__actions</code></td><td>Optional action group</td></tr>
-    </tbody>
-  </table>
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Categorical swatches</h3>
+  <div class="doc-preview">
+    <div class="q2w-minilegend">
+      <div class="q2w-minilegend__title">Land use</div>
+      <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background:var(--q2w-qual-1)"></span>Residential</div>
+      <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background:var(--q2w-qual-2)"></span>Commercial</div>
+      <div class="q2w-legend-row"><span class="q2w-legend-swatch" style="background:var(--q2w-qual-3)"></span>Green space</div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-legend-row"&gt;
+  &lt;span class="q2w-legend-swatch"&gt;&lt;/span&gt; Residential
+&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Sequential gradient</h3>
+  <div class="doc-preview">
+    <div class="q2w-minilegend">
+      <div class="q2w-minilegend__title">NIR value</div>
+      <div class="q2w-grad"></div>
+      <div class="q2w-grad__labels"><span>Low</span><span>High</span></div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-grad"&gt;&lt;/div&gt;
+&lt;div class="q2w-grad__labels"&gt;&lt;span&gt;Low&lt;/span&gt;&lt;span&gt;High&lt;/span&gt;&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Diverging scale</h3>
+  <div class="doc-preview">
+    <div class="q2w-minilegend">
+      <div class="q2w-minilegend__title">Change index</div>
+      <div class="q2w-grad" style="background:linear-gradient(90deg,var(--q2w-div-1),var(--q2w-div-2),var(--q2w-div-3),var(--q2w-div-4),var(--q2w-div-5));"></div>
+      <div class="q2w-grad__labels"><span>-</span><span>0</span><span>+</span></div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-grad" style="background:linear-gradient(90deg,var(--q2w-div-1),var(--q2w-div-3),var(--q2w-div-5));"&gt;&lt;/div&gt;</pre></div>
+
+  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Point and line symbols</h3>
+  <div class="doc-preview">
+    <div class="q2w-minilegend">
+      <div class="q2w-minilegend__title">Infrastructure</div>
+      <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background:var(--q2w-accent)"></span>Survey point</div>
+      <div class="q2w-legend-row"><span class="q2w-legend-line" style="color:var(--q2w-danger)"></span>Primary road</div>
+      <div class="q2w-legend-row"><span class="q2w-legend-line" style="color:var(--q2w-info); border-top-style:dashed;"></span>Drainage</div>
+    </div>
+  </div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;span class="q2w-legend-dot"&gt;&lt;/span&gt;
+&lt;span class="q2w-legend-line"&gt;&lt;/span&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">
