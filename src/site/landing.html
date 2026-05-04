@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>q2w — UI components for qgis2web exports</title>
+<link rel="stylesheet" href="assets/tokens.css" />
+<link rel="stylesheet" href="assets/q2w.css" />
+<style>
+  body { background: var(--q2w-surface); color: var(--q2w-text); }
+
+  /* Top nav */
+  .ln-nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(10px);
+    background: color-mix(in oklch, var(--q2w-surface) 85%, transparent);
+    border-bottom: 1px solid var(--q2w-border);
+    padding: 14px 32px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .ln-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+  .ln-brand__mark { width: 26px; height: 26px; border-radius: 6px; background: var(--q2w-accent); color: var(--q2w-accent-fg); display: grid; place-items: center; font-size: 12px; }
+  .ln-version { font-family: var(--q2w-font-mono); font-size: 11px; color: var(--q2w-text-faint); padding: 2px 6px; border: 1px solid var(--q2w-border); border-radius: var(--q2w-radius-xs); }
+  .ln-nav__links { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .ln-nav__links a { font-size: 13px; padding: 6px 10px; color: var(--q2w-text-muted); text-decoration: none; border-radius: var(--q2w-radius-xs); }
+  .ln-nav__links a:hover { color: var(--q2w-text); background: var(--q2w-surface-soft); }
+
+  /* Wrap */
+  .ln-wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* Hero */
+  .ln-hero { padding: 96px 0 48px; text-align: center; position: relative; }
+  .ln-hero::before {
+    content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 1100px; height: 480px;
+    background: radial-gradient(ellipse at center,
+      color-mix(in oklch, var(--q2w-accent) 18%, transparent) 0%,
+      transparent 60%);
+    pointer-events: none; z-index: -1;
+  }
+  .ln-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--q2w-font-mono); font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid var(--q2w-border);
+    border-radius: var(--q2w-radius-full);
+    background: var(--q2w-surface);
+    color: var(--q2w-text-muted);
+    margin-bottom: 20px;
+  }
+  .ln-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--q2w-success); }
+  .ln-hero h1 {
+    font-size: 64px; line-height: 1.05; letter-spacing: -0.03em; font-weight: 700;
+    margin: 0 0 20px;
+    max-width: 800px; margin-left: auto; margin-right: auto;
+  }
+  .ln-hero h1 em { font-style: normal; color: var(--q2w-accent); font-weight: 600; }
+  .ln-hero p.sub { font-size: 18px; line-height: 1.5; color: var(--q2w-text-muted); max-width: 620px; margin: 0 auto 32px; }
+  .ln-cta { display: flex; justify-content: center; gap: 10px; }
+  .ln-cta .q2w-btn { padding: 10px 18px; font-size: 13px; }
+
+  /* Code preview */
+  .ln-code {
+    margin: 56px auto 0; max-width: 720px;
+    background: var(--q2w-neutral-900);
+    color: #e4e7ec;
+    border-radius: var(--q2w-radius-lg);
+    padding: 0;
+    font-family: var(--q2w-font-mono); font-size: 13px;
+    box-shadow: 0 30px 80px -20px rgba(15, 122, 120, 0.25), 0 8px 32px rgba(15, 21, 32, 0.2);
+    border: 1px solid #1f2937;
+    overflow: hidden;
+    text-align: left;
+  }
+  .ln-code__bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid #1f2937; }
+  .ln-code__bar .d { width: 10px; height: 10px; border-radius: 50%; background: #2a3344; }
+  .ln-code__bar .lbl { margin-left: 12px; font-size: 11px; color: #6b7280; }
+  .ln-code__bar .copy { margin-left: auto; font-size: 11px; color: #9ca3af; padding: 3px 8px; border: 1px solid #2a3344; border-radius: 4px; cursor: pointer; }
+  .ln-code__body { padding: 18px 22px; line-height: 1.7; overflow-x: auto; }
+  .tk-c { color: #6b7280; }   /* comment */
+  .tk-k { color: #c5a3ff; }   /* keyword */
+  .tk-s { color: #7dd3a3; }   /* string */
+  .tk-n { color: #fbbf77; }   /* name */
+  .tk-p { color: #6b7280; }   /* punct */
+  .tk-a { color: var(--q2w-accent); }
+
+  /* Demo strip */
+  .ln-strip {
+    margin: 64px 0;
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .ln-strip__track {
+    display: flex; gap: 16px;
+    width: max-content;
+    animation: ln-marquee 50s linear infinite;
+  }
+  .ln-strip__track:hover { animation-play-state: paused; }
+  @keyframes ln-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .ln-tile {
+    width: 360px; height: 220px;
+    border: 1px solid var(--q2w-border);
+    border-radius: var(--q2w-radius-md);
+    background: var(--q2w-surface);
+    overflow: hidden;
+    position: relative;
+    flex: none;
+  }
+  .ln-tile__lbl {
+    position: absolute; left: 10px; bottom: 10px;
+    font-family: var(--q2w-font-mono); font-size: 11px;
+    background: rgba(15,21,32,0.7); color: #fff;
+    padding: 3px 8px; border-radius: 4px;
+  }
+
+  /* Sections */
+  .ln-section { padding: 80px 0; border-top: 1px solid var(--q2w-border); }
+  .ln-section__head { text-align: center; margin-bottom: 48px; }
+  .ln-section__head .num { font-family: var(--q2w-font-mono); font-size: 11px; color: var(--q2w-text-faint); display: block; margin-bottom: 8px; letter-spacing: 0.06em; }
+  .ln-section__head h2 { font-size: 36px; letter-spacing: -0.02em; margin: 0 0 12px; font-weight: 700; }
+  .ln-section__head p { font-size: 16px; color: var(--q2w-text-muted); max-width: 560px; margin: 0 auto; }
+
+  /* Feature grid */
+  .ln-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .ln-feat {
+    border: 1px solid var(--q2w-border);
+    border-radius: var(--q2w-radius-md);
+    padding: 24px;
+    background: var(--q2w-surface);
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .ln-feat:hover { border-color: var(--q2w-border-strong); transform: translateY(-2px); }
+  .ln-feat__icon { width: 36px; height: 36px; border-radius: var(--q2w-radius-sm); background: var(--q2w-accent-soft); color: var(--q2w-accent); display: grid; place-items: center; margin-bottom: 14px; }
+  .ln-feat h3 { margin: 0 0 6px; font-size: 15px; font-weight: 600; }
+  .ln-feat p { margin: 0; font-size: 13px; color: var(--q2w-text-muted); line-height: 1.55; }
+  .ln-feat__count {
+    display: inline-block;
+    font-family: var(--q2w-font-mono); font-size: 11px;
+    color: var(--q2w-text-faint);
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed var(--q2w-border);
+    width: 100%;
+  }
+
+  /* Origin */
+  .ln-origin { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .ln-origin h2 { font-size: 32px; letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 700; }
+  .ln-origin p { font-size: 15px; color: var(--q2w-text-muted); line-height: 1.6; margin: 0 0 14px; }
+  .ln-compare {
+    border: 1px solid var(--q2w-border);
+    border-radius: var(--q2w-radius-md);
+    overflow: hidden;
+    background: var(--q2w-surface-soft);
+  }
+  .ln-compare__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--q2w-border); }
+  .ln-compare__cell { background: var(--q2w-surface); padding: 16px 18px; }
+  .ln-compare__cell--a { background: var(--q2w-surface-soft); }
+  .ln-compare__lbl { font-family: var(--q2w-font-mono); font-size: 10px; text-transform: uppercase; color: var(--q2w-text-faint); margin-bottom: 8px; letter-spacing: 0.06em; }
+  .ln-compare__row + .ln-compare__row { border-top: 1px solid var(--q2w-border); }
+
+  /* Roadmap */
+  .ln-roadmap {
+    border: 1px solid var(--q2w-border);
+    border-radius: var(--q2w-radius-md);
+    overflow: hidden;
+  }
+  .ln-rm__row { display: grid; grid-template-columns: 100px 1fr 100px; align-items: center; padding: 16px 24px; gap: 16px; border-bottom: 1px solid var(--q2w-border); }
+  .ln-rm__row:last-child { border-bottom: 0; }
+  .ln-rm__v { font-family: var(--q2w-font-mono); font-size: 12px; color: var(--q2w-text); }
+  .ln-rm__title { font-size: 14px; }
+  .ln-rm__title small { color: var(--q2w-text-muted); font-size: 12px; display: block; margin-top: 2px; }
+  .ln-rm__status { text-align: right; font-size: 11px; padding: 3px 8px; border-radius: 999px; font-family: var(--q2w-font-mono); justify-self: end; }
+  .ln-rm__status--done { background: rgba(31,138,76,0.12); color: var(--q2w-success); }
+  .ln-rm__status--now { background: var(--q2w-accent-soft); color: var(--q2w-accent); }
+  .ln-rm__status--next { background: var(--q2w-surface-soft); color: var(--q2w-text-muted); border: 1px solid var(--q2w-border); }
+
+  /* Footer */
+  .ln-footer { border-top: 1px solid var(--q2w-border); padding: 48px 0 64px; }
+  .ln-footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+  .ln-footer h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--q2w-text-faint); margin: 0 0 14px; font-weight: 600; }
+  .ln-footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .ln-footer a { color: var(--q2w-text-muted); text-decoration: none; font-size: 13px; }
+  .ln-footer a:hover { color: var(--q2w-text); }
+  .ln-footer__bot { display: flex; justify-content: space-between; align-items: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--q2w-border); font-size: 12px; color: var(--q2w-text-faint); }
+
+  @media (max-width: 800px) {
+    .ln-hero h1 { font-size: 40px; }
+    .ln-features, .ln-origin, .ln-footer__grid { grid-template-columns: 1fr; }
+    .ln-nav__links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="ln-nav">
+  <div class="ln-brand">
+    <span class="ln-brand__mark">q2</span>
+    <span>q2w</span>
+    <span class="ln-version">v0.1</span>
+  </div>
+  <div class="ln-nav__links">
+    <a href="#features">Components</a>
+    <a href="#origin">Why q2w</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="index.html">Cheatsheet</a>
+    <a href="examples/choropleth.html">Examples</a>
+    <a href="#" class="q2w-btn" style="font-size: 12px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.4.5 0 5.9 0 12.5c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.6.1-3.3 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 3 .1 3.3.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.8-1.6 8.2-6.1 8.2-11.4C24 5.9 18.6.5 12 .5z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="ln-hero">
+  <div class="ln-wrap">
+    <span class="ln-eyebrow"><span class="dot"></span> v0.1 · brand-neutral · MIT</span>
+    <h1>Beautiful UI for your <em>qgis2web</em> exports.</h1>
+    <p class="sub">A lightweight Tailwind + Leaflet component kit. Drop it on top of any qgis2web export and get a polished header, layer panel, popup, legend — and 25 more — for free.</p>
+    <div class="ln-cta">
+      <a href="examples/choropleth.html" class="q2w-btn q2w-btn--primary q2w-btn--pill">
+        See live example
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="index.html" class="q2w-btn q2w-btn--pill">Browse components</a>
+    </div>
+
+    <!-- Code preview -->
+    <div class="ln-code">
+      <div class="ln-code__bar">
+        <span class="d"></span><span class="d"></span><span class="d"></span>
+        <span class="lbl">terminal · install</span>
+        <span class="copy">copy</span>
+      </div>
+<pre class="ln-code__body" style="margin: 0;"><span class="tk-c"># 1. Install</span>
+<span class="tk-n">npm</span> <span class="tk-k">install</span> <span class="tk-s">q2w</span>
+
+<span class="tk-c"># 2. Drop into your qgis2web export's index.html</span>
+<span class="tk-p">&lt;</span><span class="tk-k">link</span> <span class="tk-n">rel</span><span class="tk-p">=</span><span class="tk-s">"stylesheet"</span> <span class="tk-n">href</span><span class="tk-p">=</span><span class="tk-s">"q2w/dist/q2w.css"</span><span class="tk-p">&gt;</span>
+
+<span class="tk-c"># 3. Add a header — that's it</span>
+<span class="tk-p">&lt;</span><span class="tk-k">div</span> <span class="tk-n">class</span><span class="tk-p">=</span><span class="tk-s">"<span class="tk-a">q2w-header</span>"</span><span class="tk-p">&gt;</span> ... <span class="tk-p">&lt;/</span><span class="tk-k">div</span><span class="tk-p">&gt;</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- Animated demo strip -->
+<div class="ln-strip">
+  <div class="ln-strip__track">
+    <!-- Tile 1: header floating -->
+    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e 0%, #3f5e44 100%);">
+      <div class="q2w-header" style="position: absolute; top: 12px; left: 12px; right: 12px; height: 40px; padding: 0 12px;">
+        <div class="q2w-header__brand"><div class="q2w-header__logo" style="width:24px; height:24px; font-size:10px;">q2</div><div class="q2w-header__title" style="font-size:12px;">Land Atlas</div></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-header</div>
+    </div>
+    <!-- Tile 2: popup -->
+    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
+      <div class="q2w-popup" style="width: 220px; transform: scale(0.92);">
+        <div class="q2w-popup__header" style="padding: 8px 10px;"><div><div class="q2w-popup__title" style="font-size:12px;">Mekarjaya</div><div class="q2w-popup__sub" style="font-size:10px;">ZNT-021</div></div></div>
+        <div class="q2w-popup__body"><div class="q2w-attr" style="padding: 6px 10px;"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">720k</span></div></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-popup</div>
+    </div>
+    <!-- Tile 3: legend -->
+    <div class="ln-tile" style="background: linear-gradient(135deg, #f1eee8, #d9d2c3); display: grid; place-items: center;">
+      <div class="q2w-minilegend" style="width: 200px;">
+        <div class="q2w-minilegend__title">Value · Rp/m²</div>
+        <div class="q2w-grad"></div>
+        <div class="q2w-grad__labels"><span>&lt;100k</span><span>1m</span><span>5m+</span></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-grad</div>
+    </div>
+    <!-- Tile 4: dark heatmap legend -->
+    <div class="ln-tile" style="background: radial-gradient(circle at 50% 50%, rgba(215,25,28,0.7) 0 10%, rgba(253,174,97,0.5) 10% 25%, transparent 35%), linear-gradient(135deg, #1f2e3a, #15212c); display: grid; place-items: center;" data-theme="dark">
+      <div class="q2w-toolbar"><div class="q2w-control"><button class="q2w-control__btn">+</button><button class="q2w-control__btn">−</button></div></div>
+      <div class="ln-tile__lbl">.q2w-control</div>
+    </div>
+    <!-- Tile 5: search -->
+    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
+      <div class="q2w-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="q2w-search__icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input placeholder="Search…" />
+      </div>
+      <div class="ln-tile__lbl">.q2w-search</div>
+    </div>
+    <!-- Tile 6: toast -->
+    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
+      <div class="q2w-toast q2w-toast--success">
+        <div class="q2w-toast__icon">✓</div>
+        <div><div class="q2w-toast__title">Layer loaded</div><div class="q2w-toast__msg">1,284 features</div></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-toast</div>
+    </div>
+    <!-- Tile 7: layer panel -->
+    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e, #3f5e44); display: grid; place-items: center;">
+      <div class="q2w-panel" style="width: 200px;">
+        <div class="q2w-panel__header" style="padding: 6px 10px; font-size: 10px;">Layers</div>
+        <div class="q2w-panel__body" style="padding: 6px 10px;">
+          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value</span></div>
+          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
+          <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Rivers</span></div>
+        </div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-panel</div>
+    </div>
+
+    <!-- Duplicate set for seamless marquee -->
+    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e 0%, #3f5e44 100%);">
+      <div class="q2w-header" style="position: absolute; top: 12px; left: 12px; right: 12px; height: 40px; padding: 0 12px;">
+        <div class="q2w-header__brand"><div class="q2w-header__logo" style="width:24px; height:24px; font-size:10px;">q2</div><div class="q2w-header__title" style="font-size:12px;">Land Atlas</div></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-header</div>
+    </div>
+    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
+      <div class="q2w-popup" style="width: 220px; transform: scale(0.92);">
+        <div class="q2w-popup__header" style="padding: 8px 10px;"><div><div class="q2w-popup__title" style="font-size:12px;">Mekarjaya</div><div class="q2w-popup__sub" style="font-size:10px;">ZNT-021</div></div></div>
+        <div class="q2w-popup__body"><div class="q2w-attr" style="padding: 6px 10px;"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">720k</span></div></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-popup</div>
+    </div>
+    <div class="ln-tile" style="background: linear-gradient(135deg, #f1eee8, #d9d2c3); display: grid; place-items: center;">
+      <div class="q2w-minilegend" style="width: 200px;">
+        <div class="q2w-minilegend__title">Value · Rp/m²</div>
+        <div class="q2w-grad"></div>
+        <div class="q2w-grad__labels"><span>&lt;100k</span><span>1m</span><span>5m+</span></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-grad</div>
+    </div>
+    <div class="ln-tile" style="background: radial-gradient(circle at 50% 50%, rgba(215,25,28,0.7) 0 10%, rgba(253,174,97,0.5) 10% 25%, transparent 35%), linear-gradient(135deg, #1f2e3a, #15212c); display: grid; place-items: center;" data-theme="dark">
+      <div class="q2w-toolbar"><div class="q2w-control"><button class="q2w-control__btn">+</button><button class="q2w-control__btn">−</button></div></div>
+      <div class="ln-tile__lbl">.q2w-control</div>
+    </div>
+    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
+      <div class="q2w-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="q2w-search__icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input placeholder="Search…" />
+      </div>
+      <div class="ln-tile__lbl">.q2w-search</div>
+    </div>
+    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
+      <div class="q2w-toast q2w-toast--success">
+        <div class="q2w-toast__icon">✓</div>
+        <div><div class="q2w-toast__title">Layer loaded</div><div class="q2w-toast__msg">1,284 features</div></div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-toast</div>
+    </div>
+    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e, #3f5e44); display: grid; place-items: center;">
+      <div class="q2w-panel" style="width: 200px;">
+        <div class="q2w-panel__header" style="padding: 6px 10px; font-size: 10px;">Layers</div>
+        <div class="q2w-panel__body" style="padding: 6px 10px;">
+          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value</span></div>
+          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
+          <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Rivers</span></div>
+        </div>
+      </div>
+      <div class="ln-tile__lbl">.q2w-panel</div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="ln-section" id="features">
+  <div class="ln-wrap">
+    <div class="ln-section__head">
+      <span class="num">02 · COMPONENTS</span>
+      <h2>Everything a thematic map needs.</h2>
+      <p>30+ pre-styled components. Light + dark + 4 themes. ~12kb gzipped.</p>
+    </div>
+
+    <div class="ln-features">
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polygon points="12,3 21,8 12,13 3,8"/><polyline points="3,12 12,17 21,12"/><polyline points="3,16 12,21 21,16"/></svg></div>
+        <h3>Layer panel</h3>
+        <p>Categorical, graduated, point. Drag-to-reorder. Per-layer opacity. Sub-symbology.</p>
+        <span class="ln-feat__count">3 variants</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3>Popups</h3>
+        <p>Tabular, rich (image + actions), tabbed, with charts. Six variants out of the box.</p>
+        <span class="ln-feat__count">6 variants</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="6" width="18" height="4" rx="1"/><rect x="3" y="14" width="12" height="4" rx="1"/></svg></div>
+        <h3>Legends</h3>
+        <p>Categorical swatches, graduated bars, diverging scales, point symbols.</p>
+        <span class="ln-feat__count">4 variants</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h3>Search &amp; geocoder</h3>
+        <p>Result list, keyboard hint, debounced input. Wire to any geocoding API.</p>
+        <span class="ln-feat__count">2 states</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+        <h3>Map controls</h3>
+        <p>Zoom, locate, measure, compass, drawing toolbar, coordinate go-to.</p>
+        <span class="ln-feat__count">7 controls</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h3>Layouts</h3>
+        <p>Floating panels, sidebar, bottom sheet, full dashboard. Mobile-ready.</p>
+        <span class="ln-feat__count">4 layouts</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div>
+        <h3>Themes</h3>
+        <p>Light, dark, slate, ocean, forest, sunset. Override any token via CSS variables.</p>
+        <span class="ln-feat__count">6 themes</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 12h16M12 4v16"/></svg></div>
+        <h3>Compare &amp; minimap</h3>
+        <p>Swipe between two layers. Inset overview map. Time slider.</p>
+        <span class="ln-feat__count">3 advanced</span>
+      </div>
+      <div class="ln-feat">
+        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3>Built for qgis2web</h3>
+        <p>Class names map 1-to-1 to the elements qgis2web outputs. Minimum rewriting.</p>
+        <span class="ln-feat__count">drop-in</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Origin -->
+<section class="ln-section" id="origin">
+  <div class="ln-wrap">
+    <div class="ln-origin">
+      <div>
+        <span class="num" style="font-family: var(--q2w-font-mono); font-size: 11px; color: var(--q2w-text-faint); display: block; margin-bottom: 8px;">03 · WHY q2w</span>
+        <h2>qgis2web is great. Its UI isn't.</h2>
+        <p>qgis2web ships a working Leaflet map in seconds — but the layer control, popup, and chrome haven't really changed in years. Most teams end up rewriting them from scratch on every project.</p>
+        <p>q2w fixes that once. Pre-styled components, a coherent token system, dark mode, and themes — all in a CSS file you drop in alongside the export.</p>
+        <p>Inspired by <a href="https://github.com/AnmolSaini16/mapcn" class="cs-link" target="_blank" rel="noopener">mapcn</a>, but focused on Leaflet (because qgis2web exports there) and on the thematic-map use cases QGIS users actually build.</p>
+      </div>
+      <div class="ln-compare">
+        <div class="ln-compare__row">
+          <div class="ln-compare__cell ln-compare__cell--a">
+            <div class="ln-compare__lbl">Vanilla qgis2web</div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--q2w-text-muted);">
+              <input type="checkbox" checked> <span style="font-family: serif;">Layer 1</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--q2w-text-muted); margin-top: 6px;">
+              <input type="checkbox" checked> <span style="font-family: serif;">Layer 2</span>
+            </div>
+          </div>
+          <div class="ln-compare__cell">
+            <div class="ln-compare__lbl">With q2w</div>
+            <div class="q2w-layer" style="font-size: 11.5px;"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value</span><span class="q2w-layer__opacity">90%</span></div>
+            <div class="q2w-layer" style="font-size: 11.5px;"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span><span class="q2w-layer__opacity">100%</span></div>
+          </div>
+        </div>
+        <div class="ln-compare__row">
+          <div class="ln-compare__cell ln-compare__cell--a">
+            <div class="ln-compare__lbl">Popup</div>
+            <div style="background: white; border: 1px solid #888; padding: 8px; font-family: serif; font-size: 12px;">
+              <strong>name:</strong> Mekarjaya<br>
+              <strong>value:</strong> 720000
+            </div>
+          </div>
+          <div class="ln-compare__cell">
+            <div class="ln-compare__lbl">Popup</div>
+            <div class="q2w-popup" style="width: 100%; box-shadow: var(--q2w-shadow-sm);">
+              <div class="q2w-popup__header" style="padding: 6px 10px;"><div><div class="q2w-popup__title" style="font-size:12px;">Mekarjaya</div></div></div>
+              <div class="q2w-popup__body"><div class="q2w-attr" style="padding: 6px 10px;"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">720k</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section class="ln-section" id="roadmap">
+  <div class="ln-wrap">
+    <div class="ln-section__head">
+      <span class="num">04 · ROADMAP</span>
+      <h2>What's next.</h2>
+      <p>Open and public. Suggestions and PRs welcome.</p>
+    </div>
+    <div class="ln-roadmap">
+      <div class="ln-rm__row">
+        <div class="ln-rm__v">v0.1</div>
+        <div class="ln-rm__title">Core components &amp; themes <small>30+ components, light/dark + 4 presets</small></div>
+        <span class="ln-rm__status ln-rm__status--done">shipped</span>
+      </div>
+      <div class="ln-rm__row">
+        <div class="ln-rm__v">v0.2</div>
+        <div class="ln-rm__title">Tailwind plugin <small>@apply source + JIT-friendly utility classes</small></div>
+        <span class="ln-rm__status ln-rm__status--now">in progress</span>
+      </div>
+      <div class="ln-rm__row">
+        <div class="ln-rm__v">v0.3</div>
+        <div class="ln-rm__title">Web editor templates <small>Pre-built header/footer/popup templates for the editor</small></div>
+        <span class="ln-rm__status ln-rm__status--now">in progress</span>
+      </div>
+      <div class="ln-rm__row">
+        <div class="ln-rm__v">v0.4</div>
+        <div class="ln-rm__title">JS interactions <small>Drop-in helpers for opacity sliders, share modal, geolocate</small></div>
+        <span class="ln-rm__status ln-rm__status--next">next</span>
+      </div>
+      <div class="ln-rm__row">
+        <div class="ln-rm__v">v1.0</div>
+        <div class="ln-rm__title">OpenLayers support <small>Mirror the Leaflet bindings for OpenLayers exports</small></div>
+        <span class="ln-rm__status ln-rm__status--next">later</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="ln-footer">
+  <div class="ln-wrap">
+    <div class="ln-footer__grid">
+      <div>
+        <div class="ln-brand" style="margin-bottom: 12px;"><span class="ln-brand__mark">q2</span><span>q2w</span></div>
+        <p style="margin: 0; font-size: 13px; color: var(--q2w-text-muted); max-width: 280px; line-height: 1.55;">A UI component kit for qgis2web exports. Open source, MIT licensed.</p>
+      </div>
+      <div>
+        <h4>Docs</h4>
+        <ul>
+          <li><a href="index.html">Components</a></li>
+          <li><a href="examples/choropleth.html">Examples</a></li>
+          <li><a href="#">Theming</a></li>
+          <li><a href="#">Tailwind setup</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+          <li><a href="#">Changelog</a></li>
+          <li><a href="#">Issues</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Related</h4>
+        <ul>
+          <li><a href="https://github.com/tomchadwin/qgis2web" target="_blank" rel="noopener">qgis2web</a></li>
+          <li><a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a></li>
+          <li><a href="https://github.com/AnmolSaini16/mapcn" target="_blank" rel="noopener">mapcn</a></li>
+          <li><a href="https://qgis.org" target="_blank" rel="noopener">QGIS</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ln-footer__bot">
+      <span>© 2026 q2w · MIT licensed</span>
+      <span style="font-family: var(--q2w-font-mono);">v0.1 · brand-neutral</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

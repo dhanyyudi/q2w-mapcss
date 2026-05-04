@@ -1,0 +1,157 @@
+/* ============================================================
+   q2w design tokens
+   Brand-neutral framework for qgis2web (Leaflet) exports.
+   All colors expressed as CSS custom properties so themes
+   can override at :root or [data-theme="..."].
+   ============================================================ */
+
+:root {
+  /* Type ------------------------------------------------------ */
+  --q2w-font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --q2w-font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --q2w-font-display: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Neutrals (slate-tinted, matches existing redesign) -------- */
+  --q2w-neutral-0:   #ffffff;
+  --q2w-neutral-50:  #f7f8fa;
+  --q2w-neutral-100: #eef0f3;
+  --q2w-neutral-200: #dde1e7;
+  --q2w-neutral-300: #c2c8d2;
+  --q2w-neutral-400: #8a93a3;
+  --q2w-neutral-500: #5b6577;
+  --q2w-neutral-600: #3f4a5c;
+  --q2w-neutral-700: #2a3344;
+  --q2w-neutral-800: #1b2230;
+  --q2w-neutral-900: #0f1520;
+
+  /* Semantic surfaces ---------------------------------------- */
+  --q2w-surface:        var(--q2w-neutral-0);
+  --q2w-surface-soft:   var(--q2w-neutral-50);
+  --q2w-surface-sunken: var(--q2w-neutral-100);
+  --q2w-border:         var(--q2w-neutral-200);
+  --q2w-border-strong:  var(--q2w-neutral-300);
+  --q2w-text:           var(--q2w-neutral-800);
+  --q2w-text-muted:     var(--q2w-neutral-500);
+  --q2w-text-faint:     var(--q2w-neutral-400);
+
+  /* Accent (teal — overridable per theme) -------------------- */
+  --q2w-accent:        #0f7a78;
+  --q2w-accent-hover:  #0c615f;
+  --q2w-accent-soft:   #e6f3f2;
+  --q2w-accent-fg:     #ffffff;
+
+  /* Status --------------------------------------------------- */
+  --q2w-success: #1f8a4c;
+  --q2w-warning: #c98a14;
+  --q2w-danger:  #c4452f;
+  --q2w-info:    #2769c4;
+
+  /* Radii ---------------------------------------------------- */
+  --q2w-radius-xs: 4px;
+  --q2w-radius-sm: 6px;
+  --q2w-radius-md: 10px;
+  --q2w-radius-lg: 14px;
+  --q2w-radius-xl: 20px;
+  --q2w-radius-full: 9999px;
+
+  /* Shadows -------------------------------------------------- */
+  --q2w-shadow-xs: 0 1px 2px rgba(15, 21, 32, 0.06);
+  --q2w-shadow-sm: 0 2px 6px rgba(15, 21, 32, 0.08);
+  --q2w-shadow-md: 0 6px 18px rgba(15, 21, 32, 0.10), 0 1px 3px rgba(15, 21, 32, 0.06);
+  --q2w-shadow-lg: 0 18px 40px rgba(15, 21, 32, 0.16), 0 2px 6px rgba(15, 21, 32, 0.08);
+
+  /* Spacing scale ------------------------------------------- */
+  --q2w-space-1: 4px;
+  --q2w-space-2: 8px;
+  --q2w-space-3: 12px;
+  --q2w-space-4: 16px;
+  --q2w-space-5: 20px;
+  --q2w-space-6: 24px;
+  --q2w-space-8: 32px;
+
+  /* Layout --------------------------------------------------- */
+  --q2w-header-h: 56px;
+  --q2w-footer-h: 28px;
+  --q2w-panel-w:  280px;
+
+  /* Choropleth defaults (sequential warm — matches example) -- */
+  --q2w-seq-1: #fff5d6;
+  --q2w-seq-2: #fde29a;
+  --q2w-seq-3: #fbb04c;
+  --q2w-seq-4: #f47a2b;
+  --q2w-seq-5: #d83a2c;
+  --q2w-seq-6: #8a1d2a;
+
+  /* Diverging ------------------------------------------------ */
+  --q2w-div-1: #2c7bb6;
+  --q2w-div-2: #abd9e9;
+  --q2w-div-3: #ffffbf;
+  --q2w-div-4: #fdae61;
+  --q2w-div-5: #d7191c;
+
+  /* Qualitative --------------------------------------------- */
+  --q2w-qual-1: #2a6f97;
+  --q2w-qual-2: #d6802b;
+  --q2w-qual-3: #4a8c3b;
+  --q2w-qual-4: #b34a6c;
+  --q2w-qual-5: #6b4ea0;
+  --q2w-qual-6: #c4a23b;
+}
+
+/* ============================================================
+   Dark mode
+   ============================================================ */
+[data-theme="dark"] {
+  --q2w-neutral-0:   #0f1520;
+  --q2w-neutral-50:  #141b29;
+  --q2w-neutral-100: #1b2230;
+  --q2w-neutral-200: #2a3344;
+  --q2w-neutral-300: #3f4a5c;
+  --q2w-neutral-400: #5b6577;
+  --q2w-neutral-500: #8a93a3;
+  --q2w-neutral-600: #c2c8d2;
+  --q2w-neutral-700: #dde1e7;
+  --q2w-neutral-800: #eef0f3;
+  --q2w-neutral-900: #f7f8fa;
+
+  --q2w-surface:        #141b29;
+  --q2w-surface-soft:   #1b2230;
+  --q2w-surface-sunken: #0f1520;
+  --q2w-border:         #2a3344;
+  --q2w-border-strong:  #3f4a5c;
+  --q2w-text:           #eef0f3;
+  --q2w-text-muted:     #8a93a3;
+  --q2w-text-faint:     #5b6577;
+
+  --q2w-accent:       #2dd4d0;
+  --q2w-accent-hover: #5ee5e2;
+  --q2w-accent-soft:  rgba(45, 212, 208, 0.14);
+  --q2w-accent-fg:    #0f1520;
+
+  --q2w-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --q2w-shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* ============================================================
+   Preset themes (recolor accent + tone)
+   ============================================================ */
+[data-theme="ocean"] {
+  --q2w-accent:       #1d6fc4;
+  --q2w-accent-hover: #185a9f;
+  --q2w-accent-soft:  #e3eefa;
+}
+[data-theme="forest"] {
+  --q2w-accent:       #2f7d4a;
+  --q2w-accent-hover: #25633a;
+  --q2w-accent-soft:  #e4f1e8;
+}
+[data-theme="sunset"] {
+  --q2w-accent:       #d8632a;
+  --q2w-accent-hover: #b04f1f;
+  --q2w-accent-soft:  #fbece2;
+}
+[data-theme="slate"] {
+  --q2w-accent:       #3f4a5c;
+  --q2w-accent-hover: #2a3344;
+  --q2w-accent-soft:  #eef0f3;
+}

@@ -1,0 +1,360 @@
+/* ============================================================
+   q2w-mapcss Leaflet qgis2web adapter
+   Styles the DOM emitted by qgis2web Leaflet exports without
+   requiring users to rewrite generated JavaScript.
+   ============================================================ */
+
+:root {
+  --q2w-map-bg: #d8dde2;
+  --q2w-control-size: 32px;
+  --q2w-control-offset-top: calc(var(--q2w-header-h) + 24px);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body.q2w-qgis2web,
+body.q2w-fullscreen {
+  overflow: hidden;
+}
+
+body.q2w-qgis2web #map,
+body.q2w-fullscreen #map,
+#map.q2w-map {
+  position: absolute !important;
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 100vh;
+  background: var(--q2w-map-bg);
+}
+
+body.q2w-has-footer #map {
+  bottom: var(--q2w-footer-h) !important;
+}
+
+.leaflet-container {
+  font-family: var(--q2w-font-sans);
+  color: var(--q2w-text);
+  background: var(--q2w-map-bg);
+}
+
+.leaflet-container a {
+  color: var(--q2w-accent);
+}
+
+body.q2w-controls-below-header .leaflet-top.leaflet-left,
+body.q2w-controls-below-header .leaflet-top.leaflet-right {
+  top: var(--q2w-control-offset-top) !important;
+}
+
+.leaflet-control {
+  border: 0 !important;
+  border-radius: var(--q2w-radius-sm) !important;
+  box-shadow: var(--q2w-shadow-sm) !important;
+}
+
+.leaflet-bar {
+  border: 1px solid var(--q2w-border) !important;
+  overflow: hidden;
+}
+
+.leaflet-bar a,
+.leaflet-bar a:hover,
+.leaflet-touch .leaflet-bar a {
+  width: var(--q2w-control-size) !important;
+  height: var(--q2w-control-size) !important;
+  line-height: var(--q2w-control-size) !important;
+  background: var(--q2w-surface) !important;
+  color: var(--q2w-text) !important;
+  border-bottom: 1px solid var(--q2w-border) !important;
+  font-family: var(--q2w-font-sans);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.leaflet-bar a:hover {
+  background: var(--q2w-surface-soft) !important;
+  color: var(--q2w-accent) !important;
+}
+
+.leaflet-bar a:last-child {
+  border-bottom: 0 !important;
+}
+
+.leaflet-control-attribution {
+  padding: 3px 8px !important;
+  background: color-mix(in srgb, var(--q2w-surface) 92%, transparent) !important;
+  border: 1px solid var(--q2w-border);
+  border-radius: var(--q2w-radius-xs) 0 0 0;
+  box-shadow: none !important;
+  font-size: 10.5px;
+  color: var(--q2w-text-muted);
+}
+
+.leaflet-control-scale-line {
+  border-color: var(--q2w-text-muted) !important;
+  border-top: 0 !important;
+  color: var(--q2w-text-muted) !important;
+  background: color-mix(in srgb, var(--q2w-surface) 86%, transparent) !important;
+  font-family: var(--q2w-font-mono);
+  font-size: 10px;
+}
+
+/* Search and measure controls emitted by common qgis2web plugins. */
+.leaflet-control-search,
+.leaflet-control-measure {
+  background: var(--q2w-surface) !important;
+  border: 1px solid var(--q2w-border) !important;
+  border-radius: var(--q2w-radius-sm) !important;
+  box-shadow: var(--q2w-shadow-sm) !important;
+  color: var(--q2w-text) !important;
+}
+
+.leaflet-control-search .search-button,
+.leaflet-control-measure .leaflet-control-measure-toggle,
+.leaflet-touch .leaflet-control-measure .leaflet-control-measure-toggle {
+  width: var(--q2w-control-size) !important;
+  height: var(--q2w-control-size) !important;
+  line-height: var(--q2w-control-size) !important;
+  background: var(--q2w-surface) !important;
+  color: var(--q2w-text) !important;
+  border-radius: var(--q2w-radius-sm) !important;
+  text-align: center;
+  text-indent: 0 !important;
+}
+
+.leaflet-control-search .search-button:hover,
+.leaflet-control-measure .leaflet-control-measure-toggle:hover {
+  background: var(--q2w-surface-soft) !important;
+  color: var(--q2w-accent) !important;
+}
+
+.leaflet-control-search .search-input {
+  height: var(--q2w-control-size) !important;
+  border: 1px solid var(--q2w-border) !important;
+  border-radius: var(--q2w-radius-sm) !important;
+  background: var(--q2w-surface) !important;
+  color: var(--q2w-text) !important;
+  font-family: var(--q2w-font-sans);
+  font-size: 12px;
+  box-shadow: var(--q2w-shadow-sm);
+}
+
+.leaflet-control-measure .leaflet-control-measure-interaction,
+.leaflet-control-measure .leaflet-control-measure-results {
+  background: var(--q2w-surface) !important;
+  color: var(--q2w-text) !important;
+  border-color: var(--q2w-border) !important;
+  border-radius: var(--q2w-radius-sm) !important;
+  font-family: var(--q2w-font-sans);
+  box-shadow: var(--q2w-shadow-md);
+}
+
+/* Layer tree control. */
+.leaflet-control-layers {
+  background: var(--q2w-surface) !important;
+  border: 1px solid var(--q2w-border) !important;
+  border-radius: var(--q2w-radius-md) !important;
+  box-shadow: var(--q2w-shadow-md) !important;
+  color: var(--q2w-text) !important;
+  font-family: var(--q2w-font-sans);
+  font-size: 12px;
+  overflow: hidden;
+}
+
+.leaflet-control-layers-toggle {
+  width: 34px !important;
+  height: 34px !important;
+  background-color: var(--q2w-surface) !important;
+  background-size: 16px 16px !important;
+}
+
+.leaflet-control-layers-expanded {
+  width: var(--q2w-panel-w);
+  padding: 0 !important;
+}
+
+.leaflet-control-layers-list {
+  max-height: min(480px, calc(100vh - 140px));
+  overflow: auto;
+  padding: 10px 12px 12px;
+}
+
+.leaflet-layerstree-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  color: var(--q2w-text);
+}
+
+.leaflet-layerstree-header input {
+  accent-color: var(--q2w-accent);
+}
+
+.leaflet-layerstree-header-name {
+  font-size: 12px;
+}
+
+.leaflet-layerstree-children {
+  margin-left: 16px;
+  padding-left: 8px;
+  border-left: 1px dashed var(--q2w-border);
+}
+
+.leaflet-layerstree-closed,
+.leaflet-layerstree-opened,
+.leaflet-layerstree-header-space {
+  color: var(--q2w-text-faint);
+  font-family: var(--q2w-font-mono);
+  font-size: 11px;
+}
+
+.leaflet-layerstree-expand-collapse {
+  margin: 4px 0 8px;
+  color: var(--q2w-accent);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Popup tables generated by qgis2web. */
+.leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  border-radius: var(--q2w-radius-md) !important;
+  background: var(--q2w-surface) !important;
+  color: var(--q2w-text) !important;
+  box-shadow: var(--q2w-shadow-lg) !important;
+  overflow: hidden;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: min(320px, calc(100vw - 48px)) !important;
+  max-height: min(70vh, 520px);
+  overflow: auto;
+  font-family: var(--q2w-font-sans);
+  font-size: 12.5px;
+}
+
+.leaflet-popup-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaflet-popup-content th,
+.leaflet-popup-content td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--q2w-border);
+  vertical-align: top;
+}
+
+.leaflet-popup-content th {
+  width: 42%;
+  color: var(--q2w-text-faint);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.leaflet-popup-content td {
+  color: var(--q2w-text);
+  text-align: right;
+}
+
+.leaflet-popup-content td[colspan="2"] {
+  background: var(--q2w-accent);
+  color: var(--q2w-accent-fg);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.leaflet-popup-content tr:last-child th,
+.leaflet-popup-content tr:last-child td {
+  border-bottom: 0;
+}
+
+.leaflet-popup-content td img,
+.leaflet-popup-content.media img,
+.leaflet-popup-content.media video {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--q2w-radius-sm);
+}
+
+.leaflet-popup-tip {
+  background: var(--q2w-surface) !important;
+  box-shadow: var(--q2w-shadow-sm) !important;
+}
+
+.leaflet-popup-close-button {
+  width: 26px !important;
+  height: 26px !important;
+  color: var(--q2w-accent-fg) !important;
+  font-size: 18px !important;
+  line-height: 26px !important;
+}
+
+.leaflet-tooltip {
+  padding: 4px 7px !important;
+  border: 0 !important;
+  border-radius: var(--q2w-radius-xs) !important;
+  background: color-mix(in srgb, var(--q2w-neutral-900) 88%, transparent) !important;
+  color: var(--q2w-neutral-0) !important;
+  box-shadow: var(--q2w-shadow-sm) !important;
+  font-family: var(--q2w-font-mono);
+  font-size: 11px;
+}
+
+.leaflet-tooltip-left::before,
+.leaflet-tooltip-right::before,
+.leaflet-tooltip-top::before,
+.leaflet-tooltip-bottom::before {
+  border: 0 !important;
+}
+
+.q2w-label-halo,
+body.q2w-labels-halo .leaflet-tooltip {
+  text-shadow:
+    -1px -1px 0 var(--q2w-surface),
+    1px -1px 0 var(--q2w-surface),
+    -1px 1px 0 var(--q2w-surface),
+    1px 1px 0 var(--q2w-surface);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --q2w-panel-w: min(320px, calc(100vw - 24px));
+  }
+
+  .q2w-header {
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    height: 48px;
+    padding: 0 10px;
+  }
+
+  .q2w-header__sub,
+  .q2w-footer__group:not(.q2w-footer__coord) {
+    display: none;
+  }
+
+  .q2w-footer {
+    padding: 0 10px;
+  }
+
+  body.q2w-controls-below-header .leaflet-top.leaflet-left,
+  body.q2w-controls-below-header .leaflet-top.leaflet-right {
+    top: 64px !important;
+  }
+
+  .leaflet-control-layers-expanded {
+    width: var(--q2w-panel-w);
+  }
+}

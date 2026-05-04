@@ -1,0 +1,8 @@
+/node_modules/
+/dist/
+/site/
+/.wrangler/
+.DS_Store
+AGENTS.md
+docs/audit.md
+npm-debug.log*

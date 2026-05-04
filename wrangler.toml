@@ -1,0 +1,5 @@
+name = "q2w-mapcss"
+pages_build_output_dir = "site"
+
+[vars]
+Q2W_MAPCSS_VERSION = "0.1.0"

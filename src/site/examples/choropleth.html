@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>q2w · Choropleth example</title>
+<link rel="stylesheet" href="../assets/tokens.css" />
+<link rel="stylesheet" href="../assets/q2w.css" />
+<style>
+  html, body { height: 100%; }
+  .ex-map {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.08), transparent 60%),
+      linear-gradient(135deg, #6a8c5e 0%, #56795c 40%, #3f5e44 100%);
+    overflow: hidden;
+  }
+  /* Fake choropleth shapes */
+  .zone {
+    position: absolute;
+    border: 1.5px solid rgba(255,255,255,0.65);
+    mix-blend-mode: multiply;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  }
+  .road {
+    position: absolute;
+    background: var(--q2w-qual-2);
+    height: 3px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+  }
+  .river {
+    position: absolute;
+    background: #4ea8d8;
+    height: 2px;
+    border-radius: 2px;
+    opacity: 0.85;
+  }
+  .label {
+    position: absolute;
+    font-size: 11px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    font-weight: 500;
+    pointer-events: none;
+  }
+  .ex-back {
+    position: absolute; top: 12px; left: 12px;
+    z-index: 600;
+  }
+</style>
+</head>
+<body>
+<div class="ex-map">
+
+  <!-- Choropleth zones (yellow → red sequential) -->
+  <div class="zone" style="left: 18%; top: 22%; width: 22%; height: 26%; background: var(--q2w-seq-5); clip-path: polygon(0% 30%, 18% 0%, 70% 8%, 100% 50%, 88% 100%, 22% 90%, 0% 70%);"></div>
+  <div class="zone" style="left: 36%; top: 12%; width: 22%; height: 32%; background: var(--q2w-seq-6); clip-path: polygon(8% 0%, 100% 6%, 96% 70%, 60% 100%, 0% 80%, 14% 30%);"></div>
+  <div class="zone" style="left: 52%; top: 18%; width: 22%; height: 28%; background: var(--q2w-seq-4); clip-path: polygon(10% 12%, 88% 0%, 100% 60%, 70% 100%, 0% 88%);"></div>
+  <div class="zone" style="left: 60%; top: 38%; width: 18%; height: 22%; background: var(--q2w-seq-5); clip-path: polygon(0% 30%, 60% 0%, 100% 40%, 80% 100%, 10% 90%);"></div>
+  <div class="zone" style="left: 28%; top: 42%; width: 22%; height: 30%; background: var(--q2w-seq-2); clip-path: polygon(0% 20%, 60% 0%, 100% 50%, 70% 100%, 10% 88%);"></div>
+  <div class="zone" style="left: 18%; top: 56%; width: 26%; height: 30%; background: var(--q2w-seq-3); clip-path: polygon(0% 30%, 30% 0%, 100% 22%, 88% 80%, 50% 100%, 0% 70%);"></div>
+  <div class="zone" style="left: 44%; top: 56%; width: 26%; height: 28%; background: var(--q2w-seq-1); clip-path: polygon(8% 0%, 100% 18%, 90% 80%, 30% 100%, 0% 60%);"></div>
+  <div class="zone" style="left: 60%; top: 60%; width: 24%; height: 28%; background: var(--q2w-seq-3); clip-path: polygon(0% 30%, 60% 0%, 100% 40%, 80% 100%, 10% 90%);"></div>
+
+  <!-- Roads -->
+  <div class="road" style="left: 8%; top: 18%; width: 80%; transform: rotate(8deg);"></div>
+  <div class="road" style="left: 30%; top: 50%; width: 56%; transform: rotate(-4deg);"></div>
+  <div class="road" style="left: 24%; top: 70%; width: 48%; height: 2px; background: var(--q2w-text-muted); transform: rotate(6deg);"></div>
+
+  <!-- Rivers -->
+  <div class="river" style="left: 14%; top: 30%; width: 30%; transform: rotate(20deg);"></div>
+  <div class="river" style="left: 50%; top: 64%; width: 32%; transform: rotate(-12deg);"></div>
+
+  <!-- Place labels -->
+  <div class="label" style="left: 36%; top: 26%;">Tukmudal</div>
+  <div class="label" style="left: 52%; top: 22%;">Sumber</div>
+  <div class="label" style="left: 30%; top: 58%;">Mekarjaya</div>
+  <div class="label" style="left: 56%; top: 70%;">Babakan</div>
+  <div class="label" style="left: 22%; top: 78%; font-size: 10px; opacity: 0.85;">Cigedang</div>
+
+  <!-- Back to cheatsheet -->
+  <a class="ex-back q2w-btn" href="../index.html">← Component kit</a>
+
+  <!-- Header -->
+  <div class="q2w-header">
+    <div class="q2w-header__brand">
+      <div class="q2w-header__logo">q2</div>
+      <div>
+        <div class="q2w-header__title">WebGIS Zona Nilai Tanah</div>
+        <div class="q2w-header__sub">Sistem Informasi Peta Tematik · Cirebon</div>
+      </div>
+    </div>
+    <div class="q2w-header__actions">
+      <button class="q2w-btn q2w-btn--ghost">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.5-2 2-2 3.5"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+        Help
+      </button>
+      <button class="q2w-btn q2w-btn--primary q2w-btn--pill">Bantuan</button>
+    </div>
+  </div>
+
+  <!-- Left toolbar -->
+  <div class="q2w-toolbar" style="position: absolute; left: 12px; top: 80px; z-index: 500;">
+    <div class="q2w-control">
+      <button class="q2w-control__btn">+</button>
+      <button class="q2w-control__btn">−</button>
+    </div>
+    <div class="q2w-control">
+      <button class="q2w-control__btn" title="Search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+    </div>
+    <div class="q2w-control">
+      <button class="q2w-control__btn" title="Measure">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+      </button>
+    </div>
+    <div class="q2w-control">
+      <button class="q2w-control__btn" title="Locate">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Right layer panel -->
+  <div class="q2w-panel" style="position: absolute; right: 12px; top: 80px; z-index: 500;">
+    <div class="q2w-panel__header">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,3 21,8 12,13 3,8"/><polyline points="3,12 12,17 21,12"/><polyline points="3,16 12,21 21,16"/></svg>
+      <span>Layer &amp; Basemap</span>
+      <button class="q2w-btn q2w-btn--ghost q2w-btn--icon q2w-panel__close">×</button>
+    </div>
+    <div class="q2w-panel__body">
+      <div class="q2w-panel__section">
+        <div class="q2w-layer">
+          <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+          <span class="q2w-layer__name">Jaringan Jalan</span>
+        </div>
+        <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-qual-2)"></span><span>Jalan Kolektor</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-text-muted)"></span><span>Jalan Lain</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-text-faint); border-top-style: dashed;"></span><span>Jalan Lokal</span></div>
+
+        <div class="q2w-layer" style="margin-top:6px">
+          <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+          <span class="q2w-layer__name">Sungai</span>
+        </div>
+        <div class="q2w-sublayer"><span class="q2w-legend-line" style="color: var(--q2w-info)"></span><span>Alur Sungai</span></div>
+
+        <div class="q2w-layer" style="margin-top:6px">
+          <span class="q2w-layer__check q2w-layer__check--on">✓</span>
+          <span class="q2w-layer__name">Zona Nilai Tanah</span>
+        </div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-1)"></span><span>&lt; 100.000</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-2)"></span><span>100.000 – 200.000</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-3)"></span><span>200.000 – 500.000</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-4)"></span><span>500.000 – 1.000.000</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-5)"></span><span>1.000.000 – 2.000.000</span></div>
+        <div class="q2w-sublayer"><span class="q2w-legend-swatch" style="background: var(--q2w-seq-6)"></span><span>2.000.000 – 5.000.000</span></div>
+      </div>
+
+      <div class="q2w-panel__section">
+        <div class="q2w-panel__section-title">Basemap</div>
+        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on" style="border-radius:50%">●</span><span class="q2w-layer__name">Esri Imagery</span></div>
+        <div class="q2w-layer"><span class="q2w-layer__check" style="border-radius:50%"></span><span class="q2w-layer__name">Carto Voyager</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div class="q2w-popup" style="position: absolute; left: 38%; top: 50%; z-index: 510;">
+    <div class="q2w-popup__header">
+      <div>
+        <div class="q2w-popup__title">Zona Nilai Tanah</div>
+        <div class="q2w-popup__sub">Kab. Cirebon</div>
+      </div>
+      <button class="q2w-popup__close">×</button>
+    </div>
+    <div class="q2w-popup__body">
+      <div class="q2w-attr"><span class="q2w-attr__key">Kisaran nilai (Rp/m²)</span><span class="q2w-attr__val">500.000 – 1.000.000</span></div>
+      <div class="q2w-attr"><span class="q2w-attr__key">Tahun data</span><span class="q2w-attr__val">2026</span></div>
+      <div class="q2w-attr"><span class="q2w-attr__key">Luas zona</span><span class="q2w-attr__val">2.4 ha</span></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="q2w-footer">
+    <div class="q2w-footer__group">© 2026 Aksara Lab</div>
+    <div class="q2w-footer__group">Powered by qgis2web · Leaflet · QGIS</div>
+    <div class="q2w-footer__push"></div>
+    <div class="q2w-footer__group">
+      <div class="q2w-scalebar">
+        <div>
+          <div class="q2w-scalebar__bar"></div>
+          <div style="display:flex; justify-content: space-between; width: 80px;"><span>0</span><span>500m</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="q2w-footer__group q2w-footer__coord">-7.7868°, 108.4670°</div>
+  </div>
+
+</div>
+</body>
+</html>

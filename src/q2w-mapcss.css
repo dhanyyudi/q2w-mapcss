@@ -1,0 +1,9 @@
+/*
+ * q2w-mapcss source bundle.
+ * The build script concatenates tokens, components, and the qgis2web adapter.
+ * Components were designed from the qgis2web-wireframe-framework prototype.
+ */
+
+@import "./tokens.css";
+@import "./components.css";
+@import "./adapter-qgis2web.css";

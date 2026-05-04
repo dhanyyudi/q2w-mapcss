@@ -1,0 +1,22 @@
+{
+  "name": "q2w-mapcss",
+  "version": "0.1.0",
+  "description": "A lightweight CSS framework for qgis2web Leaflet exports.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "npm run build && node scripts/check.mjs",
+    "dev": "npm run build && node scripts/serve.mjs",
+    "deploy": "npm run build && npx wrangler pages deploy site --project-name q2w-mapcss"
+  },
+  "keywords": [
+    "qgis",
+    "qgis2web",
+    "leaflet",
+    "webgis",
+    "css",
+    "tailwind"
+  ],
+  "license": "MIT"
+}
