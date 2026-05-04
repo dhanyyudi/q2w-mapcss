@@ -1,16 +1,17 @@
 {
   "name": "q2w-mapcss",
-  "version": "0.1.0",
-  "description": "A lightweight CSS framework for qgis2web Leaflet exports.",
+  "version": "0.4.0",
+  "description": "A lightweight CSS framework and JS interaction helpers for qgis2web Leaflet exports.",
   "type": "module",
-  "private": true,
-  "scripts": {
-    "build:css": "node scripts/build.mjs",
-    "build:site": "npx @11ty/eleventy",
-    "build": "npm run build:css && npm run build:site",
-    "check": "npm run build && node scripts/check.mjs && node scripts/playwright-check.mjs",
-    "dev": "npm run build:css && npx @11ty/eleventy --serve --port=4173",
-    "deploy": "npm run build && npx wrangler pages deploy site --project-name q2w-mapcss"
+  "private": false,
+  "license": "MIT",
+  "homepage": "https://q2w-mapcss.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhanyyudi/q2w-mapcss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dhanyyudi/q2w-mapcss/issues"
   },
   "keywords": [
     "qgis",
@@ -18,9 +19,38 @@
     "leaflet",
     "webgis",
     "css",
-    "tailwind"
+    "map",
+    "tailwind",
+    "gis",
+    "css-framework"
   ],
-  "license": "MIT",
+  "files": [
+    "dist/",
+    "snippets/",
+    "tailwind.q2w.js",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": "./dist/q2w-mapcss.css",
+    "./css": "./dist/q2w-mapcss.css",
+    "./css/min": "./dist/q2w-mapcss.min.css",
+    "./leaflet": "./dist/q2w-leaflet.css",
+    "./plugins": "./dist/q2w-plugins.css",
+    "./showcase": "./dist/q2w-mapcss.showcase.css",
+    "./interactions": "./dist/q2w-interactions.js",
+    "./tailwind": "./tailwind.q2w.js"
+  },
+  "scripts": {
+    "build:css": "node scripts/build.mjs",
+    "build:site": "npx @11ty/eleventy",
+    "build": "npm run build:css && npm run build:site",
+    "check": "npm run build && node scripts/check.mjs && node scripts/playwright-check.mjs",
+    "dev": "npm run build:css && npx @11ty/eleventy --serve --port=4173",
+    "deploy": "npm run build && npx wrangler pages deploy site --project-name q2w-mapcss",
+    "prepublishOnly": "npm run check"
+  },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.5",
     "@playwright/test": "^1.59.1",

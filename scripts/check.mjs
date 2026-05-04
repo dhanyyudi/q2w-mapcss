@@ -17,6 +17,38 @@ function assertIncludes(label, content, needles) {
   }
 }
 
+const packageJson = JSON.parse(readOutput("package.json"));
+if (packageJson.version !== "0.4.0") {
+  console.error(`package.json version must be 0.4.0; found ${packageJson.version}.`);
+  process.exit(1);
+}
+if (packageJson.private !== false) {
+  console.error("package.json must set private to false for release preparation.");
+  process.exit(1);
+}
+for (const key of ["homepage", "repository", "bugs", "files", "exports", "scripts"]) {
+  if (!(key in packageJson)) {
+    console.error(`package.json must include ${key}.`);
+    process.exit(1);
+  }
+}
+for (const fileEntry of ["dist/", "snippets/", "tailwind.q2w.js", "README.md", "LICENSE", "CHANGELOG.md"]) {
+  if (!packageJson.files.includes(fileEntry)) {
+    console.error(`package.json files must include ${fileEntry}.`);
+    process.exit(1);
+  }
+}
+for (const exportKey of [".", "./css", "./css/min", "./leaflet", "./plugins", "./showcase", "./interactions", "./tailwind"]) {
+  if (!(exportKey in packageJson.exports)) {
+    console.error(`package.json exports must include ${exportKey}.`);
+    process.exit(1);
+  }
+}
+if (packageJson.scripts.prepublishOnly !== "npm run check") {
+  console.error("package.json prepublishOnly must run npm run check.");
+  process.exit(1);
+}
+
 const required = [
   "eleventy.config.js",
   "dist/q2w-mapcss.css",
@@ -57,6 +89,9 @@ if (missing.length) {
   console.error(`Missing build outputs:\n${missing.join("\n")}`);
   process.exit(1);
 }
+
+const wranglerToml = readOutput("wrangler.toml");
+assertIncludes("wrangler.toml", wranglerToml, ['Q2W_MAPCSS_VERSION = "0.4.0"']);
 
 const leakedDocs = [
   "site/docs/audit.md",
