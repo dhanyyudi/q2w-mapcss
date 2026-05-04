@@ -1,0 +1,30 @@
+# Development source
+src/
+scripts/
+site/
+docs/
+example-qgis2web/
+qgis2web-wireframe-framework/
+web-branding/
+agents/
+public/
+.superpowers/
+.pi/
+eleventy.config.js
+wrangler.toml
+AGENTS.md
+
+# Dev dependencies artifacts
+node_modules/
+.cache/
+.eleventy-cache/
+.wrangler/
+package-lock.json
+
+# Test and CI
+*.test.js
+.github/
+
+# Misc
+.DS_Store
+npm-debug.log*

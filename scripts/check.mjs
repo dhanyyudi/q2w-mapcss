@@ -50,6 +50,8 @@ if (packageJson.scripts.prepublishOnly !== "npm run check") {
 }
 
 const required = [
+  ".npmignore",
+  "CHANGELOG.md",
   "eleventy.config.js",
   "dist/q2w-mapcss.css",
   "dist/q2w-mapcss.min.css",
@@ -92,6 +94,25 @@ if (missing.length) {
 
 const wranglerToml = readOutput("wrangler.toml");
 assertIncludes("wrangler.toml", wranglerToml, ['Q2W_MAPCSS_VERSION = "0.4.0"']);
+
+const npmIgnore = readOutput(".npmignore");
+assertIncludes(".npmignore", npmIgnore, [
+  "src/",
+  "scripts/",
+  "site/",
+  "docs/",
+  ".superpowers/",
+  "AGENTS.md",
+]);
+
+const changelog = readOutput("CHANGELOG.md");
+assertIncludes("CHANGELOG.md", changelog, [
+  "# Changelog",
+  "## v0.4.0 (2026-05-04)",
+  "dist/q2w-interactions.js",
+  "tailwind.q2w.js",
+  "snippets/templates/",
+]);
 
 const leakedDocs = [
   "site/docs/audit.md",
