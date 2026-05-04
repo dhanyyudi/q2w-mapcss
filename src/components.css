@@ -133,6 +133,7 @@ html, body {
   color: var(--q2w-text-muted);
   z-index: var(--q2w-z-panel);
 }
+[data-theme="light"] .q2w-footer { background: rgba(255, 255, 255, 0.92); }
 [data-theme="dark"] .q2w-footer { background: rgba(20, 27, 41, 0.92); }
 .q2w-footer__group { display: flex; align-items: center; gap: 8px; }
 .q2w-footer__group + .q2w-footer__group::before { content: ""; width: 1px; height: 12px; background: var(--q2w-border); }
