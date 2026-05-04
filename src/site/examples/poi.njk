@@ -1,132 +1,41 @@
 ---
 permalink: "/examples/poi.html"
 layout: example.njk
-title: "POI example"
+title: "POI example — Zona Nilai Tanah"
 extraHead: |
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css">
   <style>
-  html, body { height: 100%; }
-  .ex-map {
-    position: absolute; inset: 0;
-    background:
-      repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 60px),
-      repeating-linear-gradient(90deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 60px),
-      linear-gradient(135deg, #f1eee8 0%, #d9d2c3 100%);
-  }
-  .roadL {
-    position: absolute; background: #fff; height: 6px; border-radius: 4px;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
-  }
-  .roadM { position: absolute; background: #fff; height: 3px; border-radius: 2px; }
-  .water { position: absolute; background: #b9d6ea; border-radius: 60% 50% 70% 40%; }
-  .label { position: absolute; font-size: 11px; color: var(--q2w-text-muted); font-weight: 500; }
-  .ex-back { position: absolute; top: 12px; left: 12px; z-index: 600; }
-
-    @media (max-width: 640px) {
-      .ex-back {
-        top: auto !important;
-        bottom: 44px !important;
-        left: 12px !important;
-        z-index: 800;
-      }
-      .ex-map > .q2w-popup {
-        left: 12px !important;
-        right: 12px !important;
-        width: auto !important;
-        transform: none !important;
-      }
-    }
+    html, body { height: 100%; margin: 0; }
+    #map { position: absolute; inset: 0; }
+    .poi-pin { width: 16px; height: 16px; border-radius: 999px; background: var(--q2w-accent); border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.18); }
   </style>
 ---
-
-<div class="ex-map">
-
-  <!-- Water -->
-  <div class="water" style="left: 60%; top: 20%; width: 200px; height: 140px; opacity: 0.8;"></div>
-  <div class="water" style="left: 8%; top: 60%; width: 220px; height: 110px; opacity: 0.8;"></div>
-
-  <!-- Roads -->
-  <div class="roadL" style="left: 4%; top: 30%; width: 92%; transform: rotate(2deg);"></div>
-  <div class="roadL" style="left: 4%; top: 60%; width: 92%; transform: rotate(-3deg);"></div>
-  <div class="roadL" style="left: 30%; top: 6%; width: 6px; height: 88%; transform: rotate(4deg); border-radius: 4px;"></div>
-  <div class="roadL" style="left: 70%; top: 6%; width: 6px; height: 88%; transform: rotate(-2deg); border-radius: 4px;"></div>
-  <div class="roadM" style="left: 8%; top: 18%; width: 70%; transform: rotate(-3deg);"></div>
-  <div class="roadM" style="left: 14%; top: 76%; width: 70%; transform: rotate(2deg);"></div>
-  <div class="roadM" style="left: 50%; top: 8%; height: 86%; width: 3px; border-radius: 2px;"></div>
-
-  <!-- Place labels -->
-  <div class="label" style="left: 22%; top: 24%;">Kejaksan</div>
-  <div class="label" style="left: 56%; top: 26%;">Pekiringan</div>
-  <div class="label" style="left: 36%; top: 56%;">Pekalipan</div>
-  <div class="label" style="left: 72%; top: 64%;">Lemahwungkuk</div>
-
-  <!-- Markers / Clusters -->
-  <div class="q2w-cluster" style="position: absolute; left: 22%; top: 35%;">14</div>
-  <div class="q2w-cluster" style="position: absolute; left: 60%; top: 50%; width: 44px; height: 44px; font-size: 13px; background: var(--q2w-info);">28</div>
-  <div class="q2w-cluster" style="position: absolute; left: 78%; top: 30%; background: var(--q2w-warning);">7</div>
-
-  <div class="q2w-marker" style="position: absolute; left: 38%; top: 42%; background: var(--q2w-info);"></div>
-  <div class="q2w-marker" style="position: absolute; left: 44%; top: 38%; background: var(--q2w-danger);"></div>
-  <div class="q2w-marker" style="position: absolute; left: 50%; top: 70%; background: var(--q2w-success);"></div>
-  <div class="q2w-marker" style="position: absolute; left: 18%; top: 76%; background: var(--q2w-warning);"></div>
-  <div class="q2w-marker" style="position: absolute; left: 70%; top: 80%; background: var(--q2w-info);"></div>
-  <div class="q2w-marker" style="position: absolute; left: 86%; top: 68%; background: var(--q2w-danger);"></div>
-
-  <!-- Tooltip on hover example -->
-  <div class="q2w-tooltip" style="position: absolute; left: 51%; top: 64%;">SMA Negeri 3 · click for details</div>
-
-  {% include "nav-example.njk" %}
-
-  <!-- Header (expressive variant) -->
-  <div class="q2w-header q2w-header--expressive">
-    <div class="q2w-header__brand">
-      <div class="q2w-header__logo">P</div>
-      <div>
-        <div class="q2w-header__title">Cirebon Public Facilities</div>
-        <div class="q2w-header__sub">Schools, hospitals, parks, markets</div>
-      </div>
-    </div>
-    <div class="q2w-header__actions">
-      <button class="q2w-btn q2w-btn--ghost">Filter</button>
-      <button class="q2w-btn q2w-btn--primary q2w-btn--pill">Add place</button>
-    </div>
-  </div>
-
-  <!-- Left: search + zoom -->
-  <div style="position: absolute; left: 12px; top: 80px; z-index: 500; display: flex; flex-direction: column; gap: 6px;">
-    <div class="q2w-search">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" class="q2w-search__icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input placeholder="Search facility…" />
-      <span style="font-family: var(--q2w-font-mono); font-size: 10px; padding: 2px 5px; border: 1px solid var(--q2w-border); border-radius: 3px; color: var(--q2w-text-faint);">⌘K</span>
-    </div>
-    <div class="q2w-control" style="align-self: flex-start;">
-      <button class="q2w-control__btn">+</button>
-      <button class="q2w-control__btn">−</button>
-    </div>
-  </div>
-
-  <!-- Right: filter chips + mini-legend -->
-  <div style="position: absolute; right: 12px; top: 80px; z-index: 500; display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
-    <div style="display: flex; gap: 6px;">
-      <button class="q2w-btn q2w-btn--pill" style="border-color: var(--q2w-info); color: var(--q2w-info); background: var(--q2w-surface);">● Schools <span style="margin-left:4px; color: var(--q2w-text-faint); font-family: var(--q2w-font-mono); font-size: 10px;">42</span></button>
-      <button class="q2w-btn q2w-btn--pill" style="border-color: var(--q2w-danger); color: var(--q2w-danger); background: var(--q2w-surface);">● Hospitals <span style="margin-left:4px; color: var(--q2w-text-faint); font-family: var(--q2w-font-mono); font-size: 10px;">18</span></button>
-      <button class="q2w-btn q2w-btn--pill" style="border-color: var(--q2w-success); color: var(--q2w-success); background: var(--q2w-surface);">● Parks <span style="margin-left:4px; color: var(--q2w-text-faint); font-family: var(--q2w-font-mono); font-size: 10px;">9</span></button>
-      <button class="q2w-btn q2w-btn--pill" style="border-color: var(--q2w-warning); color: var(--q2w-warning); background: var(--q2w-surface);">● Markets <span style="margin-left:4px; color: var(--q2w-text-faint); font-family: var(--q2w-font-mono); font-size: 10px;">12</span></button>
-    </div>
-
-    <div class="q2w-minilegend">
-      <div class="q2w-minilegend__title">Categories</div>
-      <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-info)"></span><span>School</span><span style="margin-left:auto" class="q2w-legend-label">42</span></div>
-      <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-danger)"></span><span>Hospital</span><span style="margin-left:auto" class="q2w-legend-label">18</span></div>
-      <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-success)"></span><span>Park</span><span style="margin-left:auto" class="q2w-legend-label">9</span></div>
-      <div class="q2w-legend-row"><span class="q2w-legend-dot" style="background: var(--q2w-warning)"></span><span>Market</span><span style="margin-left:auto" class="q2w-legend-label">12</span></div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="q2w-footer">
-    <div class="q2w-footer__group">© 2026 Aksara Lab</div>
-    <div class="q2w-footer__group">Powered by qgis2web · Leaflet</div>
-    <div class="q2w-footer__push"></div>
-    <div class="q2w-footer__group q2w-footer__coord">-6.7320°, 108.5523°</div>
-  </div>
+{% include "nav-example.njk" %}
+<div class="q2w-header" style="position: absolute; top: 54px; left: 12px; right: 12px; z-index: 600;">
+  <div class="q2w-header__brand"><div class="q2w-header__logo">q2</div><div><div class="q2w-header__title">POI & clusters — Zona Nilai Tanah</div><div class="q2w-header__sub">Cirebon · village centroids grouped for discovery</div></div></div>
 </div>
+<div id="map"></div>
+<div class="q2w-footer"><div class="q2w-footer__group">© 2026 Aksara Lab · Powered by q2w-mapcss</div><div class="q2w-footer__push"></div><div class="q2w-footer__group q2w-footer__coord" id="coords">0.0000, 0.0000</div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<script>
+const map = L.map('map').setView([-6.7797, 108.4714], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+fetch('_data/znt.geojson').then(r => r.json()).then(data => {
+  L.geoJSON(data.zones, { style: { fillColor: '#0f7a78', fillOpacity: 0.08, color: '#0f7a78', weight: 1 } }).addTo(map);
+  const cluster = L.markerClusterGroup();
+  data.villages.features.forEach(f => {
+    const [lng, lat] = f.geometry.coordinates;
+    const icon = L.divIcon({ className: '', html: '<div class="poi-pin"></div>', iconSize: [16,16] });
+    const marker = L.marker([lat, lng], { icon });
+    marker.bindPopup(`<div class="q2w-popup__header"><div><div class="q2w-popup__title">${f.properties.name}</div><div class="q2w-popup__sub">${f.properties.code}</div></div></div><div class="q2w-attr"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">${Number(f.properties.value).toLocaleString()}</span></div>`);
+    cluster.addLayer(marker);
+  });
+  map.addLayer(cluster);
+});
+map.on('mousemove', e => {
+  document.getElementById('coords').textContent = `${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`;
+});
+</script>

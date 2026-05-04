@@ -1,0 +1,73 @@
+<aside class="doc-side">
+  <div style="padding: 0 24px 16px; border-bottom: 1px solid var(--q2w-border); margin-bottom: 16px;">
+    <a href="../index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--q2w-text); font-weight: 700;">
+      <span class="ln-brand__mark">q2</span> q2w-mapcss
+    </a>
+  </div>
+
+  <nav style="padding: 0 24px;">
+    <h4 style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--q2w-text-faint); margin: 16px 0 8px;">Get started</h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="../docs.html" class="doc-side__link">Overview</a></li>
+      <li><a href="../docs.html#quick-start" class="doc-side__link">Quick start</a></li>
+      <li><a href="../docs.html#tokens" class="doc-side__link">Design tokens</a></li>
+    </ul>
+
+    <h4 style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--q2w-text-faint); margin: 24px 0 8px;">Layout</h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="header.html" class="doc-side__link" data-c="header">Header</a></li>
+      <li><a href="footer.html" class="doc-side__link" data-c="footer">Footer</a></li>
+      <li><a href="sidebar.html" class="doc-side__link" data-c="sidebar">Sidebar</a></li>
+      <li><a href="sheet.html" class="doc-side__link" data-c="sheet">Sheet (mobile)</a></li>
+    </ul>
+
+    <h4 style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--q2w-text-faint); margin: 24px 0 8px;">Controls</h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="button.html" class="doc-side__link" data-c="button">Button</a></li>
+      <li><a href="control.html" class="doc-side__link" data-c="control">Map control</a></li>
+      <li><a href="search.html" class="doc-side__link" data-c="search">Search</a></li>
+      <li><a href="measure.html" class="doc-side__link" data-c="measure">Measure</a></li>
+      <li><a href="basemap.html" class="doc-side__link" data-c="basemap">Basemap</a></li>
+      <li><a href="compass.html" class="doc-side__link" data-c="compass">Compass</a></li>
+    </ul>
+
+    <h4 style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--q2w-text-faint); margin: 24px 0 8px;">Data display</h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="layer.html" class="doc-side__link" data-c="layer">Layer panel</a></li>
+      <li><a href="legend.html" class="doc-side__link" data-c="legend">Legend</a></li>
+      <li><a href="popup.html" class="doc-side__link" data-c="popup">Popup</a></li>
+      <li><a href="tooltip.html" class="doc-side__link" data-c="tooltip">Tooltip</a></li>
+      <li><a href="marker.html" class="doc-side__link" data-c="marker">Marker & cluster</a></li>
+      <li><a href="minimap.html" class="doc-side__link" data-c="minimap">Minimap</a></li>
+    </ul>
+
+    <h4 style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--q2w-text-faint); margin: 24px 0 8px;">Feedback</h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="modal.html" class="doc-side__link" data-c="modal">Modal</a></li>
+      <li><a href="toast.html" class="doc-side__link" data-c="toast">Toast</a></li>
+      <li><a href="quick.html" class="doc-side__link" data-c="quick">Quick info</a></li>
+    </ul>
+
+    <h4 style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--q2w-text-faint); margin: 24px 0 8px;">Advanced</h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><a href="slider.html" class="doc-side__link" data-c="slider">Slider</a></li>
+      <li><a href="compare.html" class="doc-side__link" data-c="compare">Compare</a></li>
+      <li><a href="draw.html" class="doc-side__link" data-c="draw">Draw</a></li>
+      <li><a href="filter.html" class="doc-side__link" data-c="filter">Filter</a></li>
+      <li><a href="goto.html" class="doc-side__link" data-c="goto">Go to coordinate</a></li>
+      <li><a href="share.html" class="doc-side__link" data-c="share">Share</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  .doc-side__link { display: block; padding: 6px 0; font-size: 13px; color: var(--q2w-text-muted); text-decoration: none; border-radius: 4px; }
+  .doc-side__link:hover { color: var(--q2w-text); }
+  .doc-side__link.is-active { color: var(--q2w-accent); font-weight: 600; }
+</style>
+<script>
+  (function() {
+    const path = location.pathname.split('/').pop().replace('.html','');
+    document.querySelectorAll(`.doc-side__link[data-c="${path}"]`).forEach(el => el.classList.add('is-active'));
+  })();
+</script>

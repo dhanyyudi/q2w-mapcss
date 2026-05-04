@@ -1,0 +1,71 @@
+---
+layout: base.njk
+showcaseCss: true
+extraHead: |
+  <style>
+    body { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+    .doc-side { border-right: 1px solid var(--q2w-border); padding: 24px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    .doc-main { padding: 48px 56px; max-width: 880px; }
+    .doc-h1 { font-size: 36px; letter-spacing: -0.02em; margin: 0 0 8px; font-weight: 700; }
+    .doc-tag { font-family: var(--q2w-font-mono); font-size: 12px; color: var(--q2w-accent); }
+    .doc-lead { font-size: 16px; color: var(--q2w-text-muted); margin: 0 0 32px; line-height: 1.55; }
+    .doc-section { margin: 40px 0; }
+    .doc-section h2 { font-size: 18px; margin: 0 0 16px; font-weight: 600; }
+    .doc-preview {
+      border: 1px solid var(--q2w-border);
+      border-radius: var(--q2w-radius-md);
+      padding: 32px;
+      background: var(--q2w-surface-soft);
+      position: relative;
+      min-height: 200px;
+      display: grid; place-items: center;
+    }
+    .doc-code {
+      position: relative;
+      background: #0f1520;
+      color: #e4e7ec;
+      border-radius: var(--q2w-radius-md);
+      padding: 16px 20px;
+      font-family: var(--q2w-font-mono); font-size: 13px;
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+    .doc-code pre { margin: 0; white-space: pre; }
+    .doc-copy {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(255,255,255,0.06);
+      color: #9ca3af;
+      border: 1px solid #2a3344;
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .doc-copy:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .doc-table th, .doc-table td { padding: 10px 12px; border-bottom: 1px solid var(--q2w-border); text-align: left; }
+    .doc-table th { font-weight: 600; color: var(--q2w-text-faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .doc-table code { font-family: var(--q2w-font-mono); font-size: 12px; color: var(--q2w-accent); }
+    .doc-prev-next { display: flex; justify-content: space-between; gap: 16px; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--q2w-border); }
+    .doc-prev-next a { padding: 12px 16px; border: 1px solid var(--q2w-border); border-radius: var(--q2w-radius-md); text-decoration: none; color: var(--q2w-text); font-size: 13px; }
+    @media (max-width: 800px) {
+      body { grid-template-columns: 1fr; }
+      .doc-side { display: none; }
+      .doc-main { padding: 32px 20px; }
+    }
+  </style>
+---
+{% include "docs-sidebar.njk" %}
+<main class="doc-main">
+  {{ content | safe }}
+</main>
+<script>
+document.addEventListener('click', e => {
+  if (!e.target.classList.contains('doc-copy')) return;
+  const code = e.target.nextElementSibling?.textContent || e.target.parentElement.querySelector('pre')?.textContent;
+  if (!code) return;
+  navigator.clipboard.writeText(code.trim());
+  e.target.textContent = 'copied';
+  setTimeout(() => e.target.textContent = 'copy', 1200);
+});
+</script>

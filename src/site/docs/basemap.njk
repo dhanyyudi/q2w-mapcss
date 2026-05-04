@@ -1,0 +1,59 @@
+---
+layout: component.njk
+title: "Basemap — q2w-mapcss"
+component: "basemap"
+permalink: "/docs/basemap.html"
+---
+
+<span class="doc-tag">.q2w-basemap</span>
+<h1 class="doc-h1">Basemap</h1>
+<p class="doc-lead">Basemap picker with thumbnail previews and active state.</p>
+
+<section class="doc-section">
+  <h2>Preview</h2>
+  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
+    {% include "previews/basemap.njk" %}
+  </div>
+</section>
+
+<section class="doc-section">
+  <h2>Usage</h2>
+  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
+  <div class="doc-code">
+    <button class="doc-copy">copy</button>
+<pre>&lt;div class=&quot;q2w-basemap&quot;&gt;
+  Basemap content
+&lt;/div&gt;</pre>
+  </div>
+</section>
+
+<section class="doc-section">
+  <h2>Variants</h2>
+  <table class="doc-table">
+    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>.q2w-basemap</code></td><td>Default component shell</td></tr>
+      <tr><td><code>.q2w-basemap--compact</code></td><td>Denser layout for small maps</td></tr>
+      <tr><td><code>.q2w-basemap--floating</code></td><td>Floating map overlay style</td></tr>
+      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="doc-section">
+  <h2>Sub-elements</h2>
+  <table class="doc-table">
+    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>.q2w-basemap</code></td><td>Root element for the basemap component</td></tr>
+      <tr><td><code>.q2w-basemap__head</code></td><td>Optional header/title region</td></tr>
+      <tr><td><code>.q2w-basemap__body</code></td><td>Main component content region</td></tr>
+      <tr><td><code>.q2w-basemap__actions</code></td><td>Optional action group</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="doc-prev-next">
+  <a href="measure.html">← Measure</a>
+  <a href="compass.html">Compass →</a>
+</div>

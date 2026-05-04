@@ -1,0 +1,68 @@
+---
+layout: component.njk
+title: "Header — q2w-mapcss"
+component: "header"
+permalink: "/docs/header.html"
+---
+
+<span class="doc-tag">.q2w-header</span>
+<h1 class="doc-h1">Header</h1>
+<p class="doc-lead">Floating brand bar with logo, title, optional subtitle, and right-aligned action buttons.</p>
+
+<section class="doc-section">
+  <h2>Preview</h2>
+  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
+    {% include "previews/header.njk" %}
+  </div>
+</section>
+
+<section class="doc-section">
+  <h2>Usage</h2>
+  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
+  <div class="doc-code">
+    <button class="doc-copy">copy</button>
+<pre>&lt;div class=&quot;q2w-header&quot;&gt;
+  &lt;div class=&quot;q2w-header__brand&quot;&gt;
+    &lt;div class=&quot;q2w-header__logo&quot;&gt;q2&lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;q2w-header__title&quot;&gt;Map Title&lt;/div&gt;
+      &lt;div class=&quot;q2w-header__sub&quot;&gt;Subtitle&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;q2w-header__actions&quot;&gt;
+    &lt;button class=&quot;q2w-btn q2w-btn--icon&quot;&gt;?&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+  </div>
+</section>
+
+<section class="doc-section">
+  <h2>Variants</h2>
+  <table class="doc-table">
+    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>.q2w-header</code></td><td>Default component shell</td></tr>
+      <tr><td><code>.q2w-header--compact</code></td><td>Denser layout for small maps</td></tr>
+      <tr><td><code>.q2w-header--floating</code></td><td>Floating map overlay style</td></tr>
+      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="doc-section">
+  <h2>Sub-elements</h2>
+  <table class="doc-table">
+    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>.q2w-header</code></td><td>Root element for the header component</td></tr>
+      <tr><td><code>.q2w-header__head</code></td><td>Optional header/title region</td></tr>
+      <tr><td><code>.q2w-header__body</code></td><td>Main component content region</td></tr>
+      <tr><td><code>.q2w-header__actions</code></td><td>Optional action group</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="doc-prev-next">
+  <a href="../docs.html">← Overview</a>
+  <a href="footer.html">Footer →</a>
+</div>

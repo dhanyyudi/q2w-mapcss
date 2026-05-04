@@ -6,25 +6,6 @@ extraHead: |
   <style>
   body { background: var(--q2w-surface); color: var(--q2w-text); }
 
-  /* Force light tokens for marquee tile previews — these are
-     color swatches showing framework components in their default
-     light appearance, not adaptive UI surfaces. */
-  .ln-strip,
-  .ln-strip .ln-tile {
-    --q2w-surface: #ffffff;
-    --q2w-surface-soft: #f7f8fa;
-    --q2w-surface-sunken: #eef0f3;
-    --q2w-text: #1b2230;
-    --q2w-text-muted: #5b6577;
-    --q2w-text-faint: #8a93a3;
-    --q2w-border: #dde1e7;
-    --q2w-border-strong: #c2c8d2;
-    --q2w-accent: #0f7a78;
-    --q2w-accent-hover: #0c615f;
-    --q2w-accent-soft: #e6f3f2;
-    --q2w-accent-fg: #ffffff;
-  }
-
   /* Top nav */
   .ln-nav {
     position: sticky; top: 0; z-index: 50;
@@ -102,38 +83,61 @@ extraHead: |
   .tk-p { color: #6b7280; }   /* punct */
   .tk-a { color: var(--q2w-accent); }
 
-  /* Demo strip */
-  .ln-strip {
-    margin: 64px 0;
-    overflow: hidden;
+  .ln-showcase { padding: 80px 0; border-top: 1px solid var(--q2w-border); }
+  .ln-showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 280px;
+    gap: 16px;
+  }
+  .ln-card {
     position: relative;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  }
-  .ln-strip__track {
-    display: flex; gap: 16px;
-    width: max-content;
-    animation: ln-marquee 50s linear infinite;
-  }
-  .ln-strip__track:hover { animation-play-state: paused; }
-  @keyframes ln-marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  .ln-tile {
-    width: 360px; height: 220px;
+    display: flex;
+    flex-direction: column;
     border: 1px solid var(--q2w-border);
     border-radius: var(--q2w-radius-md);
     background: var(--q2w-surface);
     overflow: hidden;
-    position: relative;
-    flex: none;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
   }
-  .ln-tile__lbl {
-    position: absolute; left: 10px; bottom: 10px;
-    font-family: var(--q2w-font-mono); font-size: 11px;
-    background: rgba(15,21,32,0.7); color: #fff;
-    padding: 3px 8px; border-radius: 4px;
+  .ln-card:hover { border-color: var(--q2w-accent); transform: translateY(-2px); }
+  .ln-card--lg { grid-column: span 2; }
+  .ln-card__preview {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    --q2w-surface: #ffffff;
+    --q2w-surface-soft: #f7f8fa;
+    --q2w-text: #1b2230;
+    --q2w-text-muted: #5b6577;
+    --q2w-text-faint: #8a93a3;
+    --q2w-border: #dde1e7;
+    --q2w-accent-soft: #e6f3f2;
+  }
+  .ln-card__meta {
+    padding: 14px 18px;
+    border-top: 1px solid var(--q2w-border);
+  }
+  .ln-card__name {
+    font-family: var(--q2w-font-mono);
+    font-size: 12px;
+    color: var(--q2w-accent);
+    margin-bottom: 4px;
+  }
+  .ln-card__desc {
+    font-size: 13px;
+    color: var(--q2w-text-muted);
+    line-height: 1.45;
+  }
+  @media (max-width: 900px) {
+    .ln-showcase__grid { grid-template-columns: repeat(2, 1fr); }
+    .ln-card--lg { grid-column: span 2; }
+  }
+  @media (max-width: 600px) {
+    .ln-showcase__grid { grid-template-columns: 1fr; }
+    .ln-card--lg { grid-column: span 1; }
   }
 
   /* Sections */
@@ -142,31 +146,6 @@ extraHead: |
   .ln-section__head .num { font-family: var(--q2w-font-mono); font-size: 11px; color: var(--q2w-text-faint); display: block; margin-bottom: 8px; letter-spacing: 0.06em; }
   .ln-section__head h2 { font-size: 36px; letter-spacing: -0.02em; margin: 0 0 12px; font-weight: 700; }
   .ln-section__head p { font-size: 16px; color: var(--q2w-text-muted); max-width: 560px; margin: 0 auto; }
-
-  /* Feature grid */
-  .ln-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .ln-feat {
-    display: block;
-    border: 1px solid var(--q2w-border);
-    border-radius: var(--q2w-radius-md);
-    padding: 24px;
-    background: var(--q2w-surface);
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
-  }
-  .ln-feat:hover { border-color: var(--q2w-border-strong); transform: translateY(-2px); box-shadow: var(--q2w-shadow-sm); }
-  .ln-feat__icon { width: 36px; height: 36px; border-radius: var(--q2w-radius-sm); background: var(--q2w-accent-soft); color: var(--q2w-accent); display: grid; place-items: center; margin-bottom: 14px; }
-  .ln-feat h3 { margin: 0 0 6px; font-size: 15px; font-weight: 600; }
-  .ln-feat p { margin: 0; font-size: 13px; color: var(--q2w-text-muted); line-height: 1.55; }
-  .ln-feat__count {
-    display: inline-block;
-    font-family: var(--q2w-font-mono); font-size: 11px;
-    color: var(--q2w-text-faint);
-    margin-top: 12px; padding-top: 12px;
-    border-top: 1px dashed var(--q2w-border);
-    width: 100%;
-  }
 
   /* Origin */
   .ln-origin { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
@@ -220,7 +199,7 @@ extraHead: |
 
   @media (max-width: 800px) {
     .ln-hero h1 { font-size: 40px; }
-    .ln-features, .ln-origin, .ln-footer__grid { grid-template-columns: 1fr; }
+    .ln-origin, .ln-footer__grid { grid-template-columns: 1fr; }
     .ln-nav__links { display: none; }
   }
   </style>
@@ -261,190 +240,63 @@ extraHead: |
   </div>
 </section>
 
-<!-- Animated demo strip -->
-<div class="ln-strip">
-  <div class="ln-strip__track">
-    <!-- Tile 1: header floating -->
-    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e 0%, #3f5e44 100%);">
-      <div class="q2w-header" style="position: absolute; top: 12px; left: 12px; right: 12px; height: 40px; padding: 0 12px;">
-        <div class="q2w-header__brand"><div class="q2w-header__logo" style="width:24px; height:24px; font-size:10px;">q2</div><div class="q2w-header__title" style="font-size:12px;">Land Atlas</div></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-header</div>
-    </div>
-    <!-- Tile 2: popup -->
-    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
-      <div class="q2w-popup" style="width: 220px; transform: scale(0.92);">
-        <div class="q2w-popup__header" style="padding: 8px 10px;"><div><div class="q2w-popup__title" style="font-size:12px;">Mekarjaya</div><div class="q2w-popup__sub" style="font-size:10px;">ZNT-021</div></div></div>
-        <div class="q2w-popup__body"><div class="q2w-attr" style="padding: 6px 10px;"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">720k</span></div></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-popup</div>
-    </div>
-    <!-- Tile 3: legend -->
-    <div class="ln-tile" style="background: linear-gradient(135deg, #f1eee8, #d9d2c3); display: grid; place-items: center;">
-      <div class="q2w-minilegend" style="width: 200px;">
-        <div class="q2w-minilegend__title">Value · Rp/m²</div>
-        <div class="q2w-grad"></div>
-        <div class="q2w-grad__labels"><span>&lt;100k</span><span>1m</span><span>5m+</span></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-grad</div>
-    </div>
-    <!-- Tile 4: dark heatmap legend -->
-    <div class="ln-tile" style="background: radial-gradient(circle at 50% 50%, rgba(215,25,28,0.7) 0 10%, rgba(253,174,97,0.5) 10% 25%, transparent 35%), linear-gradient(135deg, #1f2e3a, #15212c); display: grid; place-items: center;" data-theme="dark">
-      <div class="q2w-toolbar"><div class="q2w-control"><button class="q2w-control__btn">+</button><button class="q2w-control__btn">−</button></div></div>
-      <div class="ln-tile__lbl">.q2w-control</div>
-    </div>
-    <!-- Tile 5: search -->
-    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
-      <div class="q2w-search">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="q2w-search__icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input placeholder="Search…" />
-      </div>
-      <div class="ln-tile__lbl">.q2w-search</div>
-    </div>
-    <!-- Tile 6: toast -->
-    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
-      <div class="q2w-toast q2w-toast--success">
-        <div class="q2w-toast__icon">✓</div>
-        <div><div class="q2w-toast__title">Layer loaded</div><div class="q2w-toast__msg">1,284 features</div></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-toast</div>
-    </div>
-    <!-- Tile 7: layer panel -->
-    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e, #3f5e44); display: grid; place-items: center;">
-      <div class="q2w-panel" style="width: 200px;">
-        <div class="q2w-panel__header" style="padding: 6px 10px; font-size: 10px;">Layers</div>
-        <div class="q2w-panel__body" style="padding: 6px 10px;">
-          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value</span></div>
-          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
-          <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Rivers</span></div>
-        </div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-panel</div>
-    </div>
-
-    <!-- Duplicate set for seamless marquee -->
-    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e 0%, #3f5e44 100%);">
-      <div class="q2w-header" style="position: absolute; top: 12px; left: 12px; right: 12px; height: 40px; padding: 0 12px;">
-        <div class="q2w-header__brand"><div class="q2w-header__logo" style="width:24px; height:24px; font-size:10px;">q2</div><div class="q2w-header__title" style="font-size:12px;">Land Atlas</div></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-header</div>
-    </div>
-    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
-      <div class="q2w-popup" style="width: 220px; transform: scale(0.92);">
-        <div class="q2w-popup__header" style="padding: 8px 10px;"><div><div class="q2w-popup__title" style="font-size:12px;">Mekarjaya</div><div class="q2w-popup__sub" style="font-size:10px;">ZNT-021</div></div></div>
-        <div class="q2w-popup__body"><div class="q2w-attr" style="padding: 6px 10px;"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">720k</span></div></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-popup</div>
-    </div>
-    <div class="ln-tile" style="background: linear-gradient(135deg, #f1eee8, #d9d2c3); display: grid; place-items: center;">
-      <div class="q2w-minilegend" style="width: 200px;">
-        <div class="q2w-minilegend__title">Value · Rp/m²</div>
-        <div class="q2w-grad"></div>
-        <div class="q2w-grad__labels"><span>&lt;100k</span><span>1m</span><span>5m+</span></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-grad</div>
-    </div>
-    <div class="ln-tile" style="background: radial-gradient(circle at 50% 50%, rgba(215,25,28,0.7) 0 10%, rgba(253,174,97,0.5) 10% 25%, transparent 35%), linear-gradient(135deg, #1f2e3a, #15212c); display: grid; place-items: center;" data-theme="dark">
-      <div class="q2w-toolbar"><div class="q2w-control"><button class="q2w-control__btn">+</button><button class="q2w-control__btn">−</button></div></div>
-      <div class="ln-tile__lbl">.q2w-control</div>
-    </div>
-    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
-      <div class="q2w-search">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="q2w-search__icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input placeholder="Search…" />
-      </div>
-      <div class="ln-tile__lbl">.q2w-search</div>
-    </div>
-    <div class="ln-tile" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c); display: grid; place-items: center;">
-      <div class="q2w-toast q2w-toast--success">
-        <div class="q2w-toast__icon">✓</div>
-        <div><div class="q2w-toast__title">Layer loaded</div><div class="q2w-toast__msg">1,284 features</div></div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-toast</div>
-    </div>
-    <div class="ln-tile" style="background: linear-gradient(135deg, #6a8c5e, #3f5e44); display: grid; place-items: center;">
-      <div class="q2w-panel" style="width: 200px;">
-        <div class="q2w-panel__header" style="padding: 6px 10px; font-size: 10px;">Layers</div>
-        <div class="q2w-panel__body" style="padding: 6px 10px;">
-          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value</span></div>
-          <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
-          <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Rivers</span></div>
-        </div>
-      </div>
-      <div class="ln-tile__lbl">.q2w-panel</div>
-    </div>
-  </div>
-</div>
-
-<!-- Features -->
-<section class="ln-section" id="features">
+<!-- Component showcase -->
+<section class="ln-showcase" id="showcase">
   <div class="ln-wrap">
     <div class="ln-section__head">
       <span class="num">02 · COMPONENTS</span>
-      <h2>Everything a thematic map needs.</h2>
-      <p>30+ pre-styled components. Light + dark + 4 themes. ~12kb gzipped.</p>
+      <h2>Built for thematic maps.</h2>
+      <p>30+ pre-styled components. Click any preview to see usage and copy code.</p>
     </div>
 
-    <div class="ln-features">
-      <a class="ln-feat" href="docs.html#layers">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polygon points="12,3 21,8 12,13 3,8"/><polyline points="3,12 12,17 21,12"/><polyline points="3,16 12,21 21,16"/></svg></div>
-        <h3>Layer panel</h3>
-        <p>Categorical, graduated, point. Drag-to-reorder. Per-layer opacity. Sub-symbology.</p>
-        <span class="ln-feat__count">3 variants</span>
+    <div class="ln-showcase__grid">
+      <a href="docs/header.html" class="ln-card ln-card--lg">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #6a8c5e, #3f5e44);">{% include "previews/header.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-header</div><div class="ln-card__desc">Floating brand pill with logo, title, actions.</div></div>
       </a>
-      <a class="ln-feat" href="docs.html#popup">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-        <h3>Popups</h3>
-        <p>Tabular, rich (image + actions), tabbed, with charts. Six variants out of the box.</p>
-        <span class="ln-feat__count">6 variants</span>
+      <a href="docs/popup.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #c5d6c5, #7d9c7c);">{% include "previews/popup.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-popup</div><div class="ln-card__desc">Tabular feature attributes with accent header.</div></div>
       </a>
-      <a class="ln-feat" href="docs.html#legend">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="6" width="18" height="4" rx="1"/><rect x="3" y="14" width="12" height="4" rx="1"/></svg></div>
-        <h3>Legends</h3>
-        <p>Categorical swatches, graduated bars, diverging scales, point symbols.</p>
-        <span class="ln-feat__count">4 variants</span>
+      <a href="docs/layer.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec);">{% include "previews/layer.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-panel</div><div class="ln-card__desc">Layer stacks, toggles, sublayers, and opacity rows.</div></div>
       </a>
-      <a class="ln-feat" href="docs.html#search">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
-        <h3>Search &amp; geocoder</h3>
-        <p>Result list, keyboard hint, debounced input. Wire to any geocoding API.</p>
-        <span class="ln-feat__count">2 states</span>
+      <a href="docs/legend.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #f6f1e9, #ead8bf);">{% include "previews/legend.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-grad</div><div class="ln-card__desc">Sequential and diverging legend bars for thematic maps.</div></div>
       </a>
-      <a class="ln-feat" href="docs.html#zoom">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
-        <h3>Map controls</h3>
-        <p>Zoom, locate, measure, compass, drawing toolbar, coordinate go-to.</p>
-        <span class="ln-feat__count">7 controls</span>
+      <a href="docs/search.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #f3f6f9, #d9e7ef);">{% include "previews/search.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-search</div><div class="ln-card__desc">Search field with icon, placeholder, and result context.</div></div>
       </a>
-      <a class="ln-feat" href="examples/dashboard.html">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <h3>Layouts</h3>
-        <p>Floating panels, sidebar, bottom sheet, full dashboard. Mobile-ready.</p>
-        <span class="ln-feat__count">4 layouts</span>
+      <a href="docs/control.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #364152, #111827);">{% include "previews/control.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-control</div><div class="ln-card__desc">Reusable control buttons for zoom, reset, layers, and tools.</div></div>
       </a>
-      <a class="ln-feat" href="docs.html#tokens">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div>
-        <h3>Themes</h3>
-        <p>Light, dark, slate, ocean, forest, sunset. Override any token via CSS variables.</p>
-        <span class="ln-feat__count">6 themes</span>
+      <a href="docs/toast.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5);">{% include "previews/toast.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-toast</div><div class="ln-card__desc">Transient success and status feedback after user actions.</div></div>
       </a>
-      <a class="ln-feat" href="docs.html#phase2">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 12h16M12 4v16"/></svg></div>
-        <h3>Compare &amp; minimap</h3>
-        <p>Swipe between two layers. Inset overview map. Time slider.</p>
-        <span class="ln-feat__count">3 advanced</span>
+      <a href="docs/basemap.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #e9eef6, #cad7ea);">{% include "previews/basemap.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-basemap</div><div class="ln-card__desc">Basemap picker with thumbnail tiles and active state.</div></div>
       </a>
-      <a class="ln-feat" href="docs.html#quick-start">
-        <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-        <h3>Built for qgis2web</h3>
-        <p>Class names map 1-to-1 to the elements qgis2web outputs. Minimum rewriting.</p>
-        <span class="ln-feat__count">drop-in</span>
+      <a href="docs/compass.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #f4f4f5, #d4d4d8);">{% include "previews/compass.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-compass</div><div class="ln-card__desc">Orientation indicator for rotated maps and advanced controls.</div></div>
       </a>
-      <a href="examples/categorized-real/" class="ln-feat">
-        <div class="ln-feat__icon">{% icon "map-pin", "18" %}</div>
-        <h3>Real qgis2web export</h3>
-        <p>A live drop-in replacement of a custom override CSS in a working categorized land value map.</p>
-        <span class="ln-feat__count">drop-in</span>
+      <a href="docs/modal.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #1f2937, #111827);">{% include "previews/modal.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-modal</div><div class="ln-card__desc">Welcome, help, and onboarding overlays with strong focus.</div></div>
+      </a>
+      <a href="docs/sheet.html" class="ln-card">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe);">{% include "previews/sheet.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-sheet</div><div class="ln-card__desc">Mobile-first bottom sheets for compact map workflows.</div></div>
+      </a>
+      <a href="docs/footer.html" class="ln-card ln-card--lg">
+        <div class="ln-card__preview" style="background: linear-gradient(135deg, #dbe7d3, #9db393);">{% include "previews/footer.njk" %}</div>
+        <div class="ln-card__meta"><div class="ln-card__name">.q2w-footer</div><div class="ln-card__desc">Sticky map footer with attribution, powered-by, and live coordinates.</div></div>
       </a>
     </div>
   </div>

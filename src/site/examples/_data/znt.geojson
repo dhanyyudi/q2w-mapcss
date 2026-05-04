@@ -1,0 +1,804 @@
+{
+  "zones": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Tukmudal",
+          "code": "ZNT-001",
+          "value": 85000,
+          "area": 8.5
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.45,
+                -6.79
+              ],
+              [
+                108.4554,
+                -6.7888
+              ],
+              [
+                108.456,
+                -6.7852
+              ],
+              [
+                108.45270000000001,
+                -6.78352
+              ],
+              [
+                108.4494,
+                -6.7858
+              ],
+              [
+                108.45,
+                -6.79
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Mekarjaya",
+          "code": "ZNT-002",
+          "value": 180000,
+          "area": 10.2
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.465,
+                -6.79
+              ],
+              [
+                108.4704,
+                -6.7888
+              ],
+              [
+                108.471,
+                -6.7852
+              ],
+              [
+                108.46770000000001,
+                -6.78352
+              ],
+              [
+                108.4644,
+                -6.7858
+              ],
+              [
+                108.465,
+                -6.79
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Sumber",
+          "code": "ZNT-003",
+          "value": 420000,
+          "area": 11.9
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.48,
+                -6.79
+              ],
+              [
+                108.4854,
+                -6.7888
+              ],
+              [
+                108.486,
+                -6.7852
+              ],
+              [
+                108.48270000000001,
+                -6.78352
+              ],
+              [
+                108.4794,
+                -6.7858
+              ],
+              [
+                108.48,
+                -6.79
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Kemantren",
+          "code": "ZNT-004",
+          "value": 760000,
+          "area": 13.6
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.495,
+                -6.79
+              ],
+              [
+                108.5004,
+                -6.7888
+              ],
+              [
+                108.501,
+                -6.7852
+              ],
+              [
+                108.49770000000001,
+                -6.78352
+              ],
+              [
+                108.4944,
+                -6.7858
+              ],
+              [
+                108.495,
+                -6.79
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Babakan",
+          "code": "ZNT-005",
+          "value": 950000,
+          "area": 15.3
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.45,
+                -6.775
+              ],
+              [
+                108.4554,
+                -6.7738000000000005
+              ],
+              [
+                108.456,
+                -6.7702
+              ],
+              [
+                108.45270000000001,
+                -6.7685200000000005
+              ],
+              [
+                108.4494,
+                -6.7708
+              ],
+              [
+                108.45,
+                -6.775
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Gegunung",
+          "code": "ZNT-006",
+          "value": 1250000,
+          "area": 17.0
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.465,
+                -6.775
+              ],
+              [
+                108.4704,
+                -6.7738000000000005
+              ],
+              [
+                108.471,
+                -6.7702
+              ],
+              [
+                108.46770000000001,
+                -6.7685200000000005
+              ],
+              [
+                108.4644,
+                -6.7708
+              ],
+              [
+                108.465,
+                -6.775
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Pejambon",
+          "code": "ZNT-007",
+          "value": 1850000,
+          "area": 18.7
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.48,
+                -6.775
+              ],
+              [
+                108.4854,
+                -6.7738000000000005
+              ],
+              [
+                108.486,
+                -6.7702
+              ],
+              [
+                108.48270000000001,
+                -6.7685200000000005
+              ],
+              [
+                108.4794,
+                -6.7708
+              ],
+              [
+                108.48,
+                -6.775
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Watubelah",
+          "code": "ZNT-008",
+          "value": 2400000,
+          "area": 20.4
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.495,
+                -6.775
+              ],
+              [
+                108.5004,
+                -6.7738000000000005
+              ],
+              [
+                108.501,
+                -6.7702
+              ],
+              [
+                108.49770000000001,
+                -6.7685200000000005
+              ],
+              [
+                108.4944,
+                -6.7708
+              ],
+              [
+                108.495,
+                -6.775
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Sendang",
+          "code": "ZNT-009",
+          "value": 3100000,
+          "area": 22.1
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.45,
+                -6.76
+              ],
+              [
+                108.4554,
+                -6.7588
+              ],
+              [
+                108.456,
+                -6.755199999999999
+              ],
+              [
+                108.45270000000001,
+                -6.75352
+              ],
+              [
+                108.4494,
+                -6.7558
+              ],
+              [
+                108.45,
+                -6.76
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Perbutulan",
+          "code": "ZNT-010",
+          "value": 4200000,
+          "area": 23.8
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.465,
+                -6.76
+              ],
+              [
+                108.4704,
+                -6.7588
+              ],
+              [
+                108.471,
+                -6.755199999999999
+              ],
+              [
+                108.46770000000001,
+                -6.75352
+              ],
+              [
+                108.4644,
+                -6.7558
+              ],
+              [
+                108.465,
+                -6.76
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Kenanga",
+          "code": "ZNT-011",
+          "value": 5600000,
+          "area": 25.5
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.48,
+                -6.76
+              ],
+              [
+                108.4854,
+                -6.7588
+              ],
+              [
+                108.486,
+                -6.755199999999999
+              ],
+              [
+                108.48270000000001,
+                -6.75352
+              ],
+              [
+                108.4794,
+                -6.7558
+              ],
+              [
+                108.48,
+                -6.76
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Kaliwadas",
+          "code": "ZNT-012",
+          "value": 6800000,
+          "area": 27.2
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                108.495,
+                -6.76
+              ],
+              [
+                108.5004,
+                -6.7588
+              ],
+              [
+                108.501,
+                -6.755199999999999
+              ],
+              [
+                108.49770000000001,
+                -6.75352
+              ],
+              [
+                108.4944,
+                -6.7558
+              ],
+              [
+                108.495,
+                -6.76
+              ]
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "villages": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Tukmudal",
+          "code": "DS-001",
+          "value": 85000,
+          "intensity": 0.01
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.453,
+            -6.7860000000000005
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Mekarjaya",
+          "code": "DS-002",
+          "value": 180000,
+          "intensity": 0.03
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.468,
+            -6.7860000000000005
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Sumber",
+          "code": "DS-003",
+          "value": 420000,
+          "intensity": 0.06
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.483,
+            -6.7860000000000005
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Kemantren",
+          "code": "DS-004",
+          "value": 760000,
+          "intensity": 0.11
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.498,
+            -6.7860000000000005
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Babakan",
+          "code": "DS-005",
+          "value": 950000,
+          "intensity": 0.14
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.453,
+            -6.771000000000001
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Gegunung",
+          "code": "DS-006",
+          "value": 1250000,
+          "intensity": 0.18
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.468,
+            -6.771000000000001
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Pejambon",
+          "code": "DS-007",
+          "value": 1850000,
+          "intensity": 0.27
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.483,
+            -6.771000000000001
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Watubelah",
+          "code": "DS-008",
+          "value": 2400000,
+          "intensity": 0.35
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.498,
+            -6.771000000000001
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Sendang",
+          "code": "DS-009",
+          "value": 3100000,
+          "intensity": 0.46
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.453,
+            -6.756
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Perbutulan",
+          "code": "DS-010",
+          "value": 4200000,
+          "intensity": 0.62
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.468,
+            -6.756
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Kenanga",
+          "code": "DS-011",
+          "value": 5600000,
+          "intensity": 0.82
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.483,
+            -6.756
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Kaliwadas",
+          "code": "DS-012",
+          "value": 6800000,
+          "intensity": 1.0
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            108.498,
+            -6.756
+          ]
+        }
+      }
+    ]
+  },
+  "roads": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Jalan Kolektor Sumber",
+          "class": "collector"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              108.446,
+              -6.786
+            ],
+            [
+              108.506,
+              -6.778
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Jalan Lokal Mekarjaya",
+          "class": "local"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              108.452,
+              -6.754
+            ],
+            [
+              108.49,
+              -6.798
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Koridor Babakan",
+          "class": "local"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              108.444,
+              -6.768
+            ],
+            [
+              108.505,
+              -6.764
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "rivers": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Sungai Jamblang"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              108.448,
+              -6.8
+            ],
+            [
+              108.462,
+              -6.784
+            ],
+            [
+              108.475,
+              -6.77
+            ],
+            [
+              108.492,
+              -6.756
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Alur Sungai"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              108.5,
+              -6.795
+            ],
+            [
+              108.486,
+              -6.782
+            ],
+            [
+              108.47,
+              -6.76
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}

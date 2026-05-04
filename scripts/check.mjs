@@ -14,6 +14,10 @@ const required = [
   "dist/q2w-mapcss.showcase.css",
   "site/index.html",
   "site/docs.html",
+  "site/docs/header.html",
+  "site/docs/popup.html",
+  "site/docs/share.html",
+  "site/examples/_data/znt.geojson",
   "site/_headers",
   "site/_redirects",
   "site/dist/q2w-mapcss.css",
@@ -31,8 +35,25 @@ if (missing.length) {
   process.exit(1);
 }
 
-if (existsSync(join(root, "site/docs"))) {
-  console.error("Agent-only docs directory must not be published to site/docs.");
+const leakedDocs = [
+  "site/docs/audit.md",
+  "site/docs/audit-2.md",
+  "site/docs/audit-3.md",
+  "site/docs/audit-4.md",
+  "site/docs/superpowers",
+].filter((path) => existsSync(join(root, path)));
+if (leakedDocs.length) {
+  console.error(`Agent-only docs must not be published:\n${leakedDocs.join("\n")}`);
+  process.exit(1);
+}
+
+const siteIndex = readFileSync(join(root, "site/index.html"), "utf8");
+if (siteIndex.includes("ln-strip") || siteIndex.includes("ln-tile") || siteIndex.includes("ln-marquee")) {
+  console.error("Landing page must not ship marquee strip markup after Audit 4.");
+  process.exit(1);
+}
+if (!siteIndex.includes("ln-showcase__grid") || !siteIndex.includes("docs/header.html")) {
+  console.error("Landing page must ship the component showcase grid after Audit 4.");
   process.exit(1);
 }
 
@@ -71,6 +92,27 @@ if (leafletCss.includes("body.q2w-qgis2web")) {
 const example = readFileSync(join(root, "site/examples/choropleth.html"), "utf8");
 if (!example.includes("../dist/q2w-mapcss.css")) {
   console.error("Example pages must consume the hosted dist CSS.");
+  process.exit(1);
+}
+
+for (const name of ["choropleth", "dashboard", "heatmap", "poi"]) {
+  const html = readFileSync(join(root, `site/examples/${name}.html`), "utf8");
+  if (!html.includes("_data/znt.geojson")) {
+    console.error(`${name} example must load shared znt.geojson data.`);
+    process.exit(1);
+  }
+  if (html.includes("clip-path")) {
+    console.error(`${name} example must not contain fake clip-path map geometry.`);
+    process.exit(1);
+  }
+}
+
+if (!readFileSync(join(root, "site/examples/heatmap.html"), "utf8").includes("leaflet-heat")) {
+  console.error("Heatmap example must include leaflet-heat.");
+  process.exit(1);
+}
+if (!readFileSync(join(root, "site/examples/poi.html"), "utf8").includes("markercluster")) {
+  console.error("POI example must include markercluster.");
   process.exit(1);
 }
 

@@ -1,217 +1,71 @@
 ---
 permalink: "/examples/dashboard.html"
 layout: example.njk
-title: "Dashboard example"
+title: "Dashboard example — Zona Nilai Tanah"
 extraHead: |
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
-  html, body { height: 100%; }
-  .ex-shell { display: flex; height: 100vh; }
-  .ex-map {
-    position: relative; flex: 1;
-    background:
-      radial-gradient(ellipse at 40% 50%, rgba(0,0,0,0.08), transparent 60%),
-      linear-gradient(135deg, #6a8c5e 0%, #56795c 50%, #3f5e44 100%);
-    overflow: hidden;
-  }
-  .zone {
-    position: absolute;
-    border: 1.5px solid rgba(255,255,255,0.65);
-    mix-blend-mode: multiply;
-  }
-  .roadL { position: absolute; background: var(--q2w-qual-2); height: 3px; border-radius: 2px; }
-  .label { position: absolute; font-size: 11px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.6); font-weight: 500; }
-
-  /* sidebar specific */
-  .ds-side {
-    width: 360px;
-    background: var(--q2w-surface);
-    border-right: 1px solid var(--q2w-border);
-    display: flex; flex-direction: column;
-    overflow: hidden;
-  }
-  .ds-side__head { padding: 16px 20px; border-bottom: 1px solid var(--q2w-border); display: flex; align-items: center; gap: 12px; }
-  .ds-side__body { padding: 16px 20px; overflow: auto; flex: 1; }
-  .ds-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
-  .ds-stat { padding: 12px; background: var(--q2w-surface-soft); border-radius: var(--q2w-radius-md); }
-  .ds-stat__k { font-family: var(--q2w-font-mono); font-size: 10px; color: var(--q2w-text-faint); text-transform: uppercase; letter-spacing: 0.06em; }
-  .ds-stat__v { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin-top: 4px; }
-  .ds-stat__d { font-size: 11px; color: var(--q2w-success); margin-top: 4px; }
-
-  .ds-h { font-family: var(--q2w-font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--q2w-text-faint); margin: 18px 0 10px; }
-  .ds-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--q2w-border); font-size: 12.5px; }
-  .ds-row:last-child { border-bottom: 0; }
-  .ds-row__name { flex: 1; }
-  .ds-row__bar { width: 80px; height: 6px; background: var(--q2w-surface-sunken); border-radius: 3px; overflow: hidden; }
-  .ds-row__bar > span { display: block; height: 100%; background: var(--q2w-accent); }
-  .ds-row__val { font-family: var(--q2w-font-mono); font-size: 11px; color: var(--q2w-text-muted); width: 56px; text-align: right; }
-
-    @media (max-width: 640px) {
-      .ex-back {
-        top: auto !important;
-        bottom: 44px !important;
-        left: 12px !important;
-        z-index: 800;
-      }
-      .ex-map > .q2w-popup {
-        left: 12px !important;
-        right: 12px !important;
-        width: auto !important;
-        transform: none !important;
-      }
+    html, body { height: 100%; margin: 0; }
+    #map { position: absolute; inset: 0 360px 0 0; }
+    .db-side { position: absolute; top: 0; right: 0; bottom: 0; width: 360px; background: var(--q2w-surface); border-left: 1px solid var(--q2w-border); z-index: 500; overflow: auto; }
+    .db-side__head { padding: 88px 20px 16px; border-bottom: 1px solid var(--q2w-border); }
+    .db-side__body { padding: 16px 20px 96px; }
+    .db-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .db-stat { padding: 12px; background: var(--q2w-surface-soft); border-radius: var(--q2w-radius-md); }
+    .db-stat__k { font-family: var(--q2w-font-mono); font-size: 10px; color: var(--q2w-text-faint); text-transform: uppercase; }
+    .db-stat__v { font-size: 22px; font-weight: 700; margin-top: 4px; }
+    .db-list { margin-top: 18px; display: grid; gap: 10px; }
+    .db-row { display: flex; justify-content: space-between; gap: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--q2w-border); font-size: 13px; }
+    @media (max-width: 900px) {
+      #map { inset: 0; }
+      .db-side { position: absolute; left: 12px; right: 12px; bottom: 56px; top: auto; width: auto; height: 260px; border: 1px solid var(--q2w-border); border-radius: var(--q2w-radius-lg); }
+      .db-side__head { padding-top: 16px; }
     }
   </style>
 ---
-
 {% include "nav-example.njk" %}
-
-<div class="ex-shell">
-
-  <!-- Sidebar -->
-  <aside class="ds-side">
-    <div class="ds-side__head">
-      <div class="q2w-header__logo">q2</div>
-      <div>
-        <div style="font-weight: 600; font-size: 14px;">Land Value Atlas</div>
-        <div style="font-size: 11px; color: var(--q2w-text-muted);">Cirebon · 2026</div>
-      </div>
-      <a class="q2w-btn q2w-btn--ghost q2w-btn--icon" href="../index.html" style="margin-left:auto" title="Back to kit">←</a>
-    </div>
-    <div class="ds-side__body">
-
-      <div class="q2w-search" style="width: 100%; margin-bottom: 18px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" class="q2w-search__icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input placeholder="Search desa or kecamatan…" />
-      </div>
-
-      <div class="ds-stat-grid">
-        <div class="ds-stat">
-          <div class="ds-stat__k">avg value</div>
-          <div class="ds-stat__v">Rp 720k</div>
-          <div class="ds-stat__d">▲ 12% YoY</div>
-        </div>
-        <div class="ds-stat">
-          <div class="ds-stat__k">zones</div>
-          <div class="ds-stat__v">1,284</div>
-          <div class="ds-stat__d" style="color: var(--q2w-text-muted);">in view</div>
-        </div>
-        <div class="ds-stat">
-          <div class="ds-stat__k">range</div>
-          <div class="ds-stat__v" style="font-size: 14px; font-weight: 500;">80k – 4.8m</div>
-        </div>
-        <div class="ds-stat">
-          <div class="ds-stat__k">last update</div>
-          <div class="ds-stat__v" style="font-size: 14px; font-weight: 500;">04 May '26</div>
-        </div>
-      </div>
-
-      <div class="ds-h">Distribution</div>
-      <svg viewBox="0 0 320 100" style="width: 100%; height: auto; display: block;">
-        <g fill="var(--q2w-accent)">
-          <rect x="0"   y="60" width="48" height="40"/>
-          <rect x="52"  y="20" width="48" height="80"/>
-          <rect x="104" y="8"  width="48" height="92"/>
-          <rect x="156" y="34" width="48" height="66"/>
-          <rect x="208" y="62" width="48" height="38"/>
-          <rect x="260" y="80" width="48" height="20"/>
-        </g>
-        <g font-family="var(--q2w-font-mono)" font-size="9" fill="var(--q2w-text-muted)">
-          <text x="0"   y="100" dy="12">&lt;100k</text>
-          <text x="52"  y="100" dy="12">200k</text>
-          <text x="104" y="100" dy="12">500k</text>
-          <text x="156" y="100" dy="12">1m</text>
-          <text x="208" y="100" dy="12">2m</text>
-          <text x="260" y="100" dy="12">5m+</text>
-        </g>
-      </svg>
-
-      <div class="ds-h">Top kecamatan by avg</div>
-      <div class="ds-row">
-        <span class="ds-row__name">Sumber</span>
-        <div class="ds-row__bar"><span style="width: 92%; background: var(--q2w-seq-6);"></span></div>
-        <span class="ds-row__val">2.4m</span>
-      </div>
-      <div class="ds-row">
-        <span class="ds-row__name">Tukmudal</span>
-        <div class="ds-row__bar"><span style="width: 76%; background: var(--q2w-seq-5);"></span></div>
-        <span class="ds-row__val">1.8m</span>
-      </div>
-      <div class="ds-row">
-        <span class="ds-row__name">Babakan</span>
-        <div class="ds-row__bar"><span style="width: 52%; background: var(--q2w-seq-4);"></span></div>
-        <span class="ds-row__val">820k</span>
-      </div>
-      <div class="ds-row">
-        <span class="ds-row__name">Mekarjaya</span>
-        <div class="ds-row__bar"><span style="width: 36%; background: var(--q2w-seq-3);"></span></div>
-        <span class="ds-row__val">540k</span>
-      </div>
-      <div class="ds-row">
-        <span class="ds-row__name">Cigedang</span>
-        <div class="ds-row__bar"><span style="width: 22%; background: var(--q2w-seq-2);"></span></div>
-        <span class="ds-row__val">280k</span>
-      </div>
-
-      <div class="ds-h">Trend · 5y</div>
-      <svg viewBox="0 0 320 80" style="width: 100%; height: auto; display: block;">
-        <polyline fill="var(--q2w-accent-soft)" stroke="none" points="0,60 60,55 120,48 180,40 240,30 300,18 320,15 320,80 0,80"/>
-        <polyline fill="none" stroke="var(--q2w-accent)" stroke-width="2" points="0,60 60,55 120,48 180,40 240,30 300,18 320,15"/>
-        <g font-family="var(--q2w-font-mono)" font-size="9" fill="var(--q2w-text-faint)">
-          <text x="0" y="78">'21</text>
-          <text x="290" y="78">'26</text>
-        </g>
-      </svg>
-
-      <div class="ds-h">Layers</div>
-      <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Land value zones</span></div>
-      <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Roads</span></div>
-      <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Rivers</span></div>
-      <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Admin boundaries</span></div>
-    </div>
-  </aside>
-
-  <!-- Map -->
-  <main class="ex-map">
-    <!-- Zones -->
-    <div class="zone" style="left: 14%; top: 18%; width: 22%; height: 26%; background: var(--q2w-seq-5); clip-path: polygon(0% 30%, 18% 0%, 70% 8%, 100% 50%, 88% 100%, 22% 90%, 0% 70%);"></div>
-    <div class="zone" style="left: 32%; top: 10%; width: 22%; height: 32%; background: var(--q2w-seq-6); clip-path: polygon(8% 0%, 100% 6%, 96% 70%, 60% 100%, 0% 80%, 14% 30%);"></div>
-    <div class="zone" style="left: 50%; top: 18%; width: 22%; height: 28%; background: var(--q2w-seq-4); clip-path: polygon(10% 12%, 88% 0%, 100% 60%, 70% 100%, 0% 88%);"></div>
-    <div class="zone" style="left: 22%; top: 42%; width: 24%; height: 30%; background: var(--q2w-seq-2); clip-path: polygon(0% 20%, 60% 0%, 100% 50%, 70% 100%, 10% 88%);"></div>
-    <div class="zone" style="left: 14%; top: 58%; width: 26%; height: 30%; background: var(--q2w-seq-3); clip-path: polygon(0% 30%, 30% 0%, 100% 22%, 88% 80%, 50% 100%, 0% 70%);"></div>
-    <div class="zone" style="left: 42%; top: 54%; width: 26%; height: 30%; background: var(--q2w-seq-1); clip-path: polygon(8% 0%, 100% 18%, 90% 80%, 30% 100%, 0% 60%);"></div>
-    <div class="zone" style="left: 58%; top: 56%; width: 24%; height: 28%; background: var(--q2w-seq-3); clip-path: polygon(0% 30%, 60% 0%, 100% 40%, 80% 100%, 10% 90%);"></div>
-
-    <!-- Roads -->
-    <div class="roadL" style="left: 4%; top: 18%; width: 80%; transform: rotate(8deg);"></div>
-    <div class="roadL" style="left: 24%; top: 50%; width: 56%; transform: rotate(-4deg);"></div>
-
-    <!-- Labels -->
-    <div class="label" style="left: 32%; top: 22%;">Tukmudal</div>
-    <div class="label" style="left: 50%; top: 22%;">Sumber</div>
-    <div class="label" style="left: 24%; top: 56%;">Mekarjaya</div>
-    <div class="label" style="left: 56%; top: 70%;">Babakan</div>
-
-    <!-- Map controls -->
-    <div class="q2w-toolbar" style="position: absolute; right: 12px; top: 12px; z-index: 500;">
-      <div class="q2w-control"><button class="q2w-control__btn">+</button><button class="q2w-control__btn">−</button></div>
-      <div class="q2w-control"><button class="q2w-control__btn">⌖</button></div>
-    </div>
-
-    <!-- Mini legend bottom-right -->
-    <div class="q2w-minilegend" style="position: absolute; right: 12px; bottom: 44px; z-index: 500;">
-      <div class="q2w-minilegend__title">Value · Rp/m²</div>
-      <div class="q2w-grad"></div>
-      <div class="q2w-grad__labels"><span>&lt;100k</span><span>1m</span><span>5m+</span></div>
-    </div>
-
-    <!-- Tooltip -->
-    <div class="q2w-tooltip" style="position: absolute; left: 36%; top: 28%; z-index: 510;">Sumber · 2.4m Rp/m²</div>
-
-    <!-- Footer -->
-    <div class="q2w-footer">
-      <div class="q2w-footer__group">© 2026 Aksara Lab</div>
-      <div class="q2w-footer__group">Powered by qgis2web · Leaflet</div>
-      <div class="q2w-footer__push"></div>
-      <div class="q2w-footer__group q2w-footer__coord">Z 13 · -7.7868°, 108.4670°</div>
-    </div>
-  </main>
+<div class="q2w-header" style="position: absolute; top: 54px; left: 12px; right: 372px; z-index: 600;">
+  <div class="q2w-header__brand"><div class="q2w-header__logo">q2</div><div><div class="q2w-header__title">Dashboard — Zona Nilai Tanah</div><div class="q2w-header__sub">Cirebon · same dataset, analysis layout</div></div></div>
 </div>
+<div id="map"></div>
+<aside class="db-side">
+  <div class="db-side__head">
+    <div style="font-weight:700; font-size:18px;">Land value dashboard</div>
+    <div style="font-size:13px; color:var(--q2w-text-muted); margin-top:4px;">Metrics derived from the same Zona Nilai Tanah dataset.</div>
+  </div>
+  <div class="db-side__body">
+    <div class="db-grid">
+      <div class="db-stat"><div class="db-stat__k">zones</div><div class="db-stat__v" id="statZones">0</div></div>
+      <div class="db-stat"><div class="db-stat__k">mean</div><div class="db-stat__v" id="statMean">0</div></div>
+      <div class="db-stat"><div class="db-stat__k">max</div><div class="db-stat__v" id="statMax">0</div></div>
+      <div class="db-stat"><div class="db-stat__k">roads</div><div class="db-stat__v" id="statRoads">0</div></div>
+    </div>
+    <h3 style="margin:20px 0 10px; font-size:14px;">Top 5 zones</h3>
+    <div class="db-list" id="topZones"></div>
+  </div>
+</aside>
+<div class="q2w-footer"><div class="q2w-footer__group">© 2026 Aksara Lab · Powered by q2w-mapcss</div><div class="q2w-footer__push"></div><div class="q2w-footer__group q2w-footer__coord" id="coords">0.0000, 0.0000</div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map = L.map('map').setView([-6.7797, 108.4714], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+fetch('_data/znt.geojson').then(r => r.json()).then(data => {
+  const zones = data.zones.features;
+  const values = zones.map(f => Number(f.properties.value));
+  document.getElementById('statZones').textContent = zones.length;
+  document.getElementById('statMean').textContent = Math.round(values.reduce((a,b)=>a+b,0) / values.length).toLocaleString();
+  document.getElementById('statMax').textContent = Math.max(...values).toLocaleString();
+  document.getElementById('statRoads').textContent = data.roads.features.length;
+  const top = [...zones].sort((a,b)=>b.properties.value-a.properties.value).slice(0,5);
+  document.getElementById('topZones').innerHTML = top.map(f => `<div class="db-row"><span>${f.properties.name}</span><strong>${Number(f.properties.value).toLocaleString()}</strong></div>`).join('');
+  L.geoJSON(data.zones, {
+    style: { fillColor: '#0f7a78', fillOpacity: 0.25, color: '#ffffff', weight: 1 },
+    onEachFeature: (f, layer) => layer.bindPopup(`<div class="q2w-popup__header"><div><div class="q2w-popup__title">${f.properties.name}</div><div class="q2w-popup__sub">${f.properties.code}</div></div></div><div class="q2w-attr"><span class="q2w-attr__key">value</span><span class="q2w-attr__val">${Number(f.properties.value).toLocaleString()}</span></div>`)
+  }).addTo(map);
+  L.geoJSON(data.roads, { style: { color: '#f59e0b', weight: 3 } }).addTo(map);
+  L.geoJSON(data.rivers, { style: { color: '#38bdf8', weight: 2 } }).addTo(map);
+});
+map.on('mousemove', e => {
+  document.getElementById('coords').textContent = `${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`;
+});
+</script>

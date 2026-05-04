@@ -1,0 +1,59 @@
+---
+layout: component.njk
+title: "Map control — q2w-mapcss"
+component: "control"
+permalink: "/docs/control.html"
+---
+
+<span class="doc-tag">.q2w-control</span>
+<h1 class="doc-h1">Map control</h1>
+<p class="doc-lead">Reusable map control buttons for zoom, reset, locate, and tools.</p>
+
+<section class="doc-section">
+  <h2>Preview</h2>
+  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
+    {% include "previews/control.njk" %}
+  </div>
+</section>
+
+<section class="doc-section">
+  <h2>Usage</h2>
+  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
+  <div class="doc-code">
+    <button class="doc-copy">copy</button>
+<pre>&lt;div class=&quot;q2w-control&quot;&gt;
+  Map control content
+&lt;/div&gt;</pre>
+  </div>
+</section>
+
+<section class="doc-section">
+  <h2>Variants</h2>
+  <table class="doc-table">
+    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>.q2w-control</code></td><td>Default component shell</td></tr>
+      <tr><td><code>.q2w-control--compact</code></td><td>Denser layout for small maps</td></tr>
+      <tr><td><code>.q2w-control--floating</code></td><td>Floating map overlay style</td></tr>
+      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="doc-section">
+  <h2>Sub-elements</h2>
+  <table class="doc-table">
+    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>.q2w-control</code></td><td>Root element for the map control component</td></tr>
+      <tr><td><code>.q2w-control__head</code></td><td>Optional header/title region</td></tr>
+      <tr><td><code>.q2w-control__body</code></td><td>Main component content region</td></tr>
+      <tr><td><code>.q2w-control__actions</code></td><td>Optional action group</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="doc-prev-next">
+  <a href="button.html">← Button</a>
+  <a href="search.html">Search →</a>
+</div>

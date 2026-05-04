@@ -1,134 +1,33 @@
 ---
 permalink: "/examples/heatmap.html"
 layout: example.njk
-title: "Heatmap example"
+title: "Heatmap example — Zona Nilai Tanah"
 extraHead: |
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
-  html, body { height: 100%; background: var(--q2w-neutral-900); }
-  body { color: var(--q2w-neutral-50); }
-  .ex-map {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(circle at 36% 42%, rgba(215,25,28,0.95) 0 6%,  rgba(253,174,97,0.7) 6% 16%, rgba(255,255,191,0.4) 16% 26%, transparent 28%),
-      radial-gradient(circle at 58% 50%, rgba(215,25,28,0.85) 0 5%,  rgba(253,174,97,0.6) 5% 14%, rgba(255,255,191,0.35) 14% 24%, transparent 26%),
-      radial-gradient(circle at 70% 32%, rgba(253,174,97,0.55) 0 8%, rgba(255,255,191,0.3) 8% 18%, transparent 22%),
-      radial-gradient(circle at 28% 70%, rgba(253,174,97,0.5) 0 6%, rgba(255,255,191,0.25) 6% 16%, transparent 20%),
-      radial-gradient(circle at 80% 70%, rgba(215,25,28,0.7) 0 4%, rgba(253,174,97,0.45) 4% 12%, transparent 18%),
-      linear-gradient(135deg, #1f2e3a 0%, #15212c 50%, #0c1620 100%);
-  }
-  .basemap-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 80px 80px;
-  }
-  .label { position: absolute; font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 500; pointer-events: none; }
-  .ex-back { position: absolute; top: 12px; left: 12px; z-index: 600; }
-
-    @media (max-width: 640px) {
-      .ex-back {
-        top: auto !important;
-        bottom: 44px !important;
-        left: 12px !important;
-        z-index: 800;
-      }
-      .ex-map > .q2w-popup {
-        left: 12px !important;
-        right: 12px !important;
-        width: auto !important;
-        transform: none !important;
-      }
-    }
+    html, body { height: 100%; margin: 0; }
+    #map { position: absolute; inset: 0; }
+    @media (max-width: 640px) { .ex-back { top: auto !important; bottom: 44px !important; left: 12px !important; z-index: 800; } }
   </style>
 ---
-
-<div class="ex-map">
-  <div class="basemap-grid"></div>
-
-  <div class="label" style="left: 30%; top: 30%;">Downtown</div>
-  <div class="label" style="left: 62%; top: 38%;">Harbor</div>
-  <div class="label" style="left: 22%; top: 60%;">Westside</div>
-  <div class="label" style="left: 76%; top: 60%;">Eastside</div>
-
-  {% include "nav-example.njk" %}
-
-  <!-- Technical header -->
-  <div class="q2w-header q2w-header--technical">
-    <div class="q2w-header__brand">
-      <div class="q2w-header__logo">▣</div>
-      <div>
-        <div class="q2w-header__title">Crime Density · 2025</div>
-        <div class="q2w-header__sub">heatmap_kde · 14,820 events</div>
-      </div>
-    </div>
-    <div class="q2w-header__actions">
-      <button class="q2w-btn q2w-btn--ghost" style="color: var(--q2w-neutral-50)">[?]</button>
-      <button class="q2w-btn q2w-btn--ghost" style="color: var(--q2w-neutral-50)">[≡]</button>
-    </div>
-  </div>
-
-  <!-- Zoom -->
-  <div style="position: absolute; left: 12px; top: 76px; z-index: 500;">
-    <div class="q2w-control"><button class="q2w-control__btn">+</button><button class="q2w-control__btn">−</button></div>
-  </div>
-
-  <!-- Time slider -->
-  <div style="position: absolute; left: 50%; top: 76px; transform: translateX(-50%); z-index: 500; background: rgba(20,27,41,0.92); backdrop-filter: blur(8px); border: 1px solid var(--q2w-border); border-radius: var(--q2w-radius-md); padding: 8px 14px; display: flex; align-items: center; gap: 12px; min-width: 420px; box-shadow: var(--q2w-shadow-md);">
-    <button class="q2w-btn q2w-btn--ghost q2w-btn--icon" style="color: var(--q2w-neutral-50)">▶</button>
-    <div style="flex: 1;">
-      <div style="height: 4px; border-radius: 2px; background: var(--q2w-border); position: relative;">
-        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 64%; background: var(--q2w-accent); border-radius: 2px;"></div>
-        <div style="position: absolute; left: 64%; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: var(--q2w-accent); box-shadow: 0 0 0 4px rgba(45,212,208,0.2);"></div>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-family: var(--q2w-font-mono); font-size: 10px; color: var(--q2w-text-muted); margin-top: 6px;">
-        <span>Jan '25</span><span>Aug '25</span><span>Dec '25</span>
-      </div>
-    </div>
-    <div style="font-family: var(--q2w-font-mono); font-size: 11px; color: var(--q2w-neutral-50);">2025-08-14</div>
-  </div>
-
-  <!-- Mini legend (gradient) -->
-  <div class="q2w-minilegend" style="position: absolute; right: 12px; bottom: 44px; z-index: 500;">
-    <div class="q2w-minilegend__title">Density · events / km²</div>
-    <div style="height: 12px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,191,0.4), rgba(253,174,97,0.7), rgba(215,25,28,0.95));"></div>
-    <div class="q2w-grad__labels"><span>low</span><span>med</span><span>high</span></div>
-    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--q2w-border); font-size: 10.5px; color: var(--q2w-text-muted); display: flex; justify-content: space-between;">
-      <span>Total</span><span style="font-family: var(--q2w-font-mono); color: var(--q2w-text);">14,820</span>
-    </div>
-  </div>
-
-  <!-- Right: layer panel -->
-  <div class="q2w-panel" style="position: absolute; right: 12px; top: 76px; z-index: 500;">
-    <div class="q2w-panel__header"><span>Heatmap settings</span></div>
-    <div class="q2w-panel__body">
-      <div class="q2w-panel__section">
-        <div style="font-size: 11px; color: var(--q2w-text-muted); margin-bottom: 6px;">Radius · 24px</div>
-        <div style="height: 4px; border-radius: 2px; background: var(--q2w-border); position: relative;">
-          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 40%; background: var(--q2w-accent); border-radius: 2px;"></div>
-        </div>
-      </div>
-      <div class="q2w-panel__section">
-        <div style="font-size: 11px; color: var(--q2w-text-muted); margin-bottom: 6px;">Intensity · 0.7</div>
-        <div style="height: 4px; border-radius: 2px; background: var(--q2w-border); position: relative;">
-          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 70%; background: var(--q2w-accent); border-radius: 2px;"></div>
-        </div>
-      </div>
-      <div class="q2w-panel__section">
-        <div class="q2w-panel__section-title">Categories</div>
-        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Theft</span><span class="q2w-layer__opacity">8,210</span></div>
-        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Assault</span><span class="q2w-layer__opacity">3,142</span></div>
-        <div class="q2w-layer"><span class="q2w-layer__check"></span><span class="q2w-layer__name">Vandalism</span><span class="q2w-layer__opacity">1,824</span></div>
-        <div class="q2w-layer"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Other</span><span class="q2w-layer__opacity">1,644</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="q2w-footer">
-    <div class="q2w-footer__group">© 2026 Aksara Lab</div>
-    <div class="q2w-footer__group">Powered by qgis2web · Leaflet.heat</div>
-    <div class="q2w-footer__push"></div>
-    <div class="q2w-footer__group q2w-footer__coord">Z 13 · -6.9020°, 107.6190°</div>
-  </div>
+{% include "nav-example.njk" %}
+<div class="q2w-header" style="position: absolute; top: 54px; left: 12px; right: 12px; z-index: 600;">
+  <div class="q2w-header__brand"><div class="q2w-header__logo">q2</div><div><div class="q2w-header__title">Heatmap — Zona Nilai Tanah</div><div class="q2w-header__sub">Cirebon · centroid density weighted by value</div></div></div>
 </div>
+<div id="map"></div>
+<div class="q2w-panel" style="position:absolute; right:12px; top:130px; width:240px; z-index:600;"><div class="q2w-panel__header">Heat intensity</div><div class="q2w-panel__body"><div class="q2w-grad" style="background:linear-gradient(90deg,#2563eb,#22c55e,#facc15,#ef4444);"></div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--q2w-text-muted);margin-top:8px;"><span>low</span><span>high</span></div></div></div>
+<div class="q2w-footer"><div class="q2w-footer__group">© 2026 Aksara Lab · Powered by q2w-mapcss</div><div class="q2w-footer__push"></div><div class="q2w-footer__group q2w-footer__coord" id="coords">0.0000, 0.0000</div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script>
+const map = L.map('map').setView([-6.7797, 108.4714], 13);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: '© Esri' }).addTo(map);
+fetch('_data/znt.geojson').then(r => r.json()).then(data => {
+  L.geoJSON(data.zones, { style: { fillOpacity: 0.08, color: '#fff', weight: 1 } }).addTo(map);
+  const points = data.villages.features.map(f => [f.geometry.coordinates[1], f.geometry.coordinates[0], f.properties.intensity || 0.5]);
+  L.heatLayer(points, { radius: 25, blur: 18, maxZoom: 15 }).addTo(map);
+});
+map.on('mousemove', e => {
+  document.getElementById('coords').textContent = `${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`;
+});
+</script>
