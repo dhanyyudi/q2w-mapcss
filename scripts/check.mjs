@@ -45,6 +45,9 @@ const required = [
   "site/examples/heatmap.html",
   "site/examples/poi.html",
   "site/examples/categorized-real/index.html",
+  "site/snippets/templates/basic.html",
+  "site/snippets/templates/with-panel.html",
+  "site/snippets/templates/dashboard.html",
   "wrangler.toml",
   "tailwind.q2w.js",
 ];
@@ -370,6 +373,28 @@ assertIncludes("tailwind.q2w.js", tailwindPlugin, [
   '"q2w-md": "var(--q2w-radius-md)"',
   '"q2w-4": "var(--q2w-space-4)"',
   '"q2w-lg": "var(--q2w-shadow-lg)"',
+]);
+
+const basicTemplate = readOutput("site/snippets/templates/basic.html");
+assertIncludes("site/snippets/templates/basic.html", basicTemplate, [
+  "q2w-mapcss.css",
+  "q2w-interactions.js",
+  "window.q2w.coordDisplay",
+  "id=\"map\"",
+]);
+
+const panelTemplate = readOutput("site/snippets/templates/with-panel.html");
+assertIncludes("site/snippets/templates/with-panel.html", panelTemplate, [
+  "q2w-panel__header--collapsible",
+  "data-layer-id=\"cities\"",
+  "window.q2w.bindLayerPanel",
+]);
+
+const dashboardTemplate = readOutput("site/snippets/templates/dashboard.html");
+assertIncludes("site/snippets/templates/dashboard.html", dashboardTemplate, [
+  "q2w-sidebar",
+  "q2w-panel",
+  "Chart placeholder",
 ]);
 
 const sourceFiles = walk(join(root, "src/site")).filter((path) => /\.(html|njk)$/.test(path));

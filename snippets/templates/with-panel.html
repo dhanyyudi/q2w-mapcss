@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map with layer panel — q2w-mapcss</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="q2w-mapcss.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .demo-panel { position: fixed; top: 88px; left: 16px; z-index: 700; width: 280px; }
+  </style>
+</head>
+<body class="q2w-qgis2web q2w-has-footer q2w-controls-below-header">
+  <div class="q2w-header">
+    <div class="q2w-header__brand">
+      <div class="q2w-header__logo">q2</div>
+      <div>
+        <div class="q2w-header__title">Operational layers</div>
+        <div class="q2w-header__sub">Panel binding template</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <div class="q2w-panel demo-panel">
+    <div class="q2w-panel__header q2w-panel__header--collapsible">Layers <span class="q2w-panel__chevron">▾</span></div>
+    <div class="q2w-panel__body">
+      <div class="q2w-layer" data-layer-id="cities"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Cities</span></div>
+      <div class="q2w-layer" data-layer-id="area"><span class="q2w-layer__check q2w-layer__check--on">✓</span><span class="q2w-layer__name">Study area</span></div>
+    </div>
+  </div>
+
+  <div class="q2w-footer">
+    <div class="q2w-footer__group">Toggle rows to add or remove layers</div>
+    <div class="q2w-footer__push"></div>
+    <div class="q2w-footer__group q2w-footer__coord" id="coords">0.00000, 0.00000</div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="q2w-interactions.js"></script>
+  <script>
+    const map = L.map('map').setView([-6.2, 106.82], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const cities = L.layerGroup([
+      L.marker([-6.175, 106.827]).bindPopup('Central Jakarta'),
+      L.marker([-6.121, 106.774]).bindPopup('North Jakarta')
+    ]).addTo(map);
+
+    const area = L.polygon([
+      [-6.29, 106.72],
+      [-6.29, 106.92],
+      [-6.12, 106.92],
+      [-6.12, 106.72]
+    ], { color: '#0f7a78', weight: 2, fillOpacity: 0.08 }).addTo(map);
+
+    window.q2w.coordDisplay(map, '#coords');
+    window.q2w.bindLayerPanel(map, { cities, area });
+
+    document.querySelector('.q2w-panel__header--collapsible').addEventListener('click', (event) => {
+      event.currentTarget.closest('.q2w-panel').classList.toggle('is-collapsed');
+    });
+  </script>
+</body>
+</html>

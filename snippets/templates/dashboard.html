@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard shell — q2w-mapcss</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="q2w-mapcss.css" />
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr); }
+    #map { height: 100vh; }
+    .dashboard-shell { padding: 88px 20px 20px; background: var(--q2w-surface-soft); overflow: auto; }
+    .dashboard-stack { display: grid; gap: 16px; }
+    .dashboard-metric { padding: 16px; border: 1px solid var(--q2w-border); border-radius: var(--q2w-radius-md); background: var(--q2w-surface); }
+    .dashboard-chart { min-height: 180px; display: grid; place-items: center; color: var(--q2w-text-muted); }
+    @media (max-width: 960px) {
+      body { grid-template-columns: 1fr; }
+      #map { height: 55vh; }
+      .dashboard-shell { padding-top: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div style="position:relative;">
+    <div class="q2w-header" style="left:16px; right:16px;">
+      <div class="q2w-header__brand">
+        <div class="q2w-header__logo">q2</div>
+        <div>
+          <div class="q2w-header__title">Dashboard template</div>
+          <div class="q2w-header__sub">Map + sidebar summary layout</div>
+        </div>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <aside class="dashboard-shell">
+    <div class="dashboard-stack">
+      <div class="q2w-sidebar">
+        <div class="q2w-sidebar__header">
+          <div>
+            <div class="q2w-sidebar__title">Overview</div>
+            <div class="q2w-sidebar__sub">Use this area for KPI copy and filters.</div>
+          </div>
+        </div>
+        <div class="q2w-sidebar__body">
+          <div class="dashboard-metric"><strong>126</strong><br>Active field reports</div>
+          <div class="dashboard-metric"><strong>18</strong><br>Priority villages</div>
+          <div class="dashboard-metric dashboard-chart">Chart placeholder</div>
+        </div>
+      </div>
+
+      <div class="q2w-panel">
+        <div class="q2w-panel__header">Legend</div>
+        <div class="q2w-panel__body">
+          <div class="q2w-legend-item"><span class="q2w-legend-swatch" style="background:#0f7a78;"></span><span>Completed</span></div>
+          <div class="q2w-legend-item"><span class="q2w-legend-swatch" style="background:#f0a44b;"></span><span>In progress</span></div>
+          <div class="q2w-legend-item"><span class="q2w-legend-swatch" style="background:#d9534f;"></span><span>Needs review</span></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([-6.2, 106.82], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    L.circleMarker([-6.175, 106.827], { radius: 10, color: '#0f7a78', fillOpacity: 0.7 }).addTo(map);
+    L.circleMarker([-6.121, 106.774], { radius: 10, color: '#f0a44b', fillOpacity: 0.7 }).addTo(map);
+    L.circleMarker([-6.261, 106.781], { radius: 10, color: '#d9534f', fillOpacity: 0.7 }).addTo(map);
+  </script>
+</body>
+</html>

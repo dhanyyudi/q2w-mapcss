@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic map shell — q2w-mapcss</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="q2w-mapcss.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+  </style>
+</head>
+<body class="q2w-qgis2web q2w-has-footer q2w-controls-below-header">
+  <div class="q2w-header">
+    <div class="q2w-header__brand">
+      <div class="q2w-header__logo">q2</div>
+      <div>
+        <div class="q2w-header__title">Map title</div>
+        <div class="q2w-header__sub">Subtitle · Organization</div>
+      </div>
+    </div>
+    <div class="q2w-header__actions">
+      <button class="q2w-btn q2w-btn--icon" data-q2w-modal="help-modal" title="Help">?</button>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <div class="q2w-footer">
+    <div class="q2w-footer__group">© 2026 Organization · Powered by q2w-mapcss</div>
+    <div class="q2w-footer__push"></div>
+    <div class="q2w-footer__group q2w-footer__coord" id="coords">0.00000, 0.00000</div>
+  </div>
+
+  <div class="q2w-modal-backdrop" id="help-modal" aria-hidden="true" style="display:none;">
+    <div class="q2w-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <div class="q2w-modal__header">
+        <div>
+          <div class="q2w-modal__title" id="help-title">Map help</div>
+          <div class="q2w-modal__sub">Replace this copy with your export guidance.</div>
+        </div>
+        <button class="q2w-btn q2w-btn--icon" data-q2w-close aria-label="Close">×</button>
+      </div>
+      <div class="q2w-modal__body">
+        <p style="margin:0; color:var(--q2w-text-muted);">Use the mouse wheel to zoom, drag to pan, and open layer popups for more details.</p>
+      </div>
+      <div class="q2w-modal__footer">
+        <button class="q2w-btn q2w-btn--primary" data-q2w-close>Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="q2w-interactions.js"></script>
+  <script>
+    const map = L.map('map').setView([-6.2, 106.82], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    window.q2w.coordDisplay(map, '#coords');
+  </script>
+</body>
+</html>
