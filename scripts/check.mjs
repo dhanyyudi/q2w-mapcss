@@ -302,6 +302,16 @@ for (const [relativePath, needles] of Object.entries(docsVariantRequirements)) {
 }
 
 const css = readFileSync(join(root, "dist/q2w-mapcss.css"), "utf8");
+assertIncludes("dist/q2w-mapcss.css", css, [
+  "q2w-mapcss v0.4.0",
+  "Lightweight CSS framework + JS interactions for qgis2web Leaflet exports.",
+  "https://q2w-mapcss.pages.dev",
+  "License: MIT",
+]);
+
+const minCss = readOutput("dist/q2w-mapcss.min.css");
+assertIncludes("dist/q2w-mapcss.min.css", minCss, ["q2w-mapcss v0.4.0"]);
+
 const mustContain = [
   "--q2w-accent",
   ".q2w-header",

@@ -6,8 +6,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const srcDir = join(root, "src");
 const distDir = join(root, "dist");
 const version = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version;
-const header = `/* q2w-mapcss v${version} | MIT License | https://github.com/dhanyyudi/q2w-mapcss */\n`;
-const minHeader = `/* q2w-mapcss v${version} | MIT */\n`;
+const header = `/*!\n * q2w-mapcss v${version}\n * Lightweight CSS framework + JS interactions for qgis2web Leaflet exports.\n * https://q2w-mapcss.pages.dev\n * License: MIT\n */\n`;
+const minHeader = `/*! q2w-mapcss v${version} | MIT | https://q2w-mapcss.pages.dev */\n`;
 
 function read(path) {
   return readFileSync(path, "utf8");
