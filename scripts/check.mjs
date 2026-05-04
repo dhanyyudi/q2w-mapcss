@@ -46,6 +46,7 @@ const required = [
   "site/examples/poi.html",
   "site/examples/categorized-real/index.html",
   "wrangler.toml",
+  "tailwind.q2w.js",
 ];
 
 const missing = required.filter((path) => !existsSync(join(root, path)));
@@ -360,6 +361,16 @@ function walk(dir) {
     return entry.isDirectory() ? walk(path) : [path];
   });
 }
+
+const tailwindPlugin = readOutput("tailwind.q2w.js");
+assertIncludes("tailwind.q2w.js", tailwindPlugin, [
+  'require("tailwindcss/plugin")',
+  '"q2w-accent": "var(--q2w-accent)"',
+  '"q2w-surface": "var(--q2w-surface)"',
+  '"q2w-md": "var(--q2w-radius-md)"',
+  '"q2w-4": "var(--q2w-space-4)"',
+  '"q2w-lg": "var(--q2w-shadow-lg)"',
+]);
 
 const sourceFiles = walk(join(root, "src/site")).filter((path) => /\.(html|njk)$/.test(path));
 const legacyRefs = [];
