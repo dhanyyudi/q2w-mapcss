@@ -47,6 +47,16 @@ if (leakedDocs.length) {
   process.exit(1);
 }
 
+const headerDoc = readFileSync(join(root, "site/docs/header.html"), "utf8");
+if (!headerDoc.includes('../dist/q2w-mapcss.css') || !headerDoc.includes('../dist/q2w-mapcss.showcase.css')) {
+  console.error("Component docs must load CSS from ../dist/ because they are nested under /docs/.");
+  process.exit(1);
+}
+if (headerDoc.includes('href="dist/q2w-mapcss.css"') || headerDoc.includes('href="dist/q2w-mapcss.showcase.css"')) {
+  console.error("Component docs must not use root-page relative dist CSS paths.");
+  process.exit(1);
+}
+
 const siteIndex = readFileSync(join(root, "site/index.html"), "utf8");
 if (siteIndex.includes("ln-strip") || siteIndex.includes("ln-tile") || siteIndex.includes("ln-marquee")) {
   console.error("Landing page must not ship marquee strip markup after Audit 4.");

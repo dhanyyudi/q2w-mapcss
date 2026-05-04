@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{{ title }} — q2w-mapcss</title>
 <link rel="stylesheet" href="{{ cssPath | default('dist/q2w-mapcss.css') }}" />
-{% if showcaseCss %}<link rel="stylesheet" href="dist/q2w-mapcss.showcase.css" />{% endif %}
+{% if showcaseCss %}<link rel="stylesheet" href="{{ showcasePath | default('dist/q2w-mapcss.showcase.css') }}" />{% endif %}
 {% if extraHead %}{{ extraHead | safe }}{% endif %}
 </head>
 <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
