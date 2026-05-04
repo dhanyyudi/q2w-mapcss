@@ -1,7 +1,7 @@
 ---
 permalink: "/index.html"
 layout: base.njk
-title: "Polished map UI for your qgis2web exports"
+title: "Beautiful UI for your web map"
 extraHead: |
   <style>
   body { background: var(--q2w-surface); color: var(--q2w-text); }
@@ -235,22 +235,6 @@ extraHead: |
   .ln-compare__lbl { font-family: var(--q2w-font-mono); font-size: 10px; text-transform: uppercase; color: var(--q2w-text-faint); margin-bottom: 8px; letter-spacing: 0.06em; }
   .ln-compare__row + .ln-compare__row { border-top: 1px solid var(--q2w-border); }
 
-  /* Roadmap */
-  .ln-roadmap {
-    border: 1px solid var(--q2w-border);
-    border-radius: var(--q2w-radius-md);
-    overflow: hidden;
-  }
-  .ln-rm__row { display: grid; grid-template-columns: 100px 1fr 100px; align-items: center; padding: 16px 24px; gap: 16px; border-bottom: 1px solid var(--q2w-border); }
-  .ln-rm__row:last-child { border-bottom: 0; }
-  .ln-rm__v { font-family: var(--q2w-font-mono); font-size: 12px; color: var(--q2w-text); }
-  .ln-rm__title { font-size: 14px; }
-  .ln-rm__title small { color: var(--q2w-text-muted); font-size: 12px; display: block; margin-top: 2px; }
-  .ln-rm__status { text-align: right; font-size: 11px; padding: 3px 8px; border-radius: 999px; font-family: var(--q2w-font-mono); justify-self: end; }
-  .ln-rm__status--done { background: rgba(31,138,76,0.12); color: var(--q2w-success); }
-  .ln-rm__status--now { background: var(--q2w-accent-soft); color: var(--q2w-accent); }
-  .ln-rm__status--next { background: var(--q2w-surface-soft); color: var(--q2w-text-muted); border: 1px solid var(--q2w-border); }
-
   /* Footer */
   .ln-footer { border-top: 1px solid var(--q2w-border); padding: 48px 0 64px; }
   .ln-footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
@@ -284,12 +268,12 @@ extraHead: |
 <!-- Hero -->
 <section class="ln-hero">
   <div class="ln-wrap">
-    <span class="ln-eyebrow"><span class="dot"></span> v0.4 · brand-neutral · MIT</span>
-    <h1>Beautiful UI for your <em>qgis2web</em> exports.</h1>
-    <p class="sub">A lightweight CSS framework for Leaflet exports, with optional JS interactions, Tailwind tokens, WebGIS templates, and polished map UI components.</p>
+    <span class="ln-eyebrow"><span class="dot"></span> v0.5 · WebGIS-ready · MIT</span>
+    <h1>Beautiful UI for your <em>web map</em>.</h1>
+    <p class="sub">A lightweight CSS framework for Leaflet-based web maps. Works great with qgis2web exports — and with any WebGIS or mapping project.</p>
     <div class="ln-cta">
-      <a href="examples/choropleth.html" class="q2w-btn q2w-btn--primary q2w-btn--pill">
-        See live example
+      <a href="examples/categorized-real/" class="q2w-btn q2w-btn--primary q2w-btn--pill">
+        See real example
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a href="docs.html" class="q2w-btn q2w-btn--pill">Browse components</a>
@@ -385,6 +369,7 @@ extraHead: |
         <h2>qgis2web is great. Its UI isn't.</h2>
         <p>qgis2web ships a working Leaflet map in seconds — but the layer control, popup, and chrome haven't really changed in years. Most teams end up rewriting them from scratch on every project.</p>
         <p>q2w fixes that once. Pre-styled components, a coherent token system, dark mode, and themes — all in a CSS file you drop in alongside the export.</p>
+        <p>q2w works on any Leaflet-based web map, not just qgis2web exports.</p>
         <p>Inspired by <a href="https://github.com/AnmolSaini16/mapcn" class="cs-link" target="_blank" rel="noopener">mapcn</a>, but focused on Leaflet (because qgis2web exports there) and on the thematic-map use cases QGIS users actually build.</p>
       </div>
       <div class="ln-compare">
@@ -420,49 +405,6 @@ extraHead: |
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Roadmap -->
-<section class="ln-section reveal" id="roadmap">
-  <div class="ln-wrap">
-    <div class="ln-section__head">
-      <span class="num">04 · ROADMAP</span>
-      <h2>What's next.</h2>
-      <p>Open and public. Suggestions and PRs welcome.</p>
-    </div>
-    <div class="ln-roadmap">
-      <div class="ln-rm__row">
-        <div class="ln-rm__v">v0.1</div>
-        <div class="ln-rm__title">Core components, themes, and Leaflet/qgis2web adapters <small>30+ components, explicit light/dark, and preset themes</small></div>
-        <span class="ln-rm__status ln-rm__status--done">shipped</span>
-      </div>
-      <div class="ln-rm__row">
-        <div class="ln-rm__v">v0.2</div>
-        <div class="ln-rm__title">Tailwind token plugin <small>CSS variable-backed colors, spacing, radius, and shadows</small></div>
-        <span class="ln-rm__status ln-rm__status--done">shipped</span>
-      </div>
-      <div class="ln-rm__row">
-        <div class="ln-rm__v">v0.3</div>
-        <div class="ln-rm__title">WebGIS starter templates <small>Basic, layer-panel, and dashboard app shells</small></div>
-        <span class="ln-rm__status ln-rm__status--done">shipped</span>
-      </div>
-      <div class="ln-rm__row">
-        <div class="ln-rm__v">v0.4</div>
-        <div class="ln-rm__title">Optional JS interactions bundle <small>Modal, toast, tabs, layer binding, coordinate display, and popup helpers</small></div>
-        <span class="ln-rm__status ln-rm__status--done">shipped</span>
-      </div>
-      <div class="ln-rm__row">
-        <div class="ln-rm__v">v0.5</div>
-        <div class="ln-rm__title">Richer interactive playground and extended demos <small>More browser-tested examples for real qgis2web exports</small></div>
-        <span class="ln-rm__status ln-rm__status--next">next</span>
-      </div>
-      <div class="ln-rm__row">
-        <div class="ln-rm__v">v1.0</div>
-        <div class="ln-rm__title">Broader ecosystem support beyond current Leaflet/qgis2web focus <small>Adapters and workflows for more export targets</small></div>
-        <span class="ln-rm__status ln-rm__status--next">later</span>
       </div>
     </div>
   </div>

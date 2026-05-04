@@ -7,35 +7,20 @@ permalink: "/docs/basemap.html"
 
 <span class="doc-tag">.q2w-basemap</span>
 <h1 class="doc-h1">Basemap</h1>
-<p class="doc-lead">Basemap picker with thumbnail previews and active state.</p>
+<p class="doc-lead">Basemap picker with public swatch classes and active state.</p>
 
 <section class="doc-section">
   <h2>Variants</h2>
-
-  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Thumbnail grid</h3>
   <div class="doc-preview">
     <div class="q2w-basemap-grid">
-      <div class="q2w-basemap">
-        <div class="q2w-basemap__thumb" style="background:linear-gradient(135deg,#d6e8ef,#f7f8fa);"></div>
-        <div class="q2w-basemap__label">OSM standard</div>
-      </div>
-      <div class="q2w-basemap q2w-basemap--active">
-        <div class="q2w-basemap__thumb" style="background:linear-gradient(135deg,#243647,#5b6577);"></div>
-        <div class="q2w-basemap__label">Dark canvas</div>
-      </div>
-      <div class="q2w-basemap">
-        <div class="q2w-basemap__thumb" style="background:linear-gradient(135deg,#d8ead3,#eff7ea);"></div>
-        <div class="q2w-basemap__label">Terrain</div>
-      </div>
-      <div class="q2w-basemap">
-        <div class="q2w-basemap__thumb" style="background:linear-gradient(135deg,#ece0cf,#f8f2e9);"></div>
-        <div class="q2w-basemap__label">Satellite hybrid</div>
-      </div>
+      <div class="q2w-basemap q2w-basemap--active"><div class="q2w-basemap__thumb q2w-bm-satellite"></div><div class="q2w-basemap__label">Esri Imagery</div></div>
+      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-voyager"></div><div class="q2w-basemap__label">Voyager</div></div>
+      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-streets"></div><div class="q2w-basemap__label">Streets</div></div>
+      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-terrain"></div><div class="q2w-basemap__label">Terrain</div></div>
+      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-light"></div><div class="q2w-basemap__label">Light</div></div>
+      <div class="q2w-basemap"><div class="q2w-basemap__thumb q2w-bm-dark"></div><div class="q2w-basemap__label">Dark</div></div>
     </div>
   </div>
-  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-basemap-grid"&gt;
-  &lt;div class="q2w-basemap q2w-basemap--active"&gt;...&lt;/div&gt;
-&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">

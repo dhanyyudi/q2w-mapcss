@@ -1,6 +1,6 @@
 # q2w-mapcss
 
-> A lightweight CSS framework for building polished map UIs in qgis2web Leaflet exports.
+> A lightweight CSS framework for building polished Leaflet WebGIS interfaces, including qgis2web exports.
 
 [![npm version](https://img.shields.io/npm/v/q2w-mapcss?color=0f7a78&label=npm)](https://www.npmjs.com/package/q2w-mapcss)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/dhanyyudi/q2w-mapcss/blob/main/LICENSE)
@@ -113,6 +113,8 @@ Starter app shells are available under `snippets/templates/`:
 - `dashboard.html` — map plus summary sidebar layout
 
 ## Docs
+
+The component docs include layout, controls, data display, feedback, loading, print/export, and advanced WebGIS patterns.
 
 - Landing page: https://q2w-mapcss.pages.dev/
 - Component docs: https://q2w-mapcss.pages.dev/docs.html

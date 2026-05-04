@@ -1,7 +1,7 @@
 {
   "name": "q2w-mapcss",
-  "version": "0.4.0",
-  "description": "A lightweight CSS framework and JS interaction helpers for qgis2web Leaflet exports.",
+  "version": "0.5.0",
+  "description": "A lightweight CSS framework and JS interaction helpers for Leaflet WebGIS interfaces, including qgis2web exports.",
   "type": "module",
   "private": false,
   "license": "MIT",

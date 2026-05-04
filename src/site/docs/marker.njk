@@ -7,16 +7,23 @@ permalink: "/docs/marker.html"
 
 <span class="doc-tag">.q2w-marker</span>
 <h1 class="doc-h1">Marker & cluster</h1>
-<p class="doc-lead">Point symbols and cluster bubbles for dense POI layers.</p>
+<p class="doc-lead">Point symbols, colored states, alternate marker shapes, and cluster bubbles.</p>
 
 <section class="doc-section">
   <h2>Variants</h2>
-  <div class="doc-preview" style="display:flex; gap:48px; align-items:center;">
-    <div style="text-align:center;"><div class="q2w-marker"></div><div class="q2w-legend-label" style="margin-top:12px;">Single marker</div></div>
-    <div style="text-align:center;"><div class="q2w-cluster">42</div><div class="q2w-legend-label" style="margin-top:12px;">Cluster count</div></div>
+  <div class="doc-preview" style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+    <div class="q2w-marker q2w-marker--pin"></div>
+    <div class="q2w-marker" style="background:var(--q2w-danger);"></div>
+    <div class="q2w-marker" style="background:var(--q2w-success);"></div>
+    <div class="q2w-marker q2w-marker--square"></div>
+    <div class="q2w-cluster">12</div>
+    <div class="q2w-cluster" style="width:44px;height:44px;font-size:13px;">128</div>
   </div>
-  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-marker"&gt;&lt;/div&gt;
-&lt;div class="q2w-cluster"&gt;42&lt;/div&gt;</pre></div>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-marker q2w-marker--pin"&gt;&lt;/div&gt;
+&lt;div class="q2w-marker" style="background:var(--q2w-danger);"&gt;&lt;/div&gt;
+&lt;div class="q2w-marker" style="background:var(--q2w-success);"&gt;&lt;/div&gt;
+&lt;div class="q2w-marker q2w-marker--square"&gt;&lt;/div&gt;
+&lt;div class="q2w-cluster"&gt;12&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">

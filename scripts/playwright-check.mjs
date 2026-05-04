@@ -55,6 +55,29 @@ async function expectPageContains(page, path, selectors) {
   }
 }
 
+async function expectRealExampleChrome(page, baseUrl) {
+  await page.goto(`${baseUrl}/examples/categorized-real/`, { waitUntil: "networkidle" });
+  await page.waitForSelector(".q2w-header");
+  if ((await page.locator(".q2w-theme-toggle").count()) !== 1) {
+    throw new Error("Real categorized example must include one q2w-theme-toggle button.");
+  }
+  if ((await page.locator('a[title="Kembali ke beranda"]').count()) !== 1) {
+    throw new Error("Real categorized example must include a back-to-home button.");
+  }
+  if ((await page.locator(".sp-welcome").count()) !== 1) {
+    throw new Error("Real categorized example must keep its welcome dialog.");
+  }
+  await page.locator(".q2w-theme-toggle").click();
+  const theme = await page.evaluate(() => document.documentElement.dataset.theme);
+  if (!["dark", "light"].includes(theme)) {
+    throw new Error("Real categorized example theme toggle must set an explicit theme.");
+  }
+  await page.locator(".q2w-theme-toggle").click();
+  if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
+    throw new Error("Real categorized example theme toggle must be able to restore explicit light mode.");
+  }
+}
+
 let browser;
 try {
   await Promise.race([
@@ -198,6 +221,8 @@ try {
   if (historyPanelDisplay === "none" || attributesPanelDisplay !== "none") {
     throw new Error("Popup docs tabs should switch rendered panels.");
   }
+
+  await expectRealExampleChrome(page, baseUrl);
 
   await page.goto(`${baseUrl}/examples/choropleth.html`, { waitUntil: "networkidle" });
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {

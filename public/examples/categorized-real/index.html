@@ -23,6 +23,15 @@
 
     <!-- ▼ SATU baris untuk redesign — file CSS terpisah, mudah diedit -->
     <!-- q2w-mapcss replaces the legacy sipeta-redesign.css override -->
+    <script>
+    (function() {
+        var key = 'q2w-theme';
+        var saved = null;
+        try { saved = localStorage.getItem(key); } catch (err) {}
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = saved !== null ? saved : (prefersDark ? 'dark' : 'light');
+    })();
+    </script>
     <link rel="stylesheet" href="../../dist/q2w-mapcss.css">
 </head>
 <body class="q2w-qgis2web q2w-has-footer q2w-controls-below-header q2w-labels-halo">
@@ -34,7 +43,7 @@
 <div class="q2w-header" role="banner">
     <div class="q2w-header__brand">
         <div class="q2w-header__logo" style="padding: 0; overflow: hidden; background: #fff;">
-            <img src="uploads/aksara-logo-black.png" alt="Aksara Collaborative Surveying" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="uploads/aksara-logo-black.png" alt="Aksara Collaborative Surveying" style="width: 100%; height: 100%; object-fit: contain;">
         </div>
         <div>
             <div class="q2w-header__title">WebGIS Zona Nilai Tanah</div>
@@ -42,6 +51,16 @@
         </div>
     </div>
     <div class="q2w-header__actions">
+        <a href="../../index.html" class="q2w-btn q2w-btn--ghost q2w-btn--icon" aria-label="Beranda" title="Kembali ke beranda">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+        </a>
+        <button class="q2w-btn q2w-btn--icon q2w-theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"></path>
+            </svg>
+        </button>
         <button class="q2w-btn q2w-btn--ghost q2w-btn--pill" id="helpBtn" aria-label="Bantuan">
             <span aria-hidden="true">i</span>
             <span>Bantuan</span>
@@ -455,6 +474,18 @@ var modal = document.getElementById('spModal');
 document.getElementById('helpBtn').addEventListener('click', function() { modal.classList.add('open'); });
 document.getElementById('modalClose').addEventListener('click', function() { modal.classList.remove('open'); });
 modal.addEventListener('click', function(e) { if (e.target === modal) modal.classList.remove('open'); });
+
+// Theme toggle
+var themeToggle = document.querySelector('.q2w-theme-toggle');
+if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+        var root = document.documentElement;
+        var current = root.dataset.theme || 'light';
+        var next = current === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('q2w-theme', next); } catch (err) {}
+    });
+}
 
 /* ===== akhir skrip qgis2web ===== */
 </script>

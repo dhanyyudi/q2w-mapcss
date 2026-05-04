@@ -7,33 +7,21 @@ permalink: "/docs/search.html"
 
 <span class="doc-tag">.q2w-search</span>
 <h1 class="doc-h1">Search</h1>
-<p class="doc-lead">Search field for geocoding, feature lookup, and layer filtering.</p>
+<p class="doc-lead">Search field for geocoding, feature lookup, keyboard shortcuts, and floating map search.</p>
 
 <section class="doc-section">
   <h2>Variants</h2>
-
-  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Idle search</h3>
-  <div class="doc-preview">
-    <div class="q2w-search"><span class="q2w-search__icon">⌕</span><input placeholder="Search parcel, street, or zone" /></div>
+  <div class="doc-preview" style="display:grid;gap:18px;align-items:start;min-height:280px;">
+    <div class="q2w-search"><svg class="q2w-search__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Search address or coordinates…" /><span class="q2w-search__kbd">⌘K</span></div>
+    <div class="q2w-search"><span class="q2w-search__icon">⌕</span><input value="Zone B" /><span class="q2w-search__kbd">/</span><div class="q2w-search__results"><div class="q2w-search__item">Zone B-01 <small>NIR 1.250.000 / m²</small></div><div class="q2w-search__item">Zone B-02 <small>NIR 1.480.000 / m²</small></div></div></div>
+    <div class="q2w-search q2w-search--floating" style="position:relative;top:auto;left:auto;width:280px;"><svg class="q2w-search__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Floating search" /></div>
   </div>
   <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-search"&gt;
-  &lt;span class="q2w-search__icon"&gt;⌕&lt;/span&gt;
-  &lt;input placeholder="Search parcel, street, or zone" /&gt;
-&lt;/div&gt;</pre></div>
-
-  <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Active search with results</h3>
-  <div class="doc-preview" style="min-height:260px; align-items:start; padding-top:48px;">
-    <div class="q2w-search"><span class="q2w-search__icon">⌕</span><input value="Zone B" />
-      <div class="q2w-search__results">
-        <div class="q2w-search__item">Zone B-01 <small>NIR 1.250.000 / m²</small></div>
-        <div class="q2w-search__item">Zone B-02 <small>NIR 1.480.000 / m²</small></div>
-        <div class="q2w-search__item">Boundary B <small>Administrative line</small></div>
-      </div>
-    </div>
-  </div>
-  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-search__results"&gt;
-  &lt;div class="q2w-search__item"&gt;Zone B-01 &lt;small&gt;NIR 1.250.000 / m²&lt;/small&gt;&lt;/div&gt;
-&lt;/div&gt;</pre></div>
+  &lt;svg class="q2w-search__icon"&gt;...&lt;/svg&gt;
+  &lt;input placeholder="Search address or coordinates…" /&gt;
+  &lt;span class="q2w-search__kbd"&gt;⌘K&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="q2w-search q2w-search--floating"&gt;...&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">

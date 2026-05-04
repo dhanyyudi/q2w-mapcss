@@ -17,9 +17,18 @@ function assertIncludes(label, content, needles) {
   }
 }
 
+function assertNotIncludes(label, content, needles) {
+  for (const needle of needles) {
+    if (content.includes(needle)) {
+      console.error(`${label} must not include ${needle}.`);
+      process.exit(1);
+    }
+  }
+}
+
 const packageJson = JSON.parse(readOutput("package.json"));
-if (packageJson.version !== "0.4.0") {
-  console.error(`package.json version must be 0.4.0; found ${packageJson.version}.`);
+if (packageJson.version !== "0.5.0") {
+  console.error(`package.json version must be 0.5.0; found ${packageJson.version}.`);
   process.exit(1);
 }
 if (packageJson.private !== false) {
@@ -66,6 +75,8 @@ const required = [
   "site/docs/header.html",
   "site/docs/popup.html",
   "site/docs/share.html",
+  "site/docs/loading.html",
+  "site/docs/print.html",
   "site/examples/_data/znt.geojson",
   "site/_headers",
   "site/_redirects",
@@ -93,7 +104,7 @@ if (missing.length) {
 }
 
 const wranglerToml = readOutput("wrangler.toml");
-assertIncludes("wrangler.toml", wranglerToml, ['Q2W_MAPCSS_VERSION = "0.4.0"']);
+assertIncludes("wrangler.toml", wranglerToml, ['Q2W_MAPCSS_VERSION = "0.5.0"']);
 
 const npmIgnore = readOutput(".npmignore");
 assertIncludes(".npmignore", npmIgnore, [
@@ -108,7 +119,10 @@ assertIncludes(".npmignore", npmIgnore, [
 const changelog = readOutput("CHANGELOG.md");
 assertIncludes("CHANGELOG.md", changelog, [
   "# Changelog",
+  "## v0.5.0 (2026-05-05)",
   "## v0.4.0 (2026-05-04)",
+  "q2w-header--pill-center",
+  "q2w-print",
   "dist/q2w-interactions.js",
   "tailwind.q2w.js",
   "snippets/templates/",
@@ -173,6 +187,8 @@ for (const needle of [
   'q2w-header--expressive',
   'q2w-header--technical',
   'q2w-header--pill-left',
+  'q2w-header--pill-center',
+  'q2w-header--pill-right',
 ]) {
   if (!headerDoc.includes(needle)) {
     console.error(`Header docs must include variant ${needle}.`);
@@ -214,6 +230,16 @@ if (!siteIndex.includes('/brand/icon.png') || !siteIndex.includes('og:image')) {
   console.error("Landing page must include branded icon and social metadata.");
   process.exit(1);
 }
+assertIncludes("site/index.html", siteIndex, [
+  "Beautiful UI for your <em>web map</em>.",
+  "Works great with qgis2web exports — and with any WebGIS or mapping project.",
+  "examples/categorized-real/",
+]);
+assertNotIncludes("site/index.html", siteIndex, [
+  'id="roadmap"',
+  'href="#roadmap"',
+  "Beautiful UI for your qgis2web exports.",
+]);
 const landingMotionNeedles = [
   'html { scroll-behavior: smooth; }',
   '.reveal {',
@@ -240,8 +266,38 @@ if (revealCardCount < 12) {
   process.exit(1);
 }
 
+const footerDoc = readOutput("site/docs/footer.html");
+assertIncludes("site/docs/footer.html", footerDoc, [
+  "q2w-scalebar",
+  "q2w-footer--compact",
+  "q2w-footer--floating",
+  "q2w-footer--coords",
+]);
+
+const sidebarDoc = readOutput("site/docs/sidebar.html");
+assertIncludes("site/docs/sidebar.html", sidebarDoc, [
+  "Cirebon Land Value",
+  "q2w-sidebar__title",
+  "q2w-sidebar__sub",
+  "<svg",
+]);
+
+const loadingDoc = readOutput("site/docs/loading.html");
+assertIncludes("site/docs/loading.html", loadingDoc, [
+  "q2w-spinner",
+  "q2w-loadbar",
+  "q2w-skeleton",
+]);
+
+const printDoc = readOutput("site/docs/print.html");
+assertIncludes("site/docs/print.html", printDoc, [
+  "q2w-print",
+  "q2w-print__header",
+  "q2w-print__row",
+]);
+
 const popupDoc = readOutput("site/docs/popup.html");
-for (const needle of ['q2w-popup--striped', 'q2w-popup--governmental']) {
+for (const needle of ['q2w-popup--striped', 'q2w-popup--governmental', 'q2w-popup--status', 'data-status="ok"']) {
   if (!popupDoc.includes(needle)) {
     console.error(`Popup docs must include variant ${needle}.`);
     process.exit(1);
@@ -279,6 +335,8 @@ const docsVariantRequirements = {
     "q2w-header--expressive",
     "q2w-header--technical",
     "q2w-header--pill-left",
+    "q2w-header--pill-center",
+    "q2w-header--pill-right",
   ],
   "site/docs/popup.html": [
     "q2w-popup",
@@ -298,6 +356,8 @@ const docsVariantRequirements = {
     "q2w-btn--pill",
     "q2w-btn--loading",
     "q2w-btn--help",
+    "q2w-btn--sm",
+    "q2w-btn--lg",
   ],
   "site/docs/layer.html": [
     "q2w-panel",
@@ -307,6 +367,10 @@ const docsVariantRequirements = {
     "q2w-panel__section-title",
     "q2w-panel__header--collapsible",
     "is-collapsed",
+    "Compact layer list",
+    "Technical dense",
+    "q2w-layer__handle",
+    "q2w-layer__expand",
   ],
   "site/docs/legend.html": [
     "q2w-legend-swatch",
@@ -319,30 +383,91 @@ const docsVariantRequirements = {
     "q2w-control",
     "q2w-control__btn",
     "q2w-control--rounded",
+    "q2w-toolbar",
+    "q2w-toolbar--row",
   ],
   "site/docs/toast.html": [
+    "q2w-toast--info",
     "q2w-toast--success",
     "q2w-toast--warning",
     "q2w-toast--error",
   ],
   "site/docs/marker.html": [
     "q2w-marker",
+    "q2w-marker--pin",
+    "q2w-marker--square",
     "q2w-cluster",
+    "var(--q2w-danger)",
+    "var(--q2w-success)",
   ],
   "site/docs/modal.html": [
     "q2w-modal-backdrop",
     "q2w-modal",
     "q2w-modal__footer",
+    "Compact splash",
+    "Open map",
   ],
   "site/docs/search.html": [
     "q2w-search",
     "q2w-search__results",
     "q2w-search__item",
+    "q2w-search__kbd",
+    "⌘K",
+    "q2w-search--floating",
   ],
   "site/docs/basemap.html": [
     "q2w-basemap-grid",
     "q2w-basemap",
     "q2w-basemap--active",
+    "q2w-bm-satellite",
+    "q2w-bm-voyager",
+    "q2w-bm-streets",
+    "q2w-bm-terrain",
+    "q2w-bm-light",
+    "q2w-bm-dark",
+  ],
+  "site/docs/measure.html": [
+    "Distance",
+    "Area",
+    "Last segment",
+    "Bearing",
+  ],
+  "site/docs/draw.html": [
+    "Point",
+    "Line",
+    "Polygon",
+    "Rectangle",
+    "Edit",
+    "Delete",
+    "<svg",
+  ],
+  "site/docs/tooltip.html": [
+    "q2w-tooltip--compact",
+    "q2w-tooltip--dark",
+    "q2w-tooltip--rich",
+  ],
+  "site/docs/compare.html": [
+    "Before",
+    "After",
+    "q2w-compare__handle",
+  ],
+  "site/docs/sheet.html": [
+    "Bottom sheet · popup",
+    "Bottom sheet · layers",
+    "Mobile chrome",
+  ],
+  "site/docs/minimap.html": [
+    "q2w-minimap__tiles--dark",
+  ],
+  "site/docs/loading.html": [
+    "q2w-spinner",
+    "q2w-loadbar",
+    "q2w-skeleton",
+  ],
+  "site/docs/print.html": [
+    "q2w-print",
+    "q2w-print__header",
+    "q2w-print__row",
   ],
 };
 
@@ -352,14 +477,34 @@ for (const [relativePath, needles] of Object.entries(docsVariantRequirements)) {
 
 const css = readFileSync(join(root, "dist/q2w-mapcss.css"), "utf8");
 assertIncludes("dist/q2w-mapcss.css", css, [
-  "q2w-mapcss v0.4.0",
+  "q2w-mapcss v0.5.0",
   "Lightweight CSS framework + JS interactions for qgis2web Leaflet exports.",
   "https://q2w-mapcss.pages.dev",
   "License: MIT",
+  ".q2w-header--pill-center",
+  ".q2w-header--pill-right",
+  ".q2w-popup--status",
+  ".q2w-toast--info",
+  ".q2w-search__kbd",
+  ".q2w-search--floating",
+  ".q2w-footer--compact",
+  ".q2w-footer--floating",
+  ".q2w-footer--coords",
+  ".q2w-tooltip--compact",
+  ".q2w-tooltip--dark",
+  ".q2w-toolbar",
+  ".q2w-btn--sm",
+  ".q2w-btn--lg",
+  ".q2w-marker--pin",
+  ".q2w-marker--square",
+  ".q2w-print",
+  ".q2w-spinner",
+  ".q2w-loadbar",
+  ".q2w-skeleton",
 ]);
 
 const minCss = readOutput("dist/q2w-mapcss.min.css");
-assertIncludes("dist/q2w-mapcss.min.css", minCss, ["q2w-mapcss v0.4.0"]);
+assertIncludes("dist/q2w-mapcss.min.css", minCss, ["q2w-mapcss v0.5.0"]);
 
 const mustContain = [
   "--q2w-accent",
@@ -416,6 +561,17 @@ if (!example.includes("../dist/q2w-mapcss.css")) {
   console.error("Example pages must consume the hosted dist CSS.");
   process.exit(1);
 }
+const realExample = readOutput("site/examples/categorized-real/index.html");
+assertIncludes("site/examples/categorized-real/index.html", realExample, [
+  "q2w-theme-toggle",
+  "Kembali ke beranda",
+  "../../index.html",
+  "sp-welcome",
+  "helpBtn",
+]);
+assertNotIncludes("site/examples/categorized-real/index.html", realExample, [
+  "object-fit: cover",
+]);
 
 for (const name of ["choropleth", "dashboard", "heatmap", "poi"]) {
   const html = readFileSync(join(root, `site/examples/${name}.html`), "utf8");
@@ -438,10 +594,6 @@ if (!readFileSync(join(root, "site/examples/poi.html"), "utf8").includes("marker
   process.exit(1);
 }
 
-const realExample = readFileSync(
-  join(root, "site/examples/categorized-real/index.html"),
-  "utf8"
-);
 if (!realExample.includes("../../dist/q2w-mapcss.css")) {
   console.error("Real qgis2web example must consume ../../dist/q2w-mapcss.css.");
   process.exit(1);
@@ -529,12 +681,13 @@ assertIncludes("src/adapter-qgis2web.css", qgis2webAdapter, [
 ]);
 
 assertIncludes("site/index.html", siteIndex, [
-  "v0.2",
-  "Tailwind token plugin",
-  "v0.3",
-  "WebGIS starter templates",
-  "v0.4",
-  "Optional JS interactions bundle",
+  "v0.5 · WebGIS-ready · MIT",
+  "Beautiful UI for your <em>web map</em>.",
+  "q2w works on any Leaflet-based web map, not just qgis2web exports.",
+]);
+assertNotIncludes("site/index.html", siteIndex, [
+  "04 · ROADMAP",
+  "What's next.",
 ]);
 
 const sourceFiles = walk(join(root, "src/site")).filter((path) => /\.(html|njk)$/.test(path));

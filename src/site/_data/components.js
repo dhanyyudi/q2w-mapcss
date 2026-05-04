@@ -16,14 +16,16 @@ const components = [
   { slug: "marker", title: "Marker & cluster", tag: ".q2w-marker", category: "Data display", preview: "previews/marker.njk", next: "minimap", prev: "tooltip" },
   { slug: "minimap", title: "Minimap", tag: ".q2w-minimap", category: "Data display", preview: "previews/minimap.njk", next: "modal", prev: "marker" },
   { slug: "modal", title: "Modal", tag: ".q2w-modal", category: "Feedback", preview: "previews/modal.njk", next: "toast", prev: "minimap" },
-  { slug: "toast", title: "Toast", tag: ".q2w-toast", category: "Feedback", preview: "previews/toast.njk", next: "quick", prev: "modal" },
-  { slug: "quick", title: "Quick info", tag: ".q2w-quick", category: "Feedback", preview: "previews/quick.njk", next: "slider", prev: "toast" },
+  { slug: "toast", title: "Toast", tag: ".q2w-toast", category: "Feedback", preview: "previews/toast.njk", next: "loading", prev: "modal" },
+  { slug: "loading", title: "Loading", tag: ".q2w-spinner", category: "Feedback", preview: "previews/loading.njk", next: "quick", prev: "toast" },
+  { slug: "quick", title: "Quick info", tag: ".q2w-quick", category: "Feedback", preview: "previews/quick.njk", next: "slider", prev: "loading" },
   { slug: "slider", title: "Slider", tag: ".q2w-slider", category: "Advanced", preview: "previews/slider.njk", next: "compare", prev: "quick" },
   { slug: "compare", title: "Compare", tag: ".q2w-compare", category: "Advanced", preview: "previews/compare.njk", next: "draw", prev: "slider" },
   { slug: "draw", title: "Draw", tag: ".q2w-draw", category: "Advanced", preview: "previews/draw.njk", next: "filter", prev: "compare" },
   { slug: "filter", title: "Filter", tag: ".q2w-filter", category: "Advanced", preview: "previews/filter.njk", next: "goto", prev: "draw" },
   { slug: "goto", title: "Go to coordinate", tag: ".q2w-goto", category: "Advanced", preview: "previews/goto.njk", next: "share", prev: "filter" },
-  { slug: "share", title: "Share", tag: ".q2w-share", category: "Advanced", preview: "previews/share.njk", next: null, prev: "goto" },
+  { slug: "share", title: "Share", tag: ".q2w-share", category: "Advanced", preview: "previews/share.njk", next: "print", prev: "goto" },
+  { slug: "print", title: "Print", tag: ".q2w-print", category: "Advanced", preview: "previews/print.njk", next: null, prev: "share" },
 ];
 
 export default components;

@@ -7,7 +7,7 @@ permalink: "/docs/draw.html"
 
 <span class="doc-tag">.q2w-draw</span>
 <h1 class="doc-h1">Draw</h1>
-<p class="doc-lead">Drawing toolbar shell for polygon, line, and annotation tools.</p>
+<p class="doc-lead">Drawing toolbar shell for Point, Line, Polygon, Rectangle, Edit, and Delete tools.</p>
 
 <section class="doc-section">
   <h2>Preview</h2>
@@ -18,39 +18,15 @@ permalink: "/docs/draw.html"
 
 <section class="doc-section">
   <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-draw&quot;&gt;
-  Draw content
-&lt;/div&gt;</pre>
-  </div>
-</section>
-
-<section class="doc-section">
-  <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-draw</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-draw--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-draw--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-draw</code></td><td>Root element for the draw component</td></tr>
-      <tr><td><code>.q2w-draw__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-draw__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-draw__actions</code></td><td>Optional action group</td></tr>
-    </tbody>
-  </table>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-draw"&gt;
+  &lt;button class="q2w-draw__btn" title="Point"&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
+  &lt;button class="q2w-draw__btn" title="Line"&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
+  &lt;button class="q2w-draw__btn" title="Polygon"&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
+  &lt;button class="q2w-draw__btn" title="Rectangle"&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
+  &lt;span class="q2w-draw__sep"&gt;&lt;/span&gt;
+  &lt;button class="q2w-draw__btn"&gt;Edit&lt;/button&gt;
+  &lt;button class="q2w-draw__btn"&gt;Delete&lt;/button&gt;
+&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">
