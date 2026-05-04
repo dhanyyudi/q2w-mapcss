@@ -8,7 +8,11 @@ docs/audit.md
 docs/audit-2.md
 docs/audit-3.md
 docs/audit-4.md
+docs/audit-5.md
 npm-debug.log*
+/qgis2web-wireframe-framework/
+/web-branding/
+/qgis2web_redesign/
 /.superpowers/
 /.pi/
 docs/superpowers/
