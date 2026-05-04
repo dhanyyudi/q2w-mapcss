@@ -60,6 +60,17 @@ if (!headerDoc.includes("const key = 'q2w-theme'") || !headerDoc.includes('cs-th
   console.error("Docs pages must include persisted theme controls and theme dots.");
   process.exit(1);
 }
+const explicitThemeRuntime = [
+  "const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;",
+  "document.documentElement.dataset.theme = theme;",
+  "const next = current === 'dark' ? 'light' : 'dark';",
+  "applyTheme(root.dataset.theme || 'light');",
+];
+const missingThemeRuntime = explicitThemeRuntime.filter((needle) => !headerDoc.includes(needle));
+if (missingThemeRuntime.length) {
+  console.error(`Docs pages must use explicit light/dark theme runtime:\n${missingThemeRuntime.join("\n")}`);
+  process.exit(1);
+}
 
 const siteIndex = readFileSync(join(root, "site/index.html"), "utf8");
 if (siteIndex.includes("ln-strip") || siteIndex.includes("ln-tile") || siteIndex.includes("ln-marquee")) {
@@ -94,6 +105,10 @@ const mustContain = [
 const absent = mustContain.filter((needle) => !css.includes(needle));
 if (absent.length) {
   console.error(`Framework CSS missing expected selectors:\n${absent.join("\n")}`);
+  process.exit(1);
+}
+if (!css.includes('[data-theme="light"] {')) {
+  console.error('Framework CSS must include explicit [data-theme="light"] tokens.');
   process.exit(1);
 }
 
