@@ -25,6 +25,8 @@ const required = [
   "dist/q2w-leaflet.min.css",
   "dist/q2w-plugins.css",
   "dist/q2w-mapcss.showcase.css",
+  "dist/q2w-interactions.js",
+  "dist/q2w-interactions.min.js",
   "site/index.html",
   "site/docs.html",
   "site/docs/header.html",
@@ -262,6 +264,15 @@ for (const needle of ['.q2w-btn--help', '.q2w-panel__header--collapsible', 'body
     process.exit(1);
   }
 }
+
+const interactionsJs = readOutput("dist/q2w-interactions.js");
+assertIncludes("dist/q2w-interactions.js", interactionsJs, [
+  "window.q2w.toast = createToast",
+  "window.q2w.coordDisplay = coordDisplay",
+  "window.q2w.bindLayerPanel = bindLayerPanel",
+  "initModals()",
+  "initTabs()",
+]);
 
 const minSize = statSync(join(root, "dist/q2w-mapcss.min.css")).size;
 if (minSize <= 1000) {

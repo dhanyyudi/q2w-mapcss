@@ -28,13 +28,23 @@ function minify(css) {
     .trim();
 }
 
+function minifyJs(source) {
+  return source
+    .replace(/\/\*![\s\S]*?\*\//g, "")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/(^|\s+)\/\/.*$/gm, "")
+    .replace(/\n\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function bundleCss(sources, outputName) {
   const concatenated = sources.map((path) => read(join(root, path))).join("\n\n");
   write(join(distDir, `${outputName}.css`), `${header}${concatenated}\n`);
   write(join(distDir, `${outputName}.min.css`), `${minHeader}${minify(concatenated)}\n`);
 }
 
-function buildCss() {
+function buildDist() {
   const fullSources = [
     "src/tokens.css",
     "src/components.css",
@@ -57,7 +67,11 @@ function buildCss() {
   bundleCss(leafletSources, "q2w-leaflet");
   write(join(distDir, "q2w-plugins.css"), read(join(srcDir, "adapter-plugins.css")) + "\n");
   write(join(distDir, "q2w-mapcss.showcase.css"), showcase);
+
+  const interactions = read(join(srcDir, "interactions.js"));
+  write(join(distDir, "q2w-interactions.js"), `${interactions}\n`);
+  write(join(distDir, "q2w-interactions.min.js"), `${minifyJs(interactions)}\n`);
 }
 
-buildCss();
+buildDist();
 console.log("Built q2w-mapcss dist/.");
