@@ -20,6 +20,10 @@ const required = [
   "site/examples/_data/znt.geojson",
   "site/_headers",
   "site/_redirects",
+  "site/brand/icon.png",
+  "site/brand/circle-icon.png",
+  "site/brand/primary-logo.png",
+  "site/brand/wordmark-horizontal.png",
   "site/dist/q2w-mapcss.css",
   "site/examples/choropleth.html",
   "site/examples/dashboard.html",
@@ -60,6 +64,18 @@ if (!headerDoc.includes("const key = 'q2w-theme'") || !headerDoc.includes('cs-th
   console.error("Docs pages must include persisted theme controls and theme dots.");
   process.exit(1);
 }
+for (const needle of [
+  'q2w-header--bar',
+  'q2w-header--minimal',
+  'q2w-header--expressive',
+  'q2w-header--technical',
+  'q2w-header--pill-left',
+]) {
+  if (!headerDoc.includes(needle)) {
+    console.error(`Header docs must include variant ${needle}.`);
+    process.exit(1);
+  }
+}
 const explicitThemeRuntime = [
   "const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;",
   "document.documentElement.dataset.theme = theme;",
@@ -91,6 +107,18 @@ if (!siteIndex.includes('theme-toggle')) {
   console.error("Landing page must include the minimal theme toggle.");
   process.exit(1);
 }
+if (!siteIndex.includes('/brand/icon.png') || !siteIndex.includes('og:image')) {
+  console.error("Landing page must include branded icon and social metadata.");
+  process.exit(1);
+}
+
+const popupDoc = readFileSync(join(root, "site/docs/popup.html"), "utf8");
+for (const needle of ['q2w-popup--striped', 'q2w-popup--governmental']) {
+  if (!popupDoc.includes(needle)) {
+    console.error(`Popup docs must include variant ${needle}.`);
+    process.exit(1);
+  }
+}
 
 const css = readFileSync(join(root, "dist/q2w-mapcss.css"), "utf8");
 const mustContain = [
@@ -110,6 +138,12 @@ if (absent.length) {
 if (!css.includes('[data-theme="light"] {')) {
   console.error('Framework CSS must include explicit [data-theme="light"] tokens.');
   process.exit(1);
+}
+for (const needle of ['.q2w-btn--help', '.q2w-panel__header--collapsible', 'body.q2w-labels-box .leaflet-tooltip']) {
+  if (!css.includes(needle)) {
+    console.error(`Framework CSS must include Phase 2 selector ${needle}.`);
+    process.exit(1);
+  }
 }
 
 const minSize = statSync(join(root, "dist/q2w-mapcss.min.css")).size;
