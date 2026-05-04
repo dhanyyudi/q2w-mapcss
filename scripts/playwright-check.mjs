@@ -45,6 +45,16 @@ async function expectLandingRevealWorks(page, baseUrl) {
   }
 }
 
+async function expectPageContains(page, path, selectors) {
+  await page.goto(`${baseUrl}${path}`, { waitUntil: "networkidle" });
+  for (const selector of selectors) {
+    const count = await page.locator(selector).count();
+    if (count < 1) {
+      throw new Error(`${path} should render selector ${selector}.`);
+    }
+  }
+}
+
 let browser;
 try {
   await Promise.race([
@@ -128,6 +138,40 @@ try {
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
     throw new Error("Component docs theme toggle did not switch back to explicit light.");
   }
+
+  await expectPageContains(page, "/docs/header.html", [
+    ".q2w-header--bar",
+    ".q2w-header--minimal",
+    ".q2w-header--expressive",
+    ".q2w-header--technical",
+    ".q2w-header--pill-left",
+  ]);
+
+  await expectPageContains(page, "/docs/popup.html", [
+    ".q2w-popup__media",
+    ".q2w-tabs",
+    ".q2w-popup--minimal",
+    ".q2w-popup--technical",
+    ".q2w-popup--expressive",
+    ".q2w-popup--striped",
+    ".q2w-popup--governmental",
+  ]);
+
+  await expectPageContains(page, "/docs/button.html", [
+    ".q2w-btn--primary",
+    ".q2w-btn--ghost",
+    ".q2w-btn--icon",
+    ".q2w-btn--pill",
+    ".q2w-btn--loading",
+    ".q2w-btn--help",
+  ]);
+
+  await expectPageContains(page, "/docs/layer.html", [
+    ".q2w-panel__section",
+    ".q2w-panel__section-title",
+    ".q2w-panel__header--collapsible",
+    ".is-collapsed",
+  ]);
 
   await page.goto(`${baseUrl}/examples/choropleth.html`, { waitUntil: "networkidle" });
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
