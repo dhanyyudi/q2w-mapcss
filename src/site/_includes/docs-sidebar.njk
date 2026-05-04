@@ -1,7 +1,8 @@
 <aside class="doc-side">
   <div style="padding: 0 24px 16px; border-bottom: 1px solid var(--q2w-border); margin-bottom: 16px;">
-    <a href="../index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--q2w-text); font-weight: 700;">
-      <span class="ln-brand__mark">q2</span> q2w-mapcss
+    <a href="../index.html" class="doc-side__brand">
+      <span class="cs-nav__mark">q2</span>
+      <span>q2w-mapcss</span>
     </a>
     <div class="doc-side__themes">
       <button class="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
@@ -74,6 +75,7 @@
 </aside>
 
 <style>
+  .doc-side__brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--q2w-text); font-weight: 700; }
   .doc-side__link { display: block; padding: 6px 0; font-size: 13px; color: var(--q2w-text-muted); text-decoration: none; border-radius: 4px; }
   .doc-side__link:hover { color: var(--q2w-text); }
   .doc-side__link.is-active { color: var(--q2w-accent); font-weight: 600; }
