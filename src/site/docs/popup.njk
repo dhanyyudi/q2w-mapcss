@@ -3,6 +3,8 @@ layout: component.njk
 title: "Popup — q2w-mapcss"
 component: "popup"
 permalink: "/docs/popup.html"
+extraScripts: |
+  <script src="../dist/q2w-interactions.js"></script>
 ---
 
 <span class="doc-tag">.q2w-popup</span>
@@ -46,9 +48,28 @@ permalink: "/docs/popup.html"
   <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Tabbed popup</h3>
   <div class="doc-preview">
     <div class="q2w-popup">
-      <div class="q2w-popup__header"><div><div class="q2w-popup__title">Feature details</div><div class="q2w-popup__sub">Tabs inside popup body</div></div></div>
-      <div class="q2w-tabs"><div class="q2w-tab q2w-tab--active">Attributes</div><div class="q2w-tab">History</div><div class="q2w-tab">Notes</div></div>
-      <div class="q2w-popup__body"><div class="q2w-attr"><span class="q2w-attr__key">Updated</span><span class="q2w-attr__val">2026</span></div></div>
+      <div class="q2w-popup__header">
+        <div>
+          <div class="q2w-popup__title">Feature details</div>
+          <div class="q2w-popup__sub">Tabbed popup body</div>
+        </div>
+      </div>
+      <div class="q2w-tabs" data-q2w-panel-group="popup-demo">
+        <button class="q2w-tab q2w-tab--active" data-q2w-tab="attributes" type="button">Attributes</button>
+        <button class="q2w-tab" data-q2w-tab="history" type="button">History</button>
+        <button class="q2w-tab" data-q2w-tab="notes" type="button">Notes</button>
+      </div>
+      <div data-q2w-panel-group="popup-demo">
+        <div data-q2w-panel="attributes">
+          <div class="q2w-popup__body"><div class="q2w-attr"><span class="q2w-attr__key">Status</span><span class="q2w-attr__val">Verified</span></div></div>
+        </div>
+        <div data-q2w-panel="history" style="display:none;">
+          <div class="q2w-popup__body"><div class="q2w-attr"><span class="q2w-attr__key">Updated</span><span class="q2w-attr__val">2026-05-04</span></div></div>
+        </div>
+        <div data-q2w-panel="notes" style="display:none;">
+          <div class="q2w-popup__body"><div class="q2w-attr"><span class="q2w-attr__key">Analyst</span><span class="q2w-attr__val">Survey team</span></div></div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-tabs"&gt;

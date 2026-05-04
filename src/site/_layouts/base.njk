@@ -82,5 +82,6 @@ html[data-theme="light"] .theme-toggle__sun { display: none; }
   });
 })();
 </script>
+{% if extraScripts %}{{ extraScripts | safe }}{% endif %}
 </body>
 </html>

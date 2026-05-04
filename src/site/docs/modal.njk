@@ -3,6 +3,8 @@ layout: component.njk
 title: "Modal — q2w-mapcss"
 component: "modal"
 permalink: "/docs/modal.html"
+extraScripts: |
+  <script src="../dist/q2w-interactions.js"></script>
 ---
 
 <span class="doc-tag">.q2w-modal</span>
@@ -13,12 +15,25 @@ permalink: "/docs/modal.html"
   <h2>Variants</h2>
 
   <h3 style="font-size: 14px; margin: 24px 0 8px; color: var(--q2w-text-muted);">Standard modal</h3>
-  <div class="doc-preview" style="overflow:hidden; min-height:260px;">
-    <div class="q2w-modal-backdrop" style="position:absolute; inset:0;"></div>
-    <div class="q2w-modal" style="position:absolute; inset:32px auto auto 50%; transform:translateX(-50%); width:min(420px, calc(100% - 32px));">
-      <div class="q2w-modal__header"><div><div class="q2w-modal__title">Map help</div><div class="q2w-modal__sub">Quick instructions for first-time users</div></div><button class="q2w-modal__close">×</button></div>
-      <div class="q2w-modal__body"><p><strong>Tip:</strong> Use the layer panel to switch valuation classes and basemaps.</p><p>All content remains plain HTML, so it can be injected into exported qgis2web pages without a build tool.</p></div>
-      <div class="q2w-modal__footer"><button class="q2w-btn q2w-btn--primary">Got it</button></div>
+  <div class="doc-preview" style="min-height: 280px; position: relative;">
+    <button class="q2w-btn q2w-btn--primary" data-q2w-modal="docs-modal-demo">Open modal</button>
+    <div class="q2w-modal-backdrop" id="docs-modal-demo" aria-hidden="true" style="display:none;">
+      <div class="q2w-modal" role="dialog" aria-modal="true" aria-labelledby="docs-modal-title">
+        <div class="q2w-modal__header">
+          <div>
+            <div class="q2w-modal__title" id="docs-modal-title">Welcome overlay</div>
+            <div class="q2w-modal__sub">Interactive demo powered by q2w-interactions.js</div>
+          </div>
+          <button class="q2w-btn q2w-btn--icon" data-q2w-close aria-label="Close">×</button>
+        </div>
+        <div class="q2w-modal__body">
+          <p style="margin:0; color:var(--q2w-text-muted);">Use this pattern for welcome overlays, help dialogs, and guided onboarding.</p>
+        </div>
+        <div class="q2w-modal__footer">
+          <button class="q2w-btn q2w-btn--ghost" data-q2w-close>Dismiss</button>
+          <button class="q2w-btn q2w-btn--primary" data-q2w-close>Start exploring</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-modal-backdrop"&gt;&lt;/div&gt;

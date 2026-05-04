@@ -160,6 +160,29 @@ for (const needle of ['q2w-popup--striped', 'q2w-popup--governmental']) {
   }
 }
 
+const modalDoc = readOutput("site/docs/modal.html");
+assertIncludes("site/docs/modal.html", modalDoc, [
+  "../dist/q2w-interactions.js",
+  'data-q2w-modal="docs-modal-demo"',
+  'id="docs-modal-demo"',
+  "data-q2w-close",
+]);
+
+const toastDoc = readOutput("site/docs/toast.html");
+assertIncludes("site/docs/toast.html", toastDoc, [
+  "../dist/q2w-interactions.js",
+  "data-doc-toast",
+  "window.q2w.toast",
+]);
+
+const popupInteractiveDoc = readOutput("site/docs/popup.html");
+assertIncludes("site/docs/popup.html", popupInteractiveDoc, [
+  "../dist/q2w-interactions.js",
+  "data-q2w-panel-group=\"popup-demo\"",
+  "data-q2w-tab=\"attributes\"",
+  "data-q2w-panel=\"history\"",
+]);
+
 const docsVariantRequirements = {
   "site/docs/header.html": [
     "q2w-header",

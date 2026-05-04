@@ -173,6 +173,32 @@ try {
     ".is-collapsed",
   ]);
 
+  await page.goto(`${baseUrl}/docs/modal.html`, { waitUntil: "networkidle" });
+  await page.locator('[data-q2w-modal="docs-modal-demo"]').click();
+  const modalHiddenAfterOpen = await page.locator("#docs-modal-demo").getAttribute("aria-hidden");
+  if (modalHiddenAfterOpen !== "false") {
+    throw new Error("Modal docs demo should open the modal.");
+  }
+  await page.locator("#docs-modal-demo [data-q2w-close]").first().click();
+  const modalHiddenAfterClose = await page.locator("#docs-modal-demo").getAttribute("aria-hidden");
+  if (modalHiddenAfterClose !== "true") {
+    throw new Error("Modal docs demo should close the modal.");
+  }
+
+  await page.goto(`${baseUrl}/docs/toast.html`, { waitUntil: "networkidle" });
+  await page.locator("[data-doc-toast]").first().click();
+  if (await page.locator(".q2w-toast").count() < 1) {
+    throw new Error("Toast docs demo should create a toast.");
+  }
+
+  await page.goto(`${baseUrl}/docs/popup.html`, { waitUntil: "networkidle" });
+  await page.locator('[data-q2w-tab="history"]').click();
+  const historyPanelDisplay = await page.locator('[data-q2w-panel="history"]').evaluate((el) => getComputedStyle(el).display);
+  const attributesPanelDisplay = await page.locator('[data-q2w-panel="attributes"]').evaluate((el) => getComputedStyle(el).display);
+  if (historyPanelDisplay === "none" || attributesPanelDisplay !== "none") {
+    throw new Error("Popup docs tabs should switch rendered panels.");
+  }
+
   await page.goto(`${baseUrl}/examples/choropleth.html`, { waitUntil: "networkidle" });
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
     throw new Error("Example page did not restore persisted light theme.");
