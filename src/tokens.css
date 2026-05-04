@@ -155,6 +155,38 @@
 }
 
 /* ============================================================
+   Explicit light mode — overrides OS dark preference
+   Applied when user manually selects light via theme toggle
+   ============================================================ */
+[data-theme="light"] {
+  --q2w-neutral-0:   #ffffff;
+  --q2w-neutral-50:  #f7f8fa;
+  --q2w-neutral-100: #eef0f3;
+  --q2w-neutral-200: #dde1e7;
+  --q2w-neutral-300: #c2c8d2;
+  --q2w-neutral-400: #8a93a3;
+  --q2w-neutral-500: #5b6577;
+  --q2w-neutral-600: #3f4a5c;
+  --q2w-neutral-700: #2a3344;
+  --q2w-neutral-800: #1b2230;
+  --q2w-neutral-900: #0f1520;
+
+  --q2w-surface:        var(--q2w-neutral-0);
+  --q2w-surface-soft:   var(--q2w-neutral-50);
+  --q2w-surface-sunken: var(--q2w-neutral-100);
+  --q2w-border:         var(--q2w-neutral-200);
+  --q2w-border-strong:  var(--q2w-neutral-300);
+  --q2w-text:           var(--q2w-neutral-800);
+  --q2w-text-muted:     var(--q2w-neutral-500);
+  --q2w-text-faint:     var(--q2w-neutral-400);
+
+  --q2w-accent:       #0f7a78;
+  --q2w-accent-hover: #0c615f;
+  --q2w-accent-soft:  #e6f3f2;
+  --q2w-accent-fg:    #ffffff;
+}
+
+/* ============================================================
    Dark mode
    ============================================================ */
 [data-theme="dark"] {
