@@ -76,7 +76,7 @@ if (githubMatches.length !== 1) {
   console.error("Landing nav must expose GitHub exactly once.");
   process.exit(1);
 }
-if (!siteIndex.includes('class="theme-toggle"')) {
+if (!siteIndex.includes('theme-toggle')) {
   console.error("Landing page must include the minimal theme toggle.");
   process.exit(1);
 }

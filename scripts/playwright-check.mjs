@@ -44,6 +44,19 @@ try {
     throw new Error("Landing theme toggle did not set data-theme=dark.");
   }
 
+  const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  mobile.on("pageerror", (error) => errors.push(error.message));
+  await mobile.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+  const mobileToggle = mobile.locator('.ln-nav .theme-toggle');
+  if (!(await mobileToggle.isVisible())) {
+    throw new Error("Landing mobile theme toggle must remain visible.");
+  }
+  await mobileToggle.click();
+  if ((await mobile.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
+    throw new Error("Landing mobile theme toggle did not set data-theme=dark.");
+  }
+  await mobile.close();
+
   await page.goto(`${baseUrl}/docs.html`, { waitUntil: "networkidle" });
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
     throw new Error("Docs overview did not restore persisted dark theme.");

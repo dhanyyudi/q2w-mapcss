@@ -21,6 +21,7 @@ extraHead: |
   .ln-nav__links { margin-left: auto; display: flex; gap: 4px; align-items: center; }
   .ln-nav__links a { font-size: 13px; padding: 6px 10px; color: var(--q2w-text-muted); text-decoration: none; border-radius: var(--q2w-radius-xs); }
   .ln-nav__links a:hover { color: var(--q2w-text); background: var(--q2w-surface-soft); }
+  .ln-nav__toggle { margin-left: 12px; flex: 0 0 auto; }
 
   /* Wrap */
   .ln-wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
@@ -200,7 +201,9 @@ extraHead: |
   @media (max-width: 800px) {
     .ln-hero h1 { font-size: 40px; }
     .ln-origin, .ln-footer__grid { grid-template-columns: 1fr; }
+    .ln-nav { justify-content: space-between; }
     .ln-nav__links { display: none; }
+    .ln-nav__toggle { margin-left: auto; }
   }
   </style>
 ---
