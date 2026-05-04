@@ -6,9 +6,12 @@
 AGENTS.md
 docs/audit.md
 docs/audit-2.md
+docs/audit-3.md
 npm-debug.log*
 /.superpowers/
 /.pi/
 docs/superpowers/
 .eleventy-cache/
 /.cache/
+docs/post-migration-audit-brief.md
+/example-qgis2web/

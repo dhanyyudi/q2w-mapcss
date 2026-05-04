@@ -8,7 +8,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ dist: "dist" });
   eleventyConfig.addPassthroughCopy({ "public/uploads": "uploads" });
   eleventyConfig.addPassthroughCopy({ snippets: "snippets" });
-  eleventyConfig.addPassthroughCopy({ docs: "docs" });
+  eleventyConfig.addPassthroughCopy({
+    "public/examples/categorized-real": "examples/categorized-real",
+  });
   eleventyConfig.addPassthroughCopy("src/site/_headers");
   eleventyConfig.addPassthroughCopy("src/site/_redirects");
 

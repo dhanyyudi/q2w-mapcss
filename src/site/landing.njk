@@ -6,6 +6,25 @@ extraHead: |
   <style>
   body { background: var(--q2w-surface); color: var(--q2w-text); }
 
+  /* Force light tokens for marquee tile previews — these are
+     color swatches showing framework components in their default
+     light appearance, not adaptive UI surfaces. */
+  .ln-strip,
+  .ln-strip .ln-tile {
+    --q2w-surface: #ffffff;
+    --q2w-surface-soft: #f7f8fa;
+    --q2w-surface-sunken: #eef0f3;
+    --q2w-text: #1b2230;
+    --q2w-text-muted: #5b6577;
+    --q2w-text-faint: #8a93a3;
+    --q2w-border: #dde1e7;
+    --q2w-border-strong: #c2c8d2;
+    --q2w-accent: #0f7a78;
+    --q2w-accent-hover: #0c615f;
+    --q2w-accent-soft: #e6f3f2;
+    --q2w-accent-fg: #ffffff;
+  }
+
   /* Top nav */
   .ln-nav {
     position: sticky; top: 0; z-index: 50;
@@ -60,7 +79,8 @@ extraHead: |
   /* Code preview */
   .ln-code {
     margin: 56px auto 0; max-width: 720px;
-    background: var(--q2w-neutral-900);
+    /* Terminal mock — always dark regardless of OS theme */
+    background: #0f1520;
     color: #e4e7ec;
     border-radius: var(--q2w-radius-lg);
     padding: 0;
@@ -418,6 +438,12 @@ extraHead: |
         <div class="ln-feat__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
         <h3>Built for qgis2web</h3>
         <p>Class names map 1-to-1 to the elements qgis2web outputs. Minimum rewriting.</p>
+        <span class="ln-feat__count">drop-in</span>
+      </a>
+      <a href="examples/categorized-real/" class="ln-feat">
+        <div class="ln-feat__icon">{% icon "map-pin", "18" %}</div>
+        <h3>Real qgis2web export</h3>
+        <p>A live drop-in replacement of a custom override CSS in a working categorized land value map.</p>
         <span class="ln-feat__count">drop-in</span>
       </a>
     </div>

@@ -21,12 +21,18 @@ const required = [
   "site/examples/dashboard.html",
   "site/examples/heatmap.html",
   "site/examples/poi.html",
+  "site/examples/categorized-real/index.html",
   "wrangler.toml",
 ];
 
 const missing = required.filter((path) => !existsSync(join(root, path)));
 if (missing.length) {
   console.error(`Missing build outputs:\n${missing.join("\n")}`);
+  process.exit(1);
+}
+
+if (existsSync(join(root, "site/docs"))) {
+  console.error("Agent-only docs directory must not be published to site/docs.");
   process.exit(1);
 }
 
@@ -65,6 +71,19 @@ if (leafletCss.includes("body.q2w-qgis2web")) {
 const example = readFileSync(join(root, "site/examples/choropleth.html"), "utf8");
 if (!example.includes("../dist/q2w-mapcss.css")) {
   console.error("Example pages must consume the hosted dist CSS.");
+  process.exit(1);
+}
+
+const realExample = readFileSync(
+  join(root, "site/examples/categorized-real/index.html"),
+  "utf8"
+);
+if (!realExample.includes("../../dist/q2w-mapcss.css")) {
+  console.error("Real qgis2web example must consume ../../dist/q2w-mapcss.css.");
+  process.exit(1);
+}
+if (realExample.includes("css/sipeta-redesign.css")) {
+  console.error("Real qgis2web example must not load css/sipeta-redesign.css.");
   process.exit(1);
 }
 

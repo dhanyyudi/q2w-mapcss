@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>WebGIS Zona Nilai Tanah · Aksara Lab</title>
+
+    <!-- Stylesheet asli dari ekspor qgis2web (jangan diubah urutannya) -->
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/leaflet.photon.css">
+    <link rel="stylesheet" href="css/leaflet-measure.css">
+
+    <!-- Google Fonts: Inter (UI) + IBM Plex Mono (koordinat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ▼ SATU baris untuk redesign — file CSS terpisah, mudah diedit -->
+    <!-- q2w-mapcss replaces the legacy sipeta-redesign.css override -->
+    <link rel="stylesheet" href="../../dist/q2w-mapcss.css">
+</head>
+<body class="q2w-qgis2web q2w-has-footer q2w-controls-below-header q2w-labels-halo">
+
+<!-- ============================================================
+     HEADER — pill brand (kiri-atas) + tombol bantuan (kanan-atas)
+     Floating: tidak memakan ruang peta sama sekali.
+     ============================================================ -->
+<div class="q2w-header" role="banner">
+    <div class="q2w-header__brand">
+        <div class="q2w-header__logo" style="padding: 0; overflow: hidden; background: #fff;">
+            <img src="uploads/aksara-logo-black.png" alt="Aksara Collaborative Surveying" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div>
+            <div class="q2w-header__title">WebGIS Zona Nilai Tanah</div>
+            <div class="q2w-header__sub">Aksara Lab · Sistem Informasi Peta Tematik</div>
+        </div>
+    </div>
+    <div class="q2w-header__actions">
+        <button class="q2w-btn q2w-btn--ghost q2w-btn--pill" id="helpBtn" aria-label="Bantuan">
+            <span aria-hidden="true">i</span>
+            <span>Bantuan</span>
+        </button>
+    </div>
+</div>
+
+<!-- ============================================================
+     PETA — div ini sama persis dengan ekspor qgis2web
+     ============================================================ -->
+<div id="map"></div>
+
+<!-- ============================================================
+     FOOTER — atribusi + koordinat kursor
+     ============================================================ -->
+<footer class="q2w-footer">
+    <div class="q2w-footer__group">© 2026 Aksara Lab</div>
+    <div class="q2w-footer__group">
+        Powered by
+        <a href="https://github.com/tomchadwin/qgis2web" target="_blank" rel="noopener">qgis2web</a>
+        ·
+        <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>
+        ·
+        <a href="https://qgis.org" target="_blank" rel="noopener">QGIS</a>
+    </div>
+    <div class="q2w-footer__push"></div>
+    <div class="q2w-footer__group q2w-footer__coord" id="spCoords">—, —</div>
+</footer>
+
+<!-- ============================================================
+     WELCOME BANNER — ringkas, untuk orientasi awal training
+     ============================================================ -->
+<div class="sp-welcome" id="spWelcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <div class="sp-welcome-card">
+        <div class="sp-welcome-head">
+            <div class="sp-welcome-logo">
+                <img src="uploads/aksara-logo-black.png" alt="Aksara Collaborative Surveying">
+            </div>
+            <div class="sp-welcome-brand">
+                <div class="sp-welcome-brand-title">Aksara Lab</div>
+                <div class="sp-welcome-brand-sub">Collaborative Surveying</div>
+            </div>
+            <button class="sp-welcome-close" id="welcomeClose" aria-label="Tutup welcome">×</button>
+        </div>
+        <div class="sp-welcome-body">
+            <h2 id="welcomeTitle">WebGIS Zona Nilai Tanah</h2>
+            <p><strong>Navigasi.</strong> Geser peta dengan <em>drag</em>. Gunakan <kbd>+</kbd>/<kbd>−</kbd> di pojok kiri atas atau scroll mouse untuk zoom.</p>
+            <p><strong>Layer.</strong> Buka panel di pojok kanan atas untuk menyalakan/mematikan layer dan mengganti basemap.</p>
+            <p><strong>Informasi objek.</strong> Klik objek apa pun (zona, jalan, sungai, batas desa) untuk melihat atribut detail.</p>
+            <p><strong>Pencarian.</strong> Gunakan ikon kaca pembesar di kiri atas untuk mencari alamat.</p>
+            <p><strong>Ukur.</strong> Ikon penggaris di kiri atas untuk mengukur jarak/luas.</p>
+            <button class="sp-welcome-start" id="welcomeStart">Mulai gunakan peta</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL bantuan
+     ============================================================ -->
+<div class="sp-modal" id="spModal">
+    <div class="sp-modal-card">
+        <div class="sp-modal-head">
+            <h3>Cara Menggunakan Peta</h3>
+            <button class="sp-modal-close" id="modalClose" aria-label="Tutup">×</button>
+        </div>
+        <div class="sp-modal-body">
+            <p><strong>Navigasi.</strong> Geser peta dengan <em>drag</em>. Gunakan <kbd>+</kbd>/<kbd>−</kbd> di pojok kiri atas atau scroll mouse untuk zoom.</p>
+            <p><strong>Layer.</strong> Buka panel di pojok kanan atas untuk menyalakan/mematikan layer dan mengganti basemap.</p>
+            <p><strong>Informasi objek.</strong> Klik objek apa pun (zona, jalan, sungai, batas desa) untuk melihat atribut detail.</p>
+            <p><strong>Pencarian.</strong> Gunakan ikon kaca pembesar di kiri atas untuk mencari alamat.</p>
+            <p><strong>Ukur.</strong> Ikon penggaris di kiri atas untuk mengukur jarak/luas.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     Script asli qgis2web — TIDAK DIUBAH urutan & isinya
+     ============================================================ -->
+<script src="js/qgis2web_expressions.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/L.Control.Layers.Tree.min.js"></script>
+<script src="js/leaflet.rotatedMarker.js"></script>
+<script src="js/leaflet.pattern.js"></script>
+<script src="js/leaflet-hash.js"></script>
+<script src="js/Autolinker.min.js"></script>
+<script src="js/rbush.min.js"></script>
+<script src="js/labelgun.min.js"></script>
+<script src="js/labels.js"></script>
+<script src="js/leaflet.photon.js"></script>
+<script src="js/leaflet-measure.js"></script>
+
+<!-- Data GeoJSON dimuat seperti ekspor qgis2web asli -->
+<script src="data/BatasDesa_3.js"></script>
+<script src="data/ZonaNilaiTanah_4.js"></script>
+<script src="data/Sungai_5.js"></script>
+<script src="data/JaringanJalan_6.js"></script>
+
+<!-- Skrip qgis2web utama.
+     Isinya disalin nyaris persis dari ekspor asli — hanya ditambah:
+       (a) hook untuk koordinat di footer
+      (b) hook untuk welcome banner
+       (c) hook untuk modal bantuan
+-->
+<script>
+/* ===== mulai skrip qgis2web ===== */
+var highlightLayer;
+function highlightFeature(e) {
+    highlightLayer = e.target;
+    if (e.target.feature.geometry.type === 'LineString' || e.target.feature.geometry.type === 'MultiLineString') {
+        highlightLayer.setStyle({ color: 'rgba(255, 235, 0, 1.00)' });
+    } else {
+        highlightLayer.setStyle({ fillColor: 'rgba(255, 235, 0, 1.00)', fillOpacity: 0.85 });
+    }
+}
+var map = L.map('map', {
+    zoomControl: true, maxZoom: 28, minZoom: 1
+}).fitBounds([[-6.805748138062593,108.44751622866258],[-6.753659885020784,108.49537824483647]]);
+var hash = new L.Hash(map);
+map.attributionControl.setPrefix('<a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+
+function removeEmptyRowsFromPopupContent(content, feature) {
+    var tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
+    var rows = tempDiv.querySelectorAll('tr');
+    for (var i = 0; i < rows.length; i++) {
+        var td = rows[i].querySelector('td.visible-with-data');
+        var key = td ? td.id : '';
+        if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+            rows[i].parentNode.removeChild(rows[i]);
+        }
+    }
+    return tempDiv.innerHTML;
+}
+
+var measureControl = new L.Control.Measure({
+    position: 'topleft',
+    primaryLengthUnit: 'meters',
+    secondaryLengthUnit: 'kilometers',
+    primaryAreaUnit: 'sqmeters',
+    secondaryAreaUnit: 'hectares'
+});
+measureControl.addTo(map);
+document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
+document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
+
+var bounds_group = new L.featureGroup([]);
+
+map.createPane('pane_CartoVoyager_1');
+map.getPane('pane_CartoVoyager_1').style.zIndex = 401;
+var layer_CartoVoyager_1 = L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+    pane: 'pane_CartoVoyager_1', opacity: 1.0, attribution: '', minZoom: 1, maxZoom: 28,
+});
+
+map.createPane('pane_EsriImagery_2');
+map.getPane('pane_EsriImagery_2').style.zIndex = 402;
+var layer_EsriImagery_2 = L.tileLayer('https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    pane: 'pane_EsriImagery_2', opacity: 1.0, attribution: '', minZoom: 1, maxZoom: 28,
+});
+map.addLayer(layer_EsriImagery_2);
+
+function pop_BatasDesa_3(feature, layer) {
+    layer.on({
+        mouseout: function(e) {
+            for (var i in e.target._eventParents) {
+                if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                    e.target._eventParents[i].resetStyle(e.target);
+                }
+            }
+        },
+        mouseover: highlightFeature,
+    });
+    var popupContent = '<table>\
+        <tr><td class="visible-with-data" id="NAMOBJ" colspan="2"><strong>' + (feature.properties.NAMOBJ || '') + '</strong></td></tr>\
+        <tr><th scope="row">Kecamatan</th><td class="visible-with-data" id="WADMKC">' + (feature.properties.WADMKC || '') + '</td></tr>\
+        <tr><th scope="row">Kabupaten</th><td class="visible-with-data" id="WADMKK">' + (feature.properties.WADMKK || '') + '</td></tr>\
+    </table>';
+    var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+    layer.bindPopup(content, { maxHeight: 400 });
+}
+function style_BatasDesa_3_0() {
+    return {
+        pane: 'pane_BatasDesa_3', opacity: 1, color: 'rgba(255,255,255,1.0)',
+        dashArray: '4,3', lineCap: 'round', lineJoin: 'round',
+        weight: 1.2, fillOpacity: 0, interactive: true,
+    };
+}
+map.createPane('pane_BatasDesa_3');
+map.getPane('pane_BatasDesa_3').style.zIndex = 403;
+var layer_BatasDesa_3 = new L.geoJson(json_BatasDesa_3, {
+    attribution: '', interactive: true, pane: 'pane_BatasDesa_3',
+    onEachFeature: pop_BatasDesa_3, style: style_BatasDesa_3_0,
+});
+bounds_group.addLayer(layer_BatasDesa_3);
+map.addLayer(layer_BatasDesa_3);
+
+function pop_ZonaNilaiTanah_4(feature, layer) {
+    layer.on({
+        mouseout: function(e) {
+            for (var i in e.target._eventParents) {
+                if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                    e.target._eventParents[i].resetStyle(e.target);
+                }
+            }
+        },
+        mouseover: highlightFeature,
+    });
+    var popupContent = '<table>\
+        <tr><td class="visible-with-data" id="NAMAKANTOR" colspan="2"><strong>Zona Nilai Tanah</strong><br>' + (feature.properties.NAMAKANTOR || '') + '</td></tr>\
+        <tr><th scope="row">Kisaran Nilai (Rp/m²)</th><td class="visible-with-data" id="RANGENILAI">' + (feature.properties.RANGENILAI || '') + '</td></tr>\
+        <tr><th scope="row">Tahun Data</th><td class="visible-with-data" id="TAHUNDIBUA">' + (feature.properties.TAHUNDIBUA || '') + '</td></tr>\
+    </table>';
+    var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+    layer.bindPopup(content, { maxHeight: 400 });
+}
+function style_ZonaNilaiTanah_4_0(feature) {
+    var colors = {'1':'rgba(255,255,178,1.0)','2':'rgba(254,204,92,1.0)','3':'rgba(253,141,60,1.0)','4':'rgba(240,59,32,1.0)','5':'rgba(189,0,38,1.0)','6':'rgba(128,0,38,1.0)'};
+    var k = String(feature.properties['q2wHide_KELASNILAI']);
+    return {
+        pane: 'pane_ZonaNilaiTanah_4', opacity: 1, color: 'rgba(35,35,35,1.0)',
+        weight: 0.6, fill: true, fillOpacity: 0.85,
+        fillColor: colors[k] || '#cccccc', interactive: true,
+    };
+}
+map.createPane('pane_ZonaNilaiTanah_4');
+map.getPane('pane_ZonaNilaiTanah_4').style.zIndex = 404;
+var layer_ZonaNilaiTanah_4 = new L.geoJson(json_ZonaNilaiTanah_4, {
+    attribution: '', interactive: true, pane: 'pane_ZonaNilaiTanah_4',
+    onEachFeature: pop_ZonaNilaiTanah_4, style: style_ZonaNilaiTanah_4_0,
+});
+bounds_group.addLayer(layer_ZonaNilaiTanah_4);
+map.addLayer(layer_ZonaNilaiTanah_4);
+
+function pop_Sungai_5(feature, layer) {
+    var popupContent = '<table>\
+        <tr><td colspan="2"><strong>' + (feature.properties.REMARK || 'Sungai') + '</strong></td></tr>\
+    </table>';
+    layer.bindPopup(popupContent, { maxHeight: 400 });
+}
+function style_Sungai_5_0(feature) {
+    var c = feature.properties.REMARK === 'Sungai Satu Garis' ? 'rgba(74,144,217,1)' : 'rgba(111,175,232,1)';
+    return { pane: 'pane_Sungai_5', opacity: 1, color: c, weight: 2.5, fillOpacity: 0, interactive: false };
+}
+map.createPane('pane_Sungai_5');
+map.getPane('pane_Sungai_5').style.zIndex = 405;
+var layer_Sungai_5 = new L.geoJson(json_Sungai_5, {
+    attribution: '', interactive: false, pane: 'pane_Sungai_5',
+    onEachFeature: pop_Sungai_5, style: style_Sungai_5_0,
+});
+bounds_group.addLayer(layer_Sungai_5);
+map.addLayer(layer_Sungai_5);
+
+function pop_JaringanJalan_6(feature, layer) {
+    var popupContent = '<table>\
+        <tr><td colspan="2"><strong>' + (feature.properties.NAMRJL || feature.properties.REMARK || 'Jalan') + '</strong></td></tr>\
+        <tr><th scope="row">Kategori</th><td>' + (feature.properties.REMARK || '') + '</td></tr>\
+    </table>';
+    layer.bindPopup(popupContent, { maxHeight: 400 });
+}
+function style_JaringanJalan_6_0(feature) {
+    var styles = {
+        'Jalan Kolektor': { color: 'rgba(244,163,0,1)', weight: 4 },
+        'Jalan Lain':     { color: 'rgba(207,207,207,1)', weight: 1.5 },
+        'Jalan Lokal':    { color: 'rgba(140,140,140,1)', weight: 2.5 },
+        'Jalan Setapak':  { color: 'rgba(184,184,184,1)', weight: 1, dashArray: '2,3' }
+    };
+    return Object.assign({ pane: 'pane_JaringanJalan_6', opacity: 1, fillOpacity: 0, interactive: false },
+                         styles[feature.properties.REMARK] || {});
+}
+map.createPane('pane_JaringanJalan_6');
+map.getPane('pane_JaringanJalan_6').style.zIndex = 406;
+var layer_JaringanJalan_6 = new L.geoJson(json_JaringanJalan_6, {
+    attribution: '', interactive: false, pane: 'pane_JaringanJalan_6',
+    onEachFeature: pop_JaringanJalan_6, style: style_JaringanJalan_6_0,
+});
+bounds_group.addLayer(layer_JaringanJalan_6);
+map.addLayer(layer_JaringanJalan_6);
+
+// ── Pencarian alamat (Photon / Nominatim) ──
+var photonControl = L.control.photon({
+    url: 'https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&',
+    feedbackLabel: '', position: 'topleft', includePosition: true, initial: true,
+}).addTo(map);
+photonControl._container.childNodes[0].style.borderRadius = '8px';
+var x = null, marker = null, z = null;
+photonControl.on('selected', function(e) {
+    if (x != null) { map.removeLayer(marker); map.removeLayer(x); }
+    var gcd = e.choice;
+    x = L.geoJSON(gcd).addTo(map);
+    var label = typeof gcd.properties.label === 'undefined' ? gcd.properties.display_name : gcd.properties.label;
+    marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
+    map.setView(x.getLayers()[0].getLatLng(), 17);
+    z = label;
+    e.target.input.value = z;
+});
+var search = document.getElementsByClassName('leaflet-photon leaflet-control')[0];
+search.classList.add('leaflet-control-search');
+search.style.display = 'flex';
+search.style.backgroundColor = 'rgba(255,255,255,0.95)';
+var sbutton = document.createElement('div');
+sbutton.id = 'gcd-button-control';
+sbutton.className = 'gcd-gl-btn fa fa-search search-button';
+search.insertBefore(sbutton, search.firstChild);
+var slast = search.lastChild;
+slast.style.display = 'none';
+sbutton.addEventListener('click', function () {
+    slast.style.display = (slast.style.display === 'none') ? 'block' : 'none';
+});
+
+// ── Layer control ──
+var overlaysTree = [
+    {label: 'Jaringan Jalan<br /><table><tr><td><img src="legend/JaringanJalan_6_JalanKolektor0.png"/></td><td>Jalan Kolektor</td></tr><tr><td><img src="legend/JaringanJalan_6_JalanLain1.png"/></td><td>Jalan Lain</td></tr><tr><td><img src="legend/JaringanJalan_6_JalanLokal2.png"/></td><td>Jalan Lokal</td></tr><tr><td><img src="legend/JaringanJalan_6_JalanSetapak3.png"/></td><td>Jalan Setapak</td></tr></table>', layer: layer_JaringanJalan_6},
+    {label: 'Sungai<br /><table><tr><td><img src="legend/Sungai_5_AlurSungai0.png"/></td><td>Alur Sungai</td></tr><tr><td><img src="legend/Sungai_5_SungaiSatuGaris1.png"/></td><td>Sungai Satu Garis</td></tr></table>', layer: layer_Sungai_5},
+    {label: 'Zona Nilai Tanah<br /><table><tr><td><img src="legend/ZonaNilaiTanah_4_1000000.png"/></td><td>&lt; 100.000</td></tr><tr><td><img src="legend/ZonaNilaiTanah_4_1000002000001.png"/></td><td>100.000 – 200.000</td></tr><tr><td><img src="legend/ZonaNilaiTanah_4_2000005000002.png"/></td><td>200.000 – 500.000</td></tr><tr><td><img src="legend/ZonaNilaiTanah_4_50000010000003.png"/></td><td>500.000 – 1.000.000</td></tr><tr><td><img src="legend/ZonaNilaiTanah_4_100000020000004.png"/></td><td>1.000.000 – 2.000.000</td></tr><tr><td><img src="legend/ZonaNilaiTanah_4_200000050000005.png"/></td><td>2.000.000 – 5.000.000</td></tr></table>', layer: layer_ZonaNilaiTanah_4},
+    {label: '<img src="legend/BatasDesa_3.png"/> Batas Desa', layer: layer_BatasDesa_3},
+    {label: 'Esri Imagery', layer: layer_EsriImagery_2, radioGroup: 'bm' },
+    {label: 'Carto Voyager', layer: layer_CartoVoyager_1, radioGroup: 'bm' },
+];
+var lay = L.control.layers.tree(null, overlaysTree, { collapsed: false });
+lay.addTo(map);
+
+// Sisipkan judul panel (bisa diciutkan dengan klik) — dirancang agar
+// trainee mudah memahami bahwa panel ini bisa disembunyikan.
+(function addLayersTitle(){
+  var panel = lay.getContainer();
+  if (!panel) return;
+  var title = document.createElement('div');
+  title.className = 'sp-layers-title';
+  title.innerHTML =
+    '<span class="sp-layers-title-icon">' +
+      '<svg width="14" height="14" viewBox="0 0 16 16" fill="none">' +
+        '<path d="M8 1.5 1.5 5 8 8.5 14.5 5 8 1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>' +
+        '<path d="M1.5 8 8 11.5 14.5 8" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>' +
+        '<path d="M1.5 11 8 14.5 14.5 11" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>' +
+      '</svg>' +
+    '</span>' +
+    '<span class="sp-layers-title-label">Layer &amp; Basemap</span>' +
+    '<span class="sp-layers-title-chevron">▼</span>';
+  panel.insertBefore(title, panel.firstChild);
+  title.addEventListener('click', function(){
+    panel.classList.toggle('sp-collapsed');
+  });
+})();
+
+// Sisipkan heading kecil sebelum pilihan basemap agar radio selector tidak
+// tercampur dengan daftar overlay tematik.
+(function addBasemapSectionTitle(){
+  var panel = lay.getContainer();
+  if (!panel) return;
+  var firstBasemapInput = panel.querySelector('input[type="radio"]');
+  if (!firstBasemapInput) return;
+  var basemapNode = firstBasemapInput.closest('.leaflet-layerstree-node') ||
+                    firstBasemapInput.closest('.leaflet-layerstree-header');
+  if (!basemapNode || !basemapNode.parentNode) return;
+  var heading = document.createElement('div');
+  heading.className = 'sp-layer-section-title';
+  heading.textContent = 'Basemap';
+  basemapNode.parentNode.insertBefore(heading, basemapNode);
+})();
+
+// Label nama desa — dijalankan setelah map siap agar containerPointToLatLng tersedia
+map.whenReady(function() {
+    setTimeout(function() {
+        try {
+            var i = 0;
+            layer_BatasDesa_3.eachLayer(function(layer) {
+                try {
+                    layer.bindTooltip(
+                        layer.feature.properties.NAMOBJ
+                            ? layer.feature.properties.NAMOBJ
+                            : '',
+                        { permanent: true, offset: [0, -16], direction: 'center', className: 'css_BatasDesa_3' }
+                    );
+                    labels.push(layer);
+                    totalMarkers += 1;
+                    layer.added = true;
+                    addLabel(layer, i);
+                    i++;
+                } catch (err) { /* lewati label yang gagal */ }
+            });
+            try { resetLabels([layer_BatasDesa_3]); } catch (err) {}
+            map.on('zoomend',     function () { try { resetLabels([layer_BatasDesa_3]); } catch (e) {} });
+            map.on('layeradd',    function () { try { resetLabels([layer_BatasDesa_3]); } catch (e) {} });
+            map.on('layerremove', function () { try { resetLabels([layer_BatasDesa_3]); } catch (e) {} });
+        } catch (err) { console.warn('Label init skipped:', err); }
+    }, 200);
+});
+
+/* ============================================================
+   Tambahan kecil di luar kode qgis2web — untuk header/footer/welcome
+   ============================================================ */
+
+// Koordinat kursor di footer
+var coordsEl = document.getElementById('spCoords');
+map.on('mousemove', function(e) {
+    coordsEl.textContent = e.latlng.lat.toFixed(5) + '°, ' + e.latlng.lng.toFixed(5) + '°';
+});
+map.on('mouseout', function() { coordsEl.textContent = '—, —'; });
+
+// Welcome banner: orientasi awal training, ditutup manual oleh pengguna.
+function hideWelcome() {
+    var w = document.getElementById('spWelcome');
+    if (w) w.classList.add('hidden');
+}
+document.getElementById('welcomeClose').addEventListener('click', hideWelcome);
+document.getElementById('welcomeStart').addEventListener('click', hideWelcome);
+
+// Modal bantuan
+var modal = document.getElementById('spModal');
+document.getElementById('helpBtn').addEventListener('click', function() { modal.classList.add('open'); });
+document.getElementById('modalClose').addEventListener('click', function() { modal.classList.remove('open'); });
+modal.addEventListener('click', function(e) { if (e.target === modal) modal.classList.remove('open'); });
+
+/* ===== akhir skrip qgis2web ===== */
+</script>
+
+</body>
+</html>

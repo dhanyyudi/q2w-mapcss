@@ -1,0 +1,732 @@
+/* ==========================================================================
+   SIPETA — Training-friendly redesign for qgis2web exports
+   --------------------------------------------------------------------------
+   Cara pakai: cukup tambahkan satu baris di <head> index.html hasil ekspor:
+
+     <link rel="stylesheet" href="css/sipeta-redesign.css">
+
+   ...lalu tambahkan <header> dan <footer> seperti di contoh index.html ini.
+   File CSS ini hanya MENIMPA tampilan (override) — tidak mengubah perilaku
+   plugin qgis2web sama sekali.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. Variabel warna & font
+   -------------------------------------------------------------------------- */
+:root {
+  /* Warna utama: navy/teal pemerintahan */
+  --sp-navy:        #0f3a5f;     /* warna gelap untuk teks tegas / header */
+  --sp-navy-2:      #163f63;
+  --sp-teal:        #137a7f;     /* aksen — tombol aktif, link, highlight */
+  --sp-teal-2:      #0f6669;
+
+  /* Netral abu-abu */
+  --sp-bg:          #f5f7fa;     /* latar halaman */
+  --sp-surface:     #ffffff;     /* latar kartu/panel */
+  --sp-border:      #e2e6ec;     /* garis pemisah */
+  --sp-border-2:    #cdd4dc;
+  --sp-ink:         #1a2531;     /* teks utama */
+  --sp-ink-2:       #4a5868;     /* teks sekunder */
+  --sp-ink-3:       #7a8696;     /* teks redup */
+
+  /* Ukuran tetap */
+  --sp-header-h:    60px;
+  --sp-footer-h:    32px;
+  --sp-radius:      8px;
+  --sp-shadow:      0 2px 8px rgba(15, 58, 95, 0.08), 0 1px 2px rgba(15, 58, 95, 0.04);
+  --sp-shadow-lg:   0 8px 24px rgba(15, 58, 95, 0.12), 0 2px 6px rgba(15, 58, 95, 0.06);
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Reset dasar — body, font, dan layout halaman
+   -------------------------------------------------------------------------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--sp-bg);
+  color: var(--sp-ink);
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Map qgis2web defaultnya pakai ukuran tetap; kita timpa agar memenuhi
+   seluruh viewport. Brand pill & tombol Bantuan kini "mengambang" di
+   atas peta sehingga tidak ada lagi area kosong putih di header. */
+#map {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: var(--sp-footer-h) !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  background: #d8dde2;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Brand pill (kiri-atas) + tombol Bantuan (kanan-atas)
+   --------------------------------------------------------------------------
+   Pill: rounded di kanan, lurus di kiri (menempel ke tepi viewport) — terkesan
+   "bendera" identitas yang ringan. Tombol bantuan: pill simetris di kanan-atas.
+   Keduanya floating di atas peta (z-index > leaflet controls).
+*/
+.sp-brand-pill {
+  position: fixed;
+  top: 14px;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px 8px 14px;
+  background: var(--sp-surface);
+  border: 1px solid var(--sp-border);
+  border-left: 0;
+  border-radius: 0 999px 999px 0;
+  box-shadow: 0 4px 14px rgba(15, 58, 95, 0.12), 0 1px 2px rgba(15, 58, 95, 0.04);
+  z-index: 1500;
+  max-width: calc(100vw - 180px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.96);
+}
+.sp-logo {
+  width: 102px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.sp-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sp-title-wrap { line-height: 1.15; min-width: 0; }
+.sp-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sp-navy);
+  letter-spacing: -0.005em;
+}
+.sp-subtitle {
+  font-size: 11.5px;
+  color: var(--sp-ink-3);
+  font-weight: 500;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tombol Bantuan — pill kanan-atas */
+.sp-help-pill {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 14px 0 10px;
+  border: 1px solid var(--sp-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--sp-ink-2);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 58, 95, 0.12), 0 1px 2px rgba(15, 58, 95, 0.04);
+  z-index: 1500;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.15s, color 0.15s, transform 0.15s;
+}
+.sp-help-pill:hover {
+  border-color: var(--sp-teal);
+  color: var(--sp-teal);
+  transform: translateY(-1px);
+}
+.sp-help-pill .dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--sp-teal);
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+  font-style: italic;
+}
+
+/* Geser kontrol Leaflet bawaan agar tidak menabrak brand pill / help pill */
+.leaflet-top.leaflet-left { top: 64px !important; }
+.leaflet-top.leaflet-right { top: 64px !important; }
+
+/* Responsif: di layar sempit, sembunyikan label "Bantuan" — sisakan ikon "i" */
+@media (max-width: 560px) {
+  .sp-brand-pill .sp-subtitle { display: none; }
+  .sp-help-pill { padding: 0; width: 38px; justify-content: center; }
+  .sp-help-label { display: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Footer — atribusi + koordinat kursor
+   -------------------------------------------------------------------------- */
+.sp-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--sp-footer-h);
+  background: var(--sp-surface);
+  border-top: 1px solid var(--sp-border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 14px;
+  font-size: 11.5px;
+  color: var(--sp-ink-3);
+  z-index: 1500;
+}
+.sp-footer .sp-sep {
+  width: 1px;
+  height: 14px;
+  background: var(--sp-border);
+}
+.sp-footer .sp-spacer { flex: 1; }
+.sp-footer .mono {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--sp-ink-2);
+}
+.sp-footer a {
+  color: var(--sp-ink-2);
+  text-decoration: none;
+}
+.sp-footer a:hover { color: var(--sp-teal); }
+
+
+/* --------------------------------------------------------------------------
+   5. Welcome banner
+   -------------------------------------------------------------------------- */
+.sp-welcome {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(15, 58, 95, 0.18);
+  backdrop-filter: blur(3px);
+  z-index: 3000;
+  transition: opacity 0.25s ease;
+}
+.sp-welcome.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.sp-welcome-card {
+  width: min(460px, 100%);
+  max-height: calc(100vh - 72px);
+  overflow: hidden;
+  border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius);
+  background: rgba(255, 255, 255, 0.97);
+  color: var(--sp-ink);
+  box-shadow: var(--sp-shadow-lg);
+}
+.sp-welcome-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--sp-border);
+}
+.sp-welcome-logo {
+  width: 104px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.sp-welcome-brand {
+  min-width: 0;
+  flex: 1;
+  line-height: 1.15;
+}
+.sp-welcome-brand-title {
+  color: var(--sp-navy);
+  font-size: 14px;
+  font-weight: 800;
+}
+.sp-welcome-brand-sub {
+  margin-top: 2px;
+  color: var(--sp-ink-3);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.sp-welcome-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sp-welcome-body {
+  padding: 14px 18px 18px;
+  max-height: calc(100vh - 154px);
+  overflow-y: auto;
+  font-size: 13px;
+  color: var(--sp-ink-2);
+  line-height: 1.55;
+}
+.sp-welcome-body h2 {
+  margin: 0 0 10px;
+  color: var(--sp-navy);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.sp-welcome-body p {
+  margin: 0 0 8px;
+}
+.sp-welcome-body kbd {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  background: var(--sp-bg);
+  border: 1px solid var(--sp-border-2);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--sp-navy);
+}
+.sp-welcome-close {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--sp-ink-3);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.sp-welcome-close:hover {
+  background: #f3f5f8;
+  color: var(--sp-navy);
+}
+.sp-welcome-start {
+  width: 100%;
+  height: 34px;
+  margin-top: 6px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--sp-teal);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sp-welcome-start:hover {
+  background: var(--sp-teal-2);
+}
+
+@media (max-width: 560px) {
+  .sp-welcome {
+    padding: 14px;
+  }
+  .sp-welcome-logo {
+    width: 96px;
+  }
+  .sp-welcome-body {
+    padding: 13px 15px 16px;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   6. Restyle panel layer (Leaflet control yang dihasilkan qgis2web)
+   --------------------------------------------------------------------------
+   Posisi panel TIDAK kita ubah — tetap di pojok kanan atas seperti aslinya.
+   Tampilannya dirapikan + ditambahkan judul "Layer & Basemap" yang bisa
+   diciutkan (collapse) dengan klik.
+*/
+.leaflet-control-layers {
+  border: 1px solid var(--sp-border) !important;
+  border-radius: var(--sp-radius) !important;
+  box-shadow: var(--sp-shadow-lg) !important;
+  background: var(--sp-surface) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  color: var(--sp-ink) !important;
+  overflow: hidden;
+  display: block !important;
+  align-items: stretch !important;
+}
+.leaflet-control-layers-expanded {
+  padding: 0 !important;
+  min-width: 240px;
+}
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+  display: none !important;
+}
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle::after {
+  content: none !important;
+}
+
+/* Judul panel — disisipkan via JS sebagai child pertama */
+.sp-layers-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, #fafbfc 0%, #f3f5f8 100%);
+  border-bottom: 1px solid var(--sp-border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sp-navy);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+.sp-layers-title-icon {
+  width: 14px; height: 14px;
+  display: grid; place-items: center;
+  color: var(--sp-teal);
+}
+.sp-layers-title-label { flex: 1; }
+.sp-layers-title-chevron {
+  font-size: 11px;
+  color: var(--sp-ink-3);
+  transition: transform 0.2s ease;
+}
+.leaflet-control-layers.sp-collapsed .sp-layers-title-chevron {
+  transform: rotate(-90deg);
+}
+.leaflet-control-layers.sp-collapsed .leaflet-control-layers-list {
+  display: none !important;
+}
+
+/* Heading / section */
+.leaflet-control-layers-list {
+  padding: 8px 12px !important;
+  max-height: calc(100vh - var(--sp-footer-h) - 100px);
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+.sp-layer-section-title {
+  margin: 8px 0 5px;
+  padding-top: 8px;
+  border-top: 1px solid var(--sp-border);
+  color: var(--sp-navy);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Buang spasi kosong di kiri tiap baris (qgis2web layerstree menyisipkan
+   <span class="leaflet-layerstree-header-space"> kosong untuk arrow grup). */
+.leaflet-layerstree-header-space { display: none !important; }
+.leaflet-layerstree-header { padding-left: 0 !important; }
+.leaflet-layerstree-header-name { padding-left: 4px !important; }
+.leaflet-layerstree-children { padding-left: 4px !important; }
+/* Tabel legend di dalam baris layer: rapatkan ke kiri */
+.leaflet-control-layers-list .leaflet-layerstree-header table {
+  margin-left: 22px;     /* sejajar dengan teks setelah checkbox */
+}
+.leaflet-control-layers-list label {
+  font-size: 12.5px !important;
+  color: var(--sp-ink-2) !important;
+  font-weight: 500 !important;
+}
+.leaflet-control-layers-list label:hover {
+  color: var(--sp-ink) !important;
+}
+/* Checkbox: warna teal saat aktif */
+.leaflet-control-layers-list input[type="checkbox"],
+.leaflet-control-layers-list input[type="radio"] {
+  accent-color: var(--sp-teal);
+  margin-right: 4px;
+}
+/* Pemisah antara overlay dan basemap */
+.leaflet-control-layers-separator {
+  border-top: 1px solid var(--sp-border) !important;
+  margin: 6px 0 !important;
+}
+/* Tombol toggle (saat panel ditutup) */
+.leaflet-control-layers-toggle {
+  background-color: var(--sp-surface) !important;
+  border-radius: var(--sp-radius) !important;
+  border: 1px solid var(--sp-border) !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+/* Legend tabel di dalam panel — dirapikan */
+.leaflet-control-layers table {
+  font-size: 11.5px !important;
+  color: var(--sp-ink-2);
+  border-collapse: collapse;
+  margin-top: 4px;
+}
+.leaflet-control-layers table td {
+  padding: 2px 6px 2px 0 !important;
+  vertical-align: middle;
+}
+.leaflet-control-layers table img {
+  vertical-align: middle;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. Restyle popup — kartu modern dengan header navy + body terstruktur
+   --------------------------------------------------------------------------
+   Struktur yang dihasilkan qgis2web adalah <table> di mana baris pertama
+   memuat <strong> sebagai judul. Kita styling baris pertama sebagai header
+   bar (latar navy + teks putih), baris berikutnya sebagai key-value list.
+*/
+.leaflet-popup-content-wrapper {
+  border-radius: 10px !important;
+  box-shadow: 0 12px 32px rgba(15, 58, 95, 0.18), 0 2px 6px rgba(15, 58, 95, 0.08) !important;
+  border: 1px solid var(--sp-border);
+  padding: 0 !important;
+  overflow: hidden;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  color: var(--sp-ink) !important;
+  line-height: 1.5;
+  min-width: 240px;
+}
+.leaflet-popup-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+/* Baris pertama = header bar */
+.leaflet-popup-content table tr:first-child td {
+  background: linear-gradient(135deg, var(--sp-navy) 0%, var(--sp-navy-2) 100%);
+  color: #fff;
+  padding: 12px 16px 11px;
+  border: 0;
+  position: relative;
+}
+.leaflet-popup-content table tr:first-child td::before {
+  /* aksen garis tipis warna teal di kiri header */
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--sp-teal);
+}
+.leaflet-popup-content table tr:first-child td strong {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  display: block;
+  margin: 0;
+}
+.leaflet-popup-content table tr:first-child td strong + br + * { /* baris baris di header */
+  font-size: 11.5px;
+  opacity: 0.78;
+  font-weight: 400;
+}
+/* Baris-baris key-value */
+.leaflet-popup-content table tr:not(:first-child) td,
+.leaflet-popup-content table tr:not(:first-child) th {
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--sp-border);
+  text-align: left;
+  font-size: 12.5px;
+  vertical-align: top;
+}
+.leaflet-popup-content table tr:not(:first-child):last-child td,
+.leaflet-popup-content table tr:not(:first-child):last-child th {
+  border-bottom: 0;
+  padding-bottom: 12px;
+}
+.leaflet-popup-content table tr:nth-child(even):not(:first-child) {
+  background: #fafbfc;
+}
+.leaflet-popup-content table th {
+  color: var(--sp-ink-3);
+  font-weight: 500;
+  width: 42%;
+  text-transform: uppercase;
+  font-size: 10.5px !important;
+  letter-spacing: 0.05em;
+  padding-top: 11px !important;
+}
+.leaflet-popup-content table td {
+  color: var(--sp-ink);
+  font-weight: 500;
+}
+.leaflet-popup-tip {
+  box-shadow: 0 2px 6px rgba(15, 58, 95, 0.12) !important;
+  background: var(--sp-navy) !important;
+}
+.leaflet-popup-close-button {
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 18px !important;
+  padding: 8px 10px 0 0 !important;
+  font-weight: 300 !important;
+  text-shadow: none !important;
+}
+.leaflet-popup-close-button:hover { color: #fff !important; }
+
+
+/* --------------------------------------------------------------------------
+   8. Restyle tombol zoom + tombol kontrol Leaflet lainnya
+   -------------------------------------------------------------------------- */
+.leaflet-bar {
+  border: 1px solid var(--sp-border) !important;
+  border-radius: var(--sp-radius) !important;
+  box-shadow: var(--sp-shadow) !important;
+  overflow: hidden;
+}
+.leaflet-bar a {
+  background: var(--sp-surface) !important;
+  color: var(--sp-ink-2) !important;
+  border-bottom: 1px solid var(--sp-border) !important;
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  font-size: 16px !important;
+  transition: background 0.15s, color 0.15s;
+}
+.leaflet-bar a:last-child { border-bottom: 0 !important; }
+.leaflet-bar a:hover {
+  background: #f3fbfb !important;
+  color: var(--sp-teal) !important;
+}
+
+/* Atribusi map dirapikan */
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: var(--sp-ink-3) !important;
+  font-size: 10.5px !important;
+  padding: 2px 8px !important;
+  border-radius: 4px 0 0 0 !important;
+}
+.leaflet-control-attribution a { color: var(--sp-ink-2) !important; }
+
+
+/* --------------------------------------------------------------------------
+   9. Tooltip nama desa (BatasDesa) — DUA gaya: halo (default) atau kotak
+   --------------------------------------------------------------------------
+   Halo = teks dengan outline putih mengikuti bentuk huruf. Lebih bersih di
+   atas citra satelit karena peta "bernapas" lewat sela huruf.
+   Kotak = latar putih semi-transparan (gaya lama qgis2web).
+   Mode dipilih lewat class pada <body>: .sp-labels-halo (default) / .sp-labels-box.
+*/
+
+/* Halo (default) — teks PUTIH dengan halo HITAM mengikuti bentuk huruf.
+   Pilihan ini lebih kontras di atas citra satelit gelap & polygon merah. */
+body.sp-labels-halo .leaflet-tooltip.css_BatasDesa_3,
+.leaflet-tooltip.css_BatasDesa_3 {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  text-shadow:
+    -1.5px -1.5px 0 #000,
+     1.5px -1.5px 0 #000,
+    -1.5px  1.5px 0 #000,
+     1.5px  1.5px 0 #000,
+       0   -1.5px 0 #000,
+       0    1.5px 0 #000,
+    -1.5px   0    0 #000,
+     1.5px   0    0 #000,
+       0     0    3px rgba(0,0,0,0.55);
+  -webkit-text-stroke: 0;
+}
+.leaflet-tooltip.css_BatasDesa_3::before { display: none !important; }
+
+/* Kotak (gaya lama) — di-override jika body.sp-labels-box dipilih */
+body.sp-labels-box .leaflet-tooltip.css_BatasDesa_3 {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid var(--sp-border) !important;
+  color: var(--sp-navy) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  text-shadow: none !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   10. Modal info (untuk tombol "Bantuan" di header)
+   -------------------------------------------------------------------------- */
+.sp-modal {
+  position: fixed; inset: 0;
+  background: rgba(15, 58, 95, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+.sp-modal.open { display: flex; }
+.sp-modal-card {
+  background: var(--sp-surface);
+  border-radius: var(--sp-radius);
+  width: min(440px, calc(100% - 32px));
+  box-shadow: var(--sp-shadow-lg);
+  overflow: hidden;
+}
+.sp-modal-head {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--sp-border);
+  display: flex;
+  align-items: center;
+}
+.sp-modal-head h3 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--sp-navy);
+  font-weight: 600;
+  flex: 1;
+}
+.sp-modal-close {
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  color: var(--sp-ink-3);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+.sp-modal-close:hover { color: var(--sp-navy); }
+.sp-modal-body {
+  padding: 14px 20px 18px;
+  font-size: 13px;
+  color: var(--sp-ink-2);
+  line-height: 1.55;
+}
+.sp-modal-body p { margin: 0 0 8px; }
+.sp-modal-body kbd {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  background: var(--sp-bg);
+  border: 1px solid var(--sp-border-2);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--sp-navy);
+}
