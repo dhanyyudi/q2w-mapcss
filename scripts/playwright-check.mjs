@@ -55,6 +55,31 @@ async function expectPageContains(page, path, selectors) {
   }
 }
 
+async function expectDocsFooterStyled(page, baseUrl) {
+  await page.goto(`${baseUrl}/docs.html`, { waitUntil: "networkidle" });
+  const footer = page.locator(".ln-footer");
+  if ((await footer.count()) !== 1) {
+    throw new Error("Docs overview must render one shared footer.");
+  }
+  const styles = await footer.evaluate((el) => {
+    const computed = getComputedStyle(el);
+    const grid = el.querySelector(".ln-footer__grid");
+    const gridComputed = grid ? getComputedStyle(grid) : null;
+    return {
+      paddingTop: computed.paddingTop,
+      borderTopStyle: computed.borderTopStyle,
+      gridDisplay: gridComputed ? gridComputed.display : "",
+      gridColumns: gridComputed ? gridComputed.gridTemplateColumns : "",
+    };
+  });
+  if (styles.paddingTop === "0px" || styles.borderTopStyle === "none") {
+    throw new Error("Docs overview footer must keep shared padding and border styles.");
+  }
+  if (styles.gridDisplay !== "grid" || !styles.gridColumns.includes("px")) {
+    throw new Error("Docs overview footer grid styles are missing.");
+  }
+}
+
 async function expectRealExampleChrome(page, baseUrl) {
   await page.goto(`${baseUrl}/examples/categorized-real/`, { waitUntil: "networkidle" });
   await page.waitForSelector(".q2w-header");
@@ -144,6 +169,8 @@ try {
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
     throw new Error("Docs overview theme toggle did not switch back to explicit light.");
   }
+
+  await expectDocsFooterStyled(page, baseUrl);
 
   await page.goto(`${baseUrl}/docs/header.html`, { waitUntil: "networkidle" });
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {

@@ -1,3 +1,19 @@
+<style>
+  .ln-wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  .ln-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+  .ln-brand__mark { width: 26px; height: 26px; border-radius: 6px; background: var(--q2w-accent); color: var(--q2w-accent-fg); display: grid; place-items: center; font-size: 12px; }
+  .ln-footer { border-top: 1px solid var(--q2w-border); padding: 48px 0 64px; }
+  .ln-footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+  .ln-footer h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--q2w-text-faint); margin: 0 0 14px; font-weight: 600; }
+  .ln-footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .ln-footer a { color: var(--q2w-text-muted); text-decoration: none; font-size: 13px; }
+  .ln-footer a:hover { color: var(--q2w-text); }
+  .ln-footer__bot { display: flex; justify-content: space-between; align-items: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--q2w-border); font-size: 12px; color: var(--q2w-text-faint); gap: 12px; flex-wrap: wrap; }
+  @media (max-width: 800px) {
+    .ln-wrap { padding: 0 20px; }
+    .ln-footer__grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>
 <footer class="ln-footer">
   <div class="ln-wrap">
     <div class="ln-footer__grid">
