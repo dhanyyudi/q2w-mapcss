@@ -4,6 +4,19 @@ import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
+function readOutput(relativePath) {
+  return readFileSync(join(root, relativePath), "utf8");
+}
+
+function assertIncludes(label, content, needles) {
+  for (const needle of needles) {
+    if (!content.includes(needle)) {
+      console.error(`${label} must include ${needle}.`);
+      process.exit(1);
+    }
+  }
+}
+
 const required = [
   "eleventy.config.js",
   "dist/q2w-mapcss.css",
@@ -51,7 +64,7 @@ if (leakedDocs.length) {
   process.exit(1);
 }
 
-const headerDoc = readFileSync(join(root, "site/docs/header.html"), "utf8");
+const headerDoc = readOutput("site/docs/header.html");
 if (!headerDoc.includes('../dist/q2w-mapcss.css') || !headerDoc.includes('../dist/q2w-mapcss.showcase.css')) {
   console.error("Component docs must load CSS from ../dist/ because they are nested under /docs/.");
   process.exit(1);
@@ -137,12 +150,91 @@ if (revealCardCount < 12) {
   process.exit(1);
 }
 
-const popupDoc = readFileSync(join(root, "site/docs/popup.html"), "utf8");
+const popupDoc = readOutput("site/docs/popup.html");
 for (const needle of ['q2w-popup--striped', 'q2w-popup--governmental']) {
   if (!popupDoc.includes(needle)) {
     console.error(`Popup docs must include variant ${needle}.`);
     process.exit(1);
   }
+}
+
+const docsVariantRequirements = {
+  "site/docs/header.html": [
+    "q2w-header",
+    "q2w-header--bar",
+    "q2w-header--minimal",
+    "q2w-header--expressive",
+    "q2w-header--technical",
+    "q2w-header--pill-left",
+  ],
+  "site/docs/popup.html": [
+    "q2w-popup",
+    "q2w-popup__media",
+    "q2w-tabs",
+    "q2w-popup--minimal",
+    "q2w-popup--technical",
+    "q2w-popup--expressive",
+    "q2w-popup--striped",
+    "q2w-popup--governmental",
+  ],
+  "site/docs/button.html": [
+    "q2w-btn",
+    "q2w-btn--primary",
+    "q2w-btn--ghost",
+    "q2w-btn--icon",
+    "q2w-btn--pill",
+    "q2w-btn--loading",
+    "q2w-btn--help",
+  ],
+  "site/docs/layer.html": [
+    "q2w-panel",
+    "q2w-layer",
+    "q2w-sublayer",
+    "q2w-panel__section",
+    "q2w-panel__section-title",
+    "q2w-panel__header--collapsible",
+    "is-collapsed",
+  ],
+  "site/docs/legend.html": [
+    "q2w-legend-swatch",
+    "q2w-grad",
+    "--q2w-div-",
+    "q2w-legend-dot",
+    "q2w-legend-line",
+  ],
+  "site/docs/control.html": [
+    "q2w-control",
+    "q2w-control__btn",
+    "q2w-control--rounded",
+  ],
+  "site/docs/toast.html": [
+    "q2w-toast--success",
+    "q2w-toast--warning",
+    "q2w-toast--error",
+  ],
+  "site/docs/marker.html": [
+    "q2w-marker",
+    "q2w-cluster",
+  ],
+  "site/docs/modal.html": [
+    "q2w-modal-backdrop",
+    "q2w-modal",
+    "q2w-modal__footer",
+  ],
+  "site/docs/search.html": [
+    "q2w-search",
+    "q2w-search__results",
+    "q2w-search__item",
+  ],
+  "site/docs/basemap.html": [
+    "q2w-basemap-grid",
+    "q2w-basemap",
+    "q2w-basemap--active",
+  ],
+};
+
+for (const [relativePath, needles] of Object.entries(docsVariantRequirements)) {
+  assertIncludes(relativePath, readOutput(relativePath), needles);
 }
 
 const css = readFileSync(join(root, "dist/q2w-mapcss.css"), "utf8");
