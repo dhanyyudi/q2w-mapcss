@@ -114,6 +114,34 @@ assertIncludes("CHANGELOG.md", changelog, [
   "snippets/templates/",
 ]);
 
+const readme = readOutput("README.md");
+assertIncludes("README.md", readme, [
+  "# q2w-mapcss",
+  "npm version",
+  "Deploy Status",
+  "Tailwind Plugin",
+  "Buy me a coffee",
+  "## JS Interactions (optional)",
+  "## Tailwind plugin",
+  "## Templates",
+  "npm install q2w-mapcss",
+  "q2w.toast('Layer loaded successfully', 'success');",
+]);
+
+for (const forbidden of [
+  "## Development",
+  "Cloudflare Pages:",
+  "build command:",
+  "output directory:",
+  "deploy branch:",
+  "## Scope",
+]) {
+  if (readme.includes(forbidden)) {
+    console.error(`README.md must not include release-internal section ${forbidden}.`);
+    process.exit(1);
+  }
+}
+
 const leakedDocs = [
   "site/docs/audit.md",
   "site/docs/audit-2.md",

@@ -1,120 +1,127 @@
 # q2w-mapcss
 
-`q2w-mapcss` is a lightweight CSS framework for Leaflet exports from qgis2web.
+> A lightweight CSS framework for building polished map UIs in qgis2web Leaflet exports.
 
-It turns the default qgis2web map chrome into a cleaner interface with design tokens, themes, headers, footers, layer panels, legends, popups, and a compatibility adapter for the DOM that qgis2web already generates.
+[![npm version](https://img.shields.io/npm/v/q2w-mapcss?color=0f7a78&label=npm)](https://www.npmjs.com/package/q2w-mapcss)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/dhanyyudi/q2w-mapcss/blob/main/LICENSE)
+[![Deploy Status](https://img.shields.io/website?url=https%3A%2F%2Fq2w-mapcss.pages.dev&label=docs&color=0f7a78)](https://q2w-mapcss.pages.dev)
+
+[![CSS](https://img.shields.io/badge/CSS-Plain%20CSS-264de4?logo=css3&logoColor=white)](https://q2w-mapcss.pages.dev)
+[![Leaflet](https://img.shields.io/badge/Leaflet-Compatible-199900?logo=leaflet&logoColor=white)](https://leafletjs.com)
+[![Tailwind Plugin](https://img.shields.io/badge/Tailwind-Plugin%20Available-06B6D4?logo=tailwindcss&logoColor=white)](https://q2w-mapcss.pages.dev/docs.html#tokens)
+[![qgis2web](https://img.shields.io/badge/qgis2web-Drop--in%20Support-589632?logo=qgis&logoColor=white)](https://plugins.qgis.org/plugins/qgis2web/)
+
+[![Buy me a coffee](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://tiptap.gg/dhanypedia/tip)
+[![GitHub stars](https://img.shields.io/github/stars/dhanyyudi/q2w-mapcss?style=social)](https://github.com/dhanyyudi/q2w-mapcss)
+
+---
 
 ## Quick Start
 
-Use the hosted Cloudflare Pages copy:
+### CDN (recommended)
 
 ```html
 <link rel="stylesheet" href="https://q2w-mapcss.pages.dev/dist/q2w-mapcss.css">
 ```
 
-Or copy the built CSS into your qgis2web export:
+### npm (after the package is published)
 
-```html
-<link rel="stylesheet" href="css/q2w-mapcss.css">
+```bash
+npm install q2w-mapcss
 ```
 
-Add the body helpers:
+```html
+<link rel="stylesheet" href="node_modules/q2w-mapcss/dist/q2w-mapcss.css">
+```
+
+### qgis2web integration
+
+1. Copy `dist/q2w-mapcss.css` into your export `css/` folder.
+2. Add the stylesheet after qgis2web and plugin CSS files.
+3. Add body helpers:
 
 ```html
 <body class="q2w-qgis2web q2w-has-footer q2w-controls-below-header">
 ```
 
-Then add snippets such as a header and footer around the existing `<div id="map"></div>`.
-
-```html
-<div class="q2w-header">
-  <div class="q2w-header__brand">
-    <div class="q2w-header__logo">q2</div>
-    <div>
-      <div class="q2w-header__title">WebGIS Zona Nilai Tanah</div>
-      <div class="q2w-header__sub">Sistem Informasi Peta Tematik</div>
-    </div>
-  </div>
-</div>
-
-<div id="map"></div>
-
-<div class="q2w-footer">
-  <div class="q2w-footer__group">Powered by qgis2web · Leaflet · QGIS</div>
-  <div class="q2w-footer__push"></div>
-  <div class="q2w-footer__group q2w-footer__coord" id="q2w-coords">0.0000, 0.0000</div>
-</div>
-```
-
 ## Themes
 
-Use a theme on `<html>` or `<body>`:
+Apply via `data-theme` on `<html>` or `<body>`:
 
 ```html
-<html lang="id" data-theme="ocean">
+<html data-theme="ocean">
 ```
 
-Available presets:
+| Theme | Value | Accent |
+|-------|-------|--------|
+| Default | `light` | Teal `#0f7a78` |
+| Dark | `dark` | Cyan `#2dd4d0` |
+| Ocean | `ocean` | Blue `#1d6fc4` |
+| Forest | `forest` | Green `#2f7d4a` |
+| Sunset | `sunset` | Orange `#d8632a` |
+| Slate | `slate` | Gray `#3f4a5c` |
 
-- `dark`
-- `ocean`
-- `forest`
-- `sunset`
-- `slate`
-
-You can also override tokens directly:
+Override any token:
 
 ```css
 :root {
-  --q2w-accent: #0f7a78;
-  --q2w-header-h: 56px;
-  --q2w-footer-h: 28px;
+  --q2w-accent: #137a7f;
+  --q2w-radius-md: 8px;
 }
 ```
 
 ## Icons
 
-`q2w-mapcss` is icon-agnostic — no icon library is bundled. Use any SVG icon set you prefer.
-
-The docs site uses [Lucide](https://lucide.dev) (MIT). To use Lucide in your own project:
+`q2w-mapcss` is icon-agnostic. Use any SVG or icon set:
 
 ```html
-<!-- Option A: inline SVG (recommended — no CDN, no request) -->
-<!-- Copy the SVG directly from lucide.dev into your HTML -->
 <button class="q2w-btn">
-  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" ...>...</svg>
-  Open layers
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"></path><path d="M9 4v14"></path><path d="M15 6v14"></path></svg>
+  Open map
 </button>
-
-<!-- Option B: Lucide CDN script -->
-<script src="https://unpkg.com/lucide@latest"></script>
-<i data-lucide="layers"></i>
-<script>lucide.createIcons();</script>
 ```
 
-All q2w-mapcss components accept any icon as a child element.
+## JS Interactions (optional)
 
-## Development
-
-```bash
-npm run build
-npm run check
-npm run dev
+```html
+<script src="https://q2w-mapcss.pages.dev/dist/q2w-interactions.js"></script>
 ```
 
-Cloudflare Pages:
+Enables modal open/close, toast notifications, tab switching, popup close, layer panel binding, and coordinate display helpers.
 
-- URL: <https://q2w-mapcss.pages.dev/>
-- build command: `npm run build`
-- output directory: `site`
-- deploy branch: `main`
+```js
+q2w.toast('Layer loaded successfully', 'success');
+q2w.coordDisplay(map, '#my-coords-element');
+```
 
-## Scope
+## Tailwind plugin
 
-V1 supports Leaflet qgis2web exports. OpenLayers support is intentionally deferred.
+```js
+// tailwind.config.js
+const q2w = require('q2w-mapcss/tailwind');
+module.exports = { plugins: [q2w] };
+```
 
-## Support
+Adds `q2w-*` color, radius, spacing, and shadow utilities to Tailwind. Continue loading q2w-mapcss CSS separately for component classes.
 
-If q2w-mapcss saved you time, consider buying me a coffee:
+## Templates
 
-[☕ tiptap.gg/dhanypedia/tip](https://tiptap.gg/dhanypedia/tip)
+Starter app shells are available under `snippets/templates/`:
+
+- `basic.html` — floating header + map + footer
+- `with-panel.html` — map shell with collapsible layer panel binding
+- `dashboard.html` — map plus summary sidebar layout
+
+## Docs
+
+- Landing page: https://q2w-mapcss.pages.dev/
+- Component docs: https://q2w-mapcss.pages.dev/docs.html
+- Quick start: https://github.com/dhanyyudi/q2w-mapcss/blob/main/docs/quick-start.md
+
+## License
+
+MIT © [dhanyyudi](https://github.com/dhanyyudi)
+
+---
+
+☕ If q2w-mapcss saved you time → [buy me a coffee](https://tiptap.gg/dhanypedia/tip)
