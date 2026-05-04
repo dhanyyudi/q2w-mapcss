@@ -92,9 +92,9 @@ try {
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
     throw new Error("Component docs did not restore persisted light theme.");
   }
-  const brandBox = await page.locator(".doc-side__brand .cs-nav__mark").boundingBox();
+  const brandBox = await page.locator(".doc-side__brand .doc-side__icon").boundingBox();
   if (!brandBox || brandBox.width < 20 || brandBox.height < 20) {
-    throw new Error("Component docs brand mark is missing or unstyled.");
+    throw new Error("Component docs brand icon is missing or unstyled.");
   }
   await page.locator(".theme-toggle").first().click();
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "dark") {
