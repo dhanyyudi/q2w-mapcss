@@ -1,56 +1,49 @@
 ---
 layout: component.njk
-title: "Compass — q2w-mapcss"
+title: "Compass & Scale — q2w-mapcss"
 component: "compass"
 permalink: "/docs/compass.html"
 ---
 
-<span class="doc-tag">.q2w-compass</span>
-<h1 class="doc-h1">Compass</h1>
-<p class="doc-lead">Orientation indicator for rotated maps and field workflows.</p>
+<span class="doc-tag">.q2w-compass · .q2w-scale</span>
+<h1 class="doc-h1">Compass & Scale</h1>
+<p class="doc-lead">Orientation and scale controls for field maps, rotated maps, and print-friendly WebGIS interfaces.</p>
 
 <section class="doc-section">
   <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 240px;">
+  <div class="doc-preview">
     {% include "previews/compass.njk" %}
   </div>
 </section>
 
 <section class="doc-section">
-  <h2>Usage</h2>
-  <p>Use this component inside a qgis2web Leaflet export after loading <code>q2w-mapcss.css</code>. Keep generated map JavaScript unchanged unless your workflow needs custom behavior.</p>
-  <div class="doc-code">
-    <button class="doc-copy">copy</button>
-<pre>&lt;div class=&quot;q2w-compass&quot;&gt;
-  Compass content
-&lt;/div&gt;</pre>
+  <h2>Variants</h2>
+  <div class="doc-preview">
+    <div class="doc-map-preview">
+      <div class="doc-map-preview__tiles doc-map-preview__tiles--terrain"></div>
+      <div class="doc-map-preview__overlay"></div>
+      <div class="doc-map-preview__controls" style="display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:center;">
+        <div class="q2w-compass q2w-compass--ring"><span class="q2w-compass__n">N</span><div class="q2w-compass__needle"></div></div>
+        <div class="q2w-compass q2w-compass--button"><div class="q2w-compass__needle"></div><span>Reset north</span></div>
+        <div class="q2w-compass q2w-compass--bearing"><span>Bearing</span><strong class="q2w-compass__bearing">032°</strong></div>
+        <div class="q2w-scale q2w-scale--bar"><div class="q2w-scale__bar"></div><div class="q2w-scale__label">1 km</div></div>
+        <div class="q2w-scale q2w-scale--text"><strong>Scale</strong><span>1:25,000</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="doc-section">
-  <h2>Variants</h2>
-  <table class="doc-table">
-    <thead><tr><th>Pattern</th><th>Effect</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-compass</code></td><td>Default component shell</td></tr>
-      <tr><td><code>.q2w-compass--compact</code></td><td>Denser layout for small maps</td></tr>
-      <tr><td><code>.q2w-compass--floating</code></td><td>Floating map overlay style</td></tr>
-      <tr><td><code>data-theme="dark"</code></td><td>Uses dark theme tokens automatically</td></tr>
-    </tbody>
-  </table>
-</section>
+  <h2>Usage</h2>
+  <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-compass q2w-compass--ring"&gt;
+  &lt;span class="q2w-compass__n"&gt;N&lt;/span&gt;
+  &lt;div class="q2w-compass__needle"&gt;&lt;/div&gt;
+&lt;/div&gt;
 
-<section class="doc-section">
-  <h2>Sub-elements</h2>
-  <table class="doc-table">
-    <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td><code>.q2w-compass</code></td><td>Root element for the compass component</td></tr>
-      <tr><td><code>.q2w-compass__head</code></td><td>Optional header/title region</td></tr>
-      <tr><td><code>.q2w-compass__body</code></td><td>Main component content region</td></tr>
-      <tr><td><code>.q2w-compass__actions</code></td><td>Optional action group</td></tr>
-    </tbody>
-  </table>
+&lt;div class="q2w-scale q2w-scale--bar"&gt;
+  &lt;div class="q2w-scale__bar"&gt;&lt;/div&gt;
+  &lt;div class="q2w-scale__label"&gt;1 km&lt;/div&gt;
+&lt;/div&gt;</pre></div>
 </section>
 
 <div class="doc-prev-next">

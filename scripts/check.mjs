@@ -351,6 +351,19 @@ assertNotIncludes("site/docs/basemap.html", basemapDoc, [
   "height: 220px",
 ]);
 
+const compassDoc = readOutput("site/docs/compass.html");
+assertIncludes("site/docs/compass.html", compassDoc, [
+  "q2w-compass--ring",
+  "q2w-compass--button",
+  "q2w-compass--bearing",
+  "q2w-scale",
+  "q2w-scale--bar",
+  "q2w-scale--text",
+  "1 km",
+  "Bearing",
+  "032°",
+]);
+
 const printDoc = readOutput("site/docs/print.html");
 assertIncludes("site/docs/print.html", printDoc, [
   "q2w-print",
@@ -493,6 +506,14 @@ const docsVariantRequirements = {
     "Last segment",
     "Bearing",
   ],
+  "site/docs/compass.html": [
+    "q2w-compass--ring",
+    "q2w-compass--button",
+    "q2w-compass--bearing",
+    "q2w-scale--bar",
+    "q2w-scale--text",
+    "1:25,000",
+  ],
   "site/docs/draw.html": [
     "Point",
     "Line",
@@ -571,6 +592,11 @@ assertIncludes("dist/q2w-mapcss.css", css, [
   ".q2w-basemap-panel",
   ".q2w-basemap-grid--tiles",
   ".q2w-basemap--tile",
+  ".q2w-compass--ring",
+  ".q2w-compass--button",
+  ".q2w-compass--bearing",
+  ".q2w-scale--bar",
+  ".q2w-scale--text",
   ".leaflet-layerstree-header-label",
   ".leaflet-layerstree-header-name table",
 ]);
