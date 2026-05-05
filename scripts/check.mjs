@@ -234,12 +234,19 @@ assertIncludes("site/index.html", siteIndex, [
   "Beautiful UI for your <em>web map</em>.",
   "Works great with qgis2web exports — and with any WebGIS or mapping project.",
   "examples/categorized-real/",
+  "/brand/icon.png",
 ]);
 assertNotIncludes("site/index.html", siteIndex, [
   'id="roadmap"',
   'href="#roadmap"',
   "Beautiful UI for your qgis2web exports.",
+  "brand-neutral",
+  '<span class="ln-brand__mark">q2</span>',
 ]);
+
+const docsOverviewBranding = readOutput("site/docs.html");
+assertIncludes("site/docs.html", docsOverviewBranding, ["/brand/icon.png", "q2w-mapcss"]);
+assertNotIncludes("site/docs.html", docsOverviewBranding, ["brand-neutral", '<span class="ln-brand__mark">q2</span>']);
 const landingMotionNeedles = [
   'html { scroll-behavior: smooth; }',
   '.reveal {',

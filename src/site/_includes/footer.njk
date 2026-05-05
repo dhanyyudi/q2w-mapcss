@@ -1,7 +1,7 @@
 <style>
   .ln-wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
   .ln-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
-  .ln-brand__mark { width: 26px; height: 26px; border-radius: 6px; background: var(--q2w-accent); color: var(--q2w-accent-fg); display: grid; place-items: center; font-size: 12px; }
+  .ln-brand__mark { width: 30px; height: 30px; border-radius: 8px; object-fit: contain; flex: 0 0 auto; }
   .ln-footer { border-top: 1px solid var(--q2w-border); padding: 48px 0 64px; }
   .ln-footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
   .ln-footer h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--q2w-text-faint); margin: 0 0 14px; font-weight: 600; }
@@ -19,7 +19,7 @@
     <div class="ln-footer__grid">
       <div>
         <div class="ln-brand" style="margin-bottom: 12px;">
-          <span class="ln-brand__mark">q2</span>
+          <img class="ln-brand__mark" src="/brand/icon.png" alt="q2w-mapcss logo">
           <span>q2w-mapcss</span>
         </div>
         <p style="margin: 0; font-size: 13px; color: var(--q2w-text-muted); max-width: 280px; line-height: 1.55;">
@@ -33,7 +33,7 @@
     <div class="ln-footer__bot">
       <span>© 2026 q2w-mapcss · MIT licensed</span>
       <a href="https://tiptap.gg/dhanypedia/tip" target="_blank" rel="noopener" style="color:var(--q2w-text-faint);text-decoration:none;font-size:12px;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid var(--q2w-border);border-radius:var(--q2w-radius-full);">☕ Buy me a coffee</a>
-      <span style="font-family: var(--q2w-font-mono);">v0.5 · brand-neutral</span>
+      <span style="font-family: var(--q2w-font-mono);">v0.5.0</span>
     </div>
   </div>
 </footer>
