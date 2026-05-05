@@ -90,6 +90,72 @@
     linear-gradient(135deg, #5a7a5a 0%, #4a6a4a 50%, #3d5a3d 100%);
 }
 
+/* Real-map docs preview stage */
+.doc-map-preview {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: var(--q2w-radius-md);
+  border: 1px solid var(--q2w-border);
+  background: #dbe7df;
+  isolation: isolate;
+}
+
+.doc-map-preview__tiles {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05)),
+    url("https://tile.openstreetmap.org/13/6564/4242.png");
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.92) contrast(0.96);
+  transform: scale(1.04);
+}
+
+.doc-map-preview__tiles--light {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.2)),
+    url("https://a.basemaps.cartocdn.com/light_all/13/6564/4242.png");
+}
+
+.doc-map-preview__tiles--terrain {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.04)),
+    url("https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/13/4242/6564");
+}
+
+.doc-map-preview__tiles--imagery {
+  background-image:
+    linear-gradient(180deg, rgba(15,21,32,0.1), rgba(15,21,32,0.18)),
+    url("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/13/4242/6564");
+}
+
+.doc-map-preview__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 28% 40%, rgba(15,122,120,0.22) 0 7%, transparent 8%),
+    radial-gradient(circle at 64% 58%, rgba(229,116,69,0.24) 0 8%, transparent 9%),
+    linear-gradient(135deg, rgba(15,122,120,0.08), rgba(15,21,32,0.02));
+  pointer-events: none;
+}
+
+.doc-map-preview__controls {
+  position: relative;
+  z-index: 1;
+  min-height: inherit;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.doc-map-preview__controls--top-right { place-items: start end; }
+.doc-map-preview__controls--left { place-items: center start; }
+.doc-map-preview__controls--bottom-left { place-items: end start; }
+.doc-map-preview__controls--bottom-right { place-items: end end; }
+
 .cs-link { color: var(--q2w-accent); text-decoration: none; font-size: 12px; }
 .cs-link:hover { text-decoration: underline; }
 

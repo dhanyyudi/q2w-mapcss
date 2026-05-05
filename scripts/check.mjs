@@ -273,6 +273,11 @@ if (revealCardCount < 12) {
   process.exit(1);
 }
 
+const componentLayoutDoc = readOutput("site/docs/filter.html");
+assertIncludes("site/docs/filter.html", componentLayoutDoc, [
+  ".doc-preview:has(.doc-map-preview)",
+]);
+
 const footerDoc = readOutput("site/docs/footer.html");
 assertIncludes("site/docs/footer.html", footerDoc, [
   "q2w-scalebar",
@@ -562,6 +567,13 @@ assertIncludes("dist/q2w-mapcss.css", css, [
 
 const minCss = readOutput("dist/q2w-mapcss.min.css");
 assertIncludes("dist/q2w-mapcss.min.css", minCss, ["q2w-mapcss v0.5.0"]);
+
+const showcaseCss = readOutput("dist/q2w-mapcss.showcase.css");
+assertIncludes("dist/q2w-mapcss.showcase.css", showcaseCss, [
+  ".doc-map-preview",
+  ".doc-map-preview__tiles",
+  ".doc-map-preview__controls",
+]);
 
 const mustContain = [
   "--q2w-accent",
