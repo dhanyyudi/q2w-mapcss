@@ -11,22 +11,12 @@ permalink: "/docs/filter.html"
 
 <section class="doc-section">
   <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); min-height: 300px;">
-    <div class="q2w-filter q2w-filter--floating" style="width:360px;">
-      <div class="q2w-filter__head">
-        <div>
-          <div class="q2w-filter__title">Parcel filter</div>
-          <div class="q2w-filter__sub">Cirebon Land Value · 1,248 parcels</div>
-        </div>
-        <span class="q2w-filter__count" data-doc-filter-count>2 active</span>
-      </div>
-      <label class="q2w-filter__row"><input type="checkbox" checked data-doc-filter> Value above Rp 1B</label>
-      <label class="q2w-filter__row"><input type="checkbox" checked data-doc-filter> Inside collector road buffer</label>
-      <label class="q2w-filter__row"><input type="checkbox" data-doc-filter> Only river-adjacent parcels</label>
-      <label class="q2w-filter__row"><input type="checkbox" data-doc-filter> Show verified survey points</label>
-      <div class="q2w-filter__actions">
-        <button class="q2w-btn q2w-btn--primary q2w-btn--sm">Apply filter</button>
-        <button class="q2w-btn q2w-btn--ghost q2w-btn--sm">Reset</button>
+  <div class="doc-preview">
+    <div class="doc-map-preview">
+      <div class="doc-map-preview__tiles doc-map-preview__tiles--light"></div>
+      <div class="doc-map-preview__overlay"></div>
+      <div class="doc-map-preview__controls doc-map-preview__controls--left">
+        {% include "previews/filter.njk" %}
       </div>
     </div>
   </div>
@@ -40,19 +30,19 @@ permalink: "/docs/filter.html"
       &lt;div class="q2w-filter__title"&gt;Parcel filter&lt;/div&gt;
       &lt;div class="q2w-filter__sub"&gt;Cirebon Land Value&lt;/div&gt;
     &lt;/div&gt;
-    &lt;span class="q2w-filter__count"&gt;2 active&lt;/span&gt;
+    &lt;span class="q2w-filter__count"&gt;3 filters&lt;/span&gt;
   &lt;/div&gt;
-  &lt;label class="q2w-filter__row"&gt;&lt;input type="checkbox" checked&gt; Value above Rp 1B&lt;/label&gt;
-  &lt;label class="q2w-filter__row"&gt;&lt;input type="checkbox" checked&gt; Inside collector road buffer&lt;/label&gt;
-  &lt;div class="q2w-filter__actions"&gt;
-    &lt;button class="q2w-btn q2w-btn--primary q2w-btn--sm"&gt;Apply filter&lt;/button&gt;
-  &lt;/div&gt;
+  &lt;div class="q2w-filter__summary"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-filter__segments"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-filter__range"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-filter__chips"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-filter__footer"&gt;...&lt;/div&gt;
 &lt;/div&gt;</pre></div>
 </section>
 
 <section class="doc-section">
   <h2>Behavior</h2>
-  <p>The docs preview updates the active-filter count. In a real Leaflet app, bind checkbox changes to layer visibility, feature filtering, or server-side query parameters.</p>
+  <p>The docs preview updates segment and chip state. In a real Leaflet app, bind those changes to layer visibility, feature filtering, or server-side query parameters.</p>
 </section>
 
 <div class="doc-prev-next">

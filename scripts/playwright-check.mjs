@@ -88,6 +88,10 @@ async function expectInteractiveDocs(page, baseUrl) {
   }
 
   await page.goto(`${baseUrl}/docs/share.html`, { waitUntil: "networkidle" });
+  const shareBox = await page.locator(".q2w-share").boundingBox();
+  if (!shareBox || shareBox.width < 340 || shareBox.height < 220) {
+    throw new Error(`Share component must render as a complete share sheet; got ${JSON.stringify(shareBox)}.`);
+  }
   await page.locator("[data-doc-share-copy]").click();
   if ((await page.locator("[data-doc-share-copy]").textContent())?.trim() !== "Copied") {
     throw new Error("Share docs preview must show copied feedback.");
@@ -103,9 +107,13 @@ async function expectInteractiveDocs(page, baseUrl) {
   }
 
   await page.goto(`${baseUrl}/docs/filter.html`, { waitUntil: "networkidle" });
-  await page.locator("[data-doc-filter]").nth(2).check();
-  if ((await page.locator("[data-doc-filter-count]").textContent())?.trim() !== "3 active") {
-    throw new Error("Filter docs preview must update active count.");
+  const filterBox = await page.locator(".q2w-filter").boundingBox();
+  if (!filterBox || filterBox.width < 300 || filterBox.height < 260) {
+    throw new Error(`Filter component must render as a substantial panel; got ${JSON.stringify(filterBox)}.`);
+  }
+  await page.locator('[data-doc-filter-segment="2 high"]').click();
+  if ((await page.locator("[data-doc-filter-count]").textContent())?.trim() !== "2 high") {
+    throw new Error("Filter segment click must update summary count.");
   }
 
   await page.goto(`${baseUrl}/docs/basemap.html`, { waitUntil: "networkidle" });

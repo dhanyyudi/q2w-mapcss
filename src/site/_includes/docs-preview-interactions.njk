@@ -42,6 +42,26 @@
       return;
     }
 
+    const segment = event.target.closest('[data-doc-filter-segment]');
+    if (segment) {
+      const root = segment.closest('.q2w-filter');
+      root?.querySelectorAll('[data-doc-filter-segment]').forEach((btn) => btn.classList.remove('is-active'));
+      segment.classList.add('is-active');
+      const count = root?.querySelector('[data-doc-filter-count]');
+      if (count) count.textContent = segment.dataset.docFilterSegment || 'Filtered';
+      return;
+    }
+
+    const chip = event.target.closest('[data-doc-filter-chip]');
+    if (chip) {
+      chip.classList.toggle('is-active');
+      const root = chip.closest('.q2w-filter');
+      const active = root?.querySelectorAll('.q2w-filter__chip.is-active').length || 0;
+      const count = root?.querySelector('[data-doc-filter-count]');
+      if (count) count.textContent = `${active} filters`;
+      return;
+    }
+
     const basemap = event.target.closest('[data-doc-basemap]');
     if (basemap) {
       const root = basemap.closest('.q2w-basemap-demo') || basemap.closest('.q2w-basemap-grid');

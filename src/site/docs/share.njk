@@ -7,26 +7,16 @@ permalink: "/docs/share.html"
 
 <span class="doc-tag">.q2w-share</span>
 <h1 class="doc-h1">Share</h1>
-<p class="doc-lead">Copyable map URL, current-view metadata, and share action for collaborative WebGIS workflows.</p>
+<p class="doc-lead">Share sheet for copying the current viewport, exposing location context, and offering embed or open-map actions.</p>
 
 <section class="doc-section">
   <h2>Preview</h2>
-  <div class="doc-preview" style="background: linear-gradient(135deg, #eef2f7, #dbe3ec); height: 260px;">
-    <div class="q2w-share q2w-share--floating" style="width:420px;">
-      <div class="q2w-share__head">
-        <div>
-          <div class="q2w-share__title">Share current map view</div>
-          <div class="q2w-share__meta">Zoom 13 · Cirebon Land Value · 4 layers visible</div>
-        </div>
-        <span class="q2w-share__badge">Live URL</span>
-      </div>
-      <div class="q2w-share__field">
-        <code data-doc-share-url>https://q2w-mapcss.pages.dev/examples/categorized-real/#13/-6.7797/108.4714</code>
-        <button class="q2w-btn q2w-btn--primary q2w-btn--sm" data-doc-share-copy>Copy link</button>
-      </div>
-      <div class="q2w-share__actions">
-        <button class="q2w-btn q2w-btn--ghost q2w-btn--sm">Embed</button>
-        <button class="q2w-btn q2w-btn--ghost q2w-btn--sm">Open preview</button>
+  <div class="doc-preview">
+    <div class="doc-map-preview">
+      <div class="doc-map-preview__tiles doc-map-preview__tiles--imagery"></div>
+      <div class="doc-map-preview__overlay"></div>
+      <div class="doc-map-preview__controls">
+        {% include "previews/share.njk" %}
       </div>
     </div>
   </div>
@@ -35,26 +25,24 @@ permalink: "/docs/share.html"
 <section class="doc-section">
   <h2>Usage</h2>
   <div class="doc-code"><button class="doc-copy">copy</button><pre>&lt;div class="q2w-share q2w-share--floating"&gt;
-  &lt;div class="q2w-share__head"&gt;
-    &lt;div&gt;
-      &lt;div class="q2w-share__title"&gt;Share current map view&lt;/div&gt;
-      &lt;div class="q2w-share__meta"&gt;Zoom 13 · 4 layers visible&lt;/div&gt;
+  &lt;div class="q2w-share__head"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-share__grid"&gt;
+    &lt;div class="q2w-share__qr"&gt;&lt;/div&gt;
+    &lt;div class="q2w-share__stats"&gt;
+      &lt;div class="q2w-share__stat"&gt;...&lt;/div&gt;
     &lt;/div&gt;
-    &lt;span class="q2w-share__badge"&gt;Live URL&lt;/span&gt;
   &lt;/div&gt;
-  &lt;div class="q2w-share__field"&gt;
-    &lt;code&gt;https://example.com/map/#13/-6.7797/108.4714&lt;/code&gt;
-    &lt;button class="q2w-btn q2w-btn--primary q2w-btn--sm"&gt;Copy link&lt;/button&gt;
-  &lt;/div&gt;
+  &lt;div class="q2w-share__field"&gt;...&lt;/div&gt;
+  &lt;div class="q2w-share__actions"&gt;...&lt;/div&gt;
 &lt;/div&gt;</pre></div>
 </section>
 
 <section class="doc-section">
   <h2>Behavior</h2>
-  <p>The framework styles the share UI. Your app can update the URL from Leaflet state using <code>map.getCenter()</code>, <code>map.getZoom()</code>, or a hash plugin. The docs preview demonstrates copy feedback.</p>
+  <p>The framework styles the share UI while your map runtime provides the actual hash, embed payload, or QR generation. The docs preview demonstrates copy feedback for the primary action.</p>
 </section>
 
 <div class="doc-prev-next">
   <a href="goto.html">← Goto</a>
-  <a href="../docs.html">Overview →</a>
+  <a href="print.html">Print →</a>
 </div>

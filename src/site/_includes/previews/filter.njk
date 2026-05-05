@@ -1,13 +1,26 @@
-<div class="q2w-filter q2w-filter--floating" style="width:300px;">
+<div class="q2w-filter q2w-filter--floating" style="width:340px;">
   <div class="q2w-filter__head">
-    <div>
-      <div class="q2w-filter__title">Parcel filter</div>
-      <div class="q2w-filter__sub">Cirebon Land Value</div>
-    </div>
-    <span class="q2w-filter__count" data-doc-filter-count>2 active</span>
+    <div><div class="q2w-filter__title">Parcel filter</div><div class="q2w-filter__sub">Cirebon Land Value</div></div>
+    <span class="q2w-filter__count" data-doc-filter-count>3 filters</span>
   </div>
-  <label class="q2w-filter__row"><input type="checkbox" checked data-doc-filter> Value above Rp 1B</label>
-  <label class="q2w-filter__row"><input type="checkbox" checked data-doc-filter> Inside collector road buffer</label>
-  <label class="q2w-filter__row"><input type="checkbox" data-doc-filter> Only river-adjacent parcels</label>
-  <button class="q2w-btn q2w-btn--primary q2w-btn--sm">Apply</button>
+  <div class="q2w-filter__summary">
+    <div class="q2w-filter__metric"><strong>1,248</strong><span>parcels</span></div>
+    <div class="q2w-filter__metric"><strong>312</strong><span>selected</span></div>
+    <div class="q2w-filter__metric"><strong>Rp 1.2B</strong><span>median</span></div>
+  </div>
+  <div class="q2w-filter__segments">
+    <button class="q2w-filter__segment is-active" data-doc-filter-segment="3 filters">All</button>
+    <button class="q2w-filter__segment" data-doc-filter-segment="2 high">High</button>
+    <button class="q2w-filter__segment" data-doc-filter-segment="1 verified">Verified</button>
+  </div>
+  <div class="q2w-filter__range">
+    <label><span>Value threshold</span><strong>Rp 1B+</strong></label>
+    <input type="range" min="0" max="100" value="68" aria-label="Value threshold">
+  </div>
+  <div class="q2w-filter__chips">
+    <button class="q2w-filter__chip is-active" data-doc-filter-chip>Road buffer</button>
+    <button class="q2w-filter__chip is-active" data-doc-filter-chip>Commercial</button>
+    <button class="q2w-filter__chip is-active" data-doc-filter-chip>Surveyed</button>
+  </div>
+  <div class="q2w-filter__footer"><small>Live preview</small><button class="q2w-btn q2w-btn--primary q2w-btn--sm">Apply</button></div>
 </div>

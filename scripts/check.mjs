@@ -312,18 +312,24 @@ assertIncludes("site/docs/slider.html", sliderDoc, [
 
 const shareDoc = readOutput("site/docs/share.html");
 assertIncludes("site/docs/share.html", shareDoc, [
-  "data-doc-share-copy",
-  "data-doc-share-url",
-  "Share current map view",
+  "q2w-share__qr",
+  "q2w-share__grid",
+  "q2w-share__stat",
   "Copy link",
+  "Embed code",
+  "current viewport",
+  "data-doc-share-copy",
 ]);
 
 const filterDoc = readOutput("site/docs/filter.html");
 assertIncludes("site/docs/filter.html", filterDoc, [
-  "data-doc-filter",
-  "data-doc-filter-count",
-  "Parcel filter",
-  "2 active",
+  "q2w-filter__chip",
+  "q2w-filter__segment",
+  "q2w-filter__range",
+  "q2w-filter__summary",
+  "1,248",
+  "Road buffer",
+  "data-doc-filter-segment",
 ]);
 
 const drawDoc = readOutput("site/docs/draw.html");
@@ -585,7 +591,14 @@ assertIncludes("dist/q2w-mapcss.css", css, [
   ".q2w-skeleton",
   ".q2w-slider__input",
   ".q2w-share__title",
+  ".q2w-share__qr",
+  ".q2w-share__grid",
+  ".q2w-share__stat",
   ".q2w-filter__count",
+  ".q2w-filter__chip",
+  ".q2w-filter__segment",
+  ".q2w-filter__range",
+  ".q2w-filter__summary",
   ".q2w-draw__status",
   ".q2w-bm-osm",
   ".q2w-bm-esri-terrain",
