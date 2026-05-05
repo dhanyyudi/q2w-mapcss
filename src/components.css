@@ -672,6 +672,7 @@ html, body {
 /* ---------- Basemap --------------------------------------- */
 .q2w-basemap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .q2w-basemap-grid--compact { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.q2w-basemap-grid--tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .q2w-basemap {
   border: 1.5px solid var(--q2w-border);
   border-radius: var(--q2w-radius-sm);
@@ -687,23 +688,27 @@ html, body {
 .q2w-basemap--active { border-color: var(--q2w-accent); box-shadow: 0 0 0 2px var(--q2w-accent-soft); }
 .q2w-basemap__thumb { height: 56px; position: relative; overflow: hidden; }
 .q2w-basemap__label { padding: 4px 8px; font-size: 11px; font-weight: 500; background: var(--q2w-surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.q2w-basemap-demo { display: grid; gap: 12px; width: 100%; }
-.q2w-basemap-demo__map,
-.q2w-basemap-demo__map--osm {
-  min-height: 120px;
-  border-radius: var(--q2w-radius-md);
+.q2w-basemap__meta { padding: 8px 10px; display: grid; align-content: center; gap: 2px; background: var(--q2w-surface); min-width: 0; }
+.q2w-basemap__source { font-size: 10px; color: var(--q2w-text-faint); font-family: var(--q2w-font-mono); }
+.q2w-basemap--tile { display: grid; grid-template-columns: 72px 1fr; align-items: stretch; min-height: 64px; }
+.q2w-basemap--tile .q2w-basemap__thumb { height: 100%; min-height: 64px; }
+.q2w-basemap-panel {
+  width: min(420px, 100%);
+  display: grid;
+  gap: 12px;
+  padding: 14px;
   border: 1px solid var(--q2w-border);
-  background:
-    linear-gradient(95deg, transparent 0 42%, rgba(255,255,255,0.85) 42% 46%, transparent 46% 100%),
-    linear-gradient(15deg, transparent 0 58%, rgba(255,255,255,0.8) 58% 61%, transparent 61% 100%),
-    linear-gradient(135deg, #dce9d7, #cadbe9);
-  position: relative;
-  overflow: hidden;
+  border-radius: var(--q2w-radius-lg);
+  background: color-mix(in srgb, var(--q2w-surface) 94%, transparent);
+  box-shadow: var(--q2w-shadow-md);
+  backdrop-filter: blur(14px);
 }
-.q2w-basemap-demo__map > span,
+.q2w-basemap-panel__head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.q2w-basemap-panel__title { font-size: 13px; font-weight: 700; color: var(--q2w-text); }
+.q2w-basemap-panel__sub { font-size: 11px; color: var(--q2w-text-muted); margin-top: 2px; }
+.q2w-basemap-panel__active { font-family: var(--q2w-font-mono); font-size: 10px; color: var(--q2w-accent); background: var(--q2w-accent-soft); border-radius: var(--q2w-radius-full); padding: 3px 7px; white-space: nowrap; }
+.q2w-basemap-demo { display: grid; gap: 12px; width: 100%; }
 .q2w-basemap-demo__caption { font-size: 12px; color: var(--q2w-text-muted); }
-.q2w-basemap-demo__map > span { position: absolute; left: 10px; bottom: 8px; background: var(--q2w-surface); border: 1px solid var(--q2w-border); border-radius: var(--q2w-radius-full); padding: 3px 8px; }
-.q2w-basemap-demo__pin { position: absolute; left: 52%; top: 42%; width: 12px; height: 12px; border-radius: 50%; background: var(--q2w-accent); box-shadow: 0 0 0 5px var(--q2w-accent-soft); }
 
 /* swatch backgrounds for thumbs */
 .q2w-bm-streets,

@@ -335,13 +335,20 @@ assertIncludes("site/docs/draw.html", drawDoc, [
 
 const basemapDoc = readOutput("site/docs/basemap.html");
 assertIncludes("site/docs/basemap.html", basemapDoc, [
-  "docs-basemap-map",
-  "data-doc-tile=\"osm\"",
-  "data-doc-tile=\"terrain\"",
+  "doc-map-preview__tiles--light",
+  "data-doc-basemap=\"OSM Streets\"",
+  "data-doc-basemap=\"Carto Light\"",
+  "data-doc-basemap=\"Esri Terrain\"",
+  "data-doc-basemap=\"Esri Imagery\"",
   "tile.openstreetmap.org",
+  "basemaps.cartocdn.com/light_all",
   "World_Terrain_Base",
   "World_Imagery",
-  "light_all",
+]);
+assertNotIncludes("site/docs/basemap.html", basemapDoc, [
+  "id=\"docs-basemap-map\"",
+  "L.map(mapEl",
+  "height: 220px",
 ]);
 
 const printDoc = readOutput("site/docs/print.html");
@@ -471,14 +478,14 @@ const docsVariantRequirements = {
     "q2w-search--floating",
   ],
   "site/docs/basemap.html": [
-    "q2w-basemap-grid",
-    "q2w-basemap",
+    "q2w-basemap-panel",
+    "q2w-basemap-grid--tiles",
+    "q2w-basemap--tile",
     "q2w-basemap--active",
     "q2w-bm-osm",
     "q2w-bm-esri-terrain",
     "q2w-bm-esri-imagery",
     "q2w-bm-carto-light",
-    "docs-basemap-map",
   ],
   "site/docs/measure.html": [
     "Distance",
@@ -561,6 +568,9 @@ assertIncludes("dist/q2w-mapcss.css", css, [
   ".q2w-draw__status",
   ".q2w-bm-osm",
   ".q2w-bm-esri-terrain",
+  ".q2w-basemap-panel",
+  ".q2w-basemap-grid--tiles",
+  ".q2w-basemap--tile",
   ".leaflet-layerstree-header-label",
   ".leaflet-layerstree-header-name table",
 ]);

@@ -109,8 +109,12 @@ async function expectInteractiveDocs(page, baseUrl) {
   }
 
   await page.goto(`${baseUrl}/docs/basemap.html`, { waitUntil: "networkidle" });
-  await page.locator('[data-doc-tile="terrain"]').click();
-  if (!((await page.locator('[data-doc-tile="terrain"]').getAttribute("class")) || "").includes("q2w-basemap--active")) {
+  const basemapBox = await page.locator(".q2w-basemap-panel").boundingBox();
+  if (!basemapBox || basemapBox.height > 260) {
+    throw new Error(`Basemap selector must be compact; got height ${basemapBox?.height}.`);
+  }
+  await page.locator('[data-doc-basemap="Esri Terrain"]').click();
+  if (!((await page.locator('[data-doc-basemap="Esri Terrain"]').getAttribute("class")) || "").includes("q2w-basemap--active")) {
     throw new Error("Basemap docs preview must update active basemap state.");
   }
   if (!((await page.locator("[data-doc-basemap-label]").textContent()) || "").includes("Esri Terrain")) {
