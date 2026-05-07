@@ -170,6 +170,26 @@ async function expectRealExampleChrome(page, baseUrl) {
   if ((await page.locator(".sp-welcome").count()) !== 1) {
     throw new Error("Real categorized example must keep its welcome dialog.");
   }
+  const welcomeMetrics = await page.locator(".sp-welcome").evaluate((el) => {
+    const card = el.querySelector(".sp-welcome-card");
+    const logo = el.querySelector(".sp-welcome-logo img");
+    const cardRect = card ? card.getBoundingClientRect() : { width: 0, height: 0 };
+    const logoRect = logo ? logo.getBoundingClientRect() : { width: 0, height: 0 };
+    return {
+      cardWidth: cardRect.width,
+      logoWidth: logoRect.width,
+      logoHeight: logoRect.height,
+      position: getComputedStyle(el).position,
+      display: getComputedStyle(el).display,
+    };
+  });
+  if (welcomeMetrics.position !== "fixed" || welcomeMetrics.display !== "grid") {
+    throw new Error("Real categorized example welcome dialog must be styled as a fixed centered overlay.");
+  }
+  if (welcomeMetrics.cardWidth > 500 || welcomeMetrics.logoWidth > 120 || welcomeMetrics.logoHeight > 48) {
+    throw new Error(`Real categorized example welcome logo/card is oversized: ${JSON.stringify(welcomeMetrics)}.`);
+  }
+  await page.locator("#welcomeStart").click();
   await page.locator(".q2w-theme-toggle").click();
   const theme = await page.evaluate(() => document.documentElement.dataset.theme);
   if (!["dark", "light"].includes(theme)) {
@@ -179,8 +199,6 @@ async function expectRealExampleChrome(page, baseUrl) {
   if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== "light") {
     throw new Error("Real categorized example theme toggle must be able to restore explicit light mode.");
   }
-
-  await page.locator("#welcomeStart").click().catch(() => {});
   await page.waitForSelector(".leaflet-control-layers-expanded");
   if ((await page.locator(".sp-layers-title").count()) !== 1) {
     throw new Error("Real categorized example layer control must expose one centered q2w panel title.");

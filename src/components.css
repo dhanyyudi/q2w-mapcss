@@ -593,6 +593,196 @@ html, body {
 .q2w-modal__footer { padding: 12px 20px 16px; }
 .q2w-modal__footer .q2w-btn--primary { width: 100%; justify-content: center; }
 
+/* Legacy qgis2web demo modal aliases. */
+.sp-welcome {
+  position: fixed;
+  inset: 0;
+  z-index: var(--q2w-z-modal);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(15, 21, 32, 0.28);
+  backdrop-filter: blur(4px);
+  transition: opacity 0.2s var(--q2w-ease);
+}
+.sp-welcome.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.sp-welcome-card {
+  width: min(460px, 100%);
+  max-height: calc(100vh - 72px);
+  overflow: hidden;
+  border: 1px solid var(--q2w-border);
+  border-radius: var(--q2w-radius-md);
+  background: color-mix(in srgb, var(--q2w-surface) 97%, transparent);
+  color: var(--q2w-text);
+  box-shadow: var(--q2w-shadow-lg);
+}
+.sp-welcome-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--q2w-border);
+}
+.sp-welcome-logo {
+  width: 104px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 3px 6px;
+  flex: 0 0 auto;
+  border: 1px solid var(--q2w-border);
+  border-radius: var(--q2w-radius-xs);
+  background: #fff;
+}
+.sp-welcome-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sp-welcome-brand {
+  min-width: 0;
+  flex: 1;
+  line-height: 1.15;
+}
+.sp-welcome-brand-title {
+  color: var(--q2w-text);
+  font-size: 14px;
+  font-weight: 800;
+}
+.sp-welcome-brand-sub {
+  margin-top: 2px;
+  color: var(--q2w-text-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.sp-welcome-close,
+.sp-modal-close {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: var(--q2w-radius-xs);
+  background: transparent;
+  color: var(--q2w-text-muted);
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.sp-welcome-close:hover,
+.sp-modal-close:hover {
+  background: var(--q2w-surface-soft);
+  color: var(--q2w-text);
+}
+.sp-welcome-body {
+  padding: 14px 18px 18px;
+  max-height: calc(100vh - 154px);
+  overflow-y: auto;
+  font-size: 13px;
+  color: var(--q2w-text-muted);
+  line-height: 1.55;
+}
+.sp-welcome-body h2 {
+  margin: 0 0 10px;
+  color: var(--q2w-text);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.sp-welcome-body p,
+.sp-modal-body p {
+  margin: 0 0 8px;
+}
+.sp-welcome-body kbd,
+.sp-modal-body kbd {
+  padding: 1px 5px;
+  border: 1px solid var(--q2w-border);
+  border-radius: var(--q2w-radius-xs);
+  background: var(--q2w-surface-soft);
+  color: var(--q2w-text);
+  font-family: var(--q2w-font-mono);
+  font-size: 11px;
+}
+.sp-welcome-start {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 6px;
+  border: 0;
+  border-radius: var(--q2w-radius-sm);
+  background: var(--q2w-accent);
+  color: var(--q2w-accent-fg);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sp-welcome-start:hover {
+  background: var(--q2w-accent-hover);
+}
+.sp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--q2w-z-modal);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(15, 21, 32, 0.34);
+  backdrop-filter: blur(4px);
+}
+.sp-modal.open {
+  display: flex;
+}
+.sp-modal-card {
+  width: min(460px, 100%);
+  max-height: calc(100vh - 72px);
+  overflow: hidden;
+  border: 1px solid var(--q2w-border);
+  border-radius: var(--q2w-radius-md);
+  background: var(--q2w-surface);
+  color: var(--q2w-text);
+  box-shadow: var(--q2w-shadow-lg);
+}
+.sp-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--q2w-border);
+}
+.sp-modal-head h3 {
+  flex: 1;
+  margin: 0;
+  color: var(--q2w-text);
+  font-size: 15px;
+  font-weight: 700;
+}
+.sp-modal-body {
+  padding: 14px 18px 18px;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  color: var(--q2w-text-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+@media (max-width: 560px) {
+  .sp-welcome,
+  .sp-modal {
+    padding: 14px;
+  }
+  .sp-welcome-logo {
+    width: 96px;
+  }
+  .sp-welcome-body,
+  .sp-modal-body {
+    padding: 13px 15px 16px;
+  }
+}
+
 /* ---------- Sidebar (info panel) -------------------------- */
 .q2w-sidebar {
   position: absolute;
