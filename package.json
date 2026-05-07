@@ -44,6 +44,7 @@
   },
   "scripts": {
     "build:css": "node scripts/build.mjs",
+    "prebuild:site": "node scripts/clean-site.mjs",
     "build:site": "npx @11ty/eleventy",
     "build": "npm run build:css && npm run build:site",
     "check": "npm run build && node scripts/check.mjs && node scripts/playwright-check.mjs",

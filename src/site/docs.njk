@@ -46,7 +46,6 @@ extraHead: |
       --q2w-text-faint: #8a93a3;
       --q2w-border: #dde1e7;
       --q2w-accent-soft: #e6f3f2;
-      background: linear-gradient(135deg, #eef2f7, #dbe3ec);
     }
     .ln-card__meta { padding: 14px 18px; border-top: 1px solid var(--q2w-border); }
     .ln-card__name { font-family: var(--q2w-font-mono); font-size: 12px; color: var(--q2w-accent); margin-bottom: 4px; }
@@ -119,7 +118,7 @@ extraHead: |
   <div class="ln-showcase__grid">
     {% for component in components %}
       <a href="docs/{{ component.slug }}.html" class="ln-card{% if component.slug == 'header' or component.slug == 'footer' %} ln-card--lg{% endif %}">
-        <div class="ln-card__preview">
+        <div class="ln-card__preview ln-card__preview--{{ component.slug }}">
           {% include component.preview %}
         </div>
         <div class="ln-card__meta">
@@ -131,4 +130,5 @@ extraHead: |
   </div>
 </main>
 
+{% include "docs-preview-interactions.njk" %}
 {% include "footer.njk" %}

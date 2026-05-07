@@ -86,7 +86,73 @@ body.q2w-controls-below-header .leaflet-top.leaflet-right {
 }
 
 body.q2w-qgis2web .leaflet-control-layers-expanded {
-  width: min(340px, calc(100vw - 24px));
+  width: min(300px, calc(100vw - 24px));
+  max-width: min(300px, calc(100vw - 24px));
+  padding: 12px 14px !important;
+}
+
+body.q2w-qgis2web .leaflet-control-layers:has(.sp-layers-title) {
+  display: block !important;
+  align-items: stretch !important;
+  padding: 0 !important;
+}
+
+body.q2w-qgis2web .leaflet-control-layers-expanded:has(.sp-layers-title) {
+  padding: 0 !important;
+}
+
+body.q2w-qgis2web .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+  display: none !important;
+}
+
+body.q2w-qgis2web .leaflet-control-layers-expanded .leaflet-control-layers-toggle::after {
+  content: none !important;
+}
+
+body.q2w-qgis2web .sp-layers-title {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--q2w-border);
+  background: color-mix(in srgb, var(--q2w-surface) 96%, var(--q2w-accent-soft));
+  color: var(--q2w-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+body.q2w-qgis2web .sp-layers-title-icon,
+body.q2w-qgis2web .sp-layers-title-chevron {
+  display: grid;
+  place-items: center;
+  color: var(--q2w-accent);
+}
+
+body.q2w-qgis2web .sp-layers-title-label {
+  min-width: 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+body.q2w-qgis2web .sp-layers-title-chevron {
+  font-size: 11px;
+  transition: transform 0.18s var(--q2w-ease);
+}
+
+body.q2w-qgis2web .leaflet-control-layers.sp-collapsed .sp-layers-title-chevron {
+  transform: rotate(-90deg);
+}
+
+body.q2w-qgis2web .leaflet-control-layers.sp-collapsed .leaflet-control-layers-list {
+  display: none !important;
+}
+
+body.q2w-qgis2web .leaflet-control-layers-list {
+  max-height: calc(100vh - var(--q2w-header-h) - var(--q2w-footer-h) - 96px);
+  overflow: auto;
 }
 
 body.q2w-qgis2web .leaflet-layerstree-header.leaflet-layerstree-nevershow {
@@ -98,17 +164,58 @@ body.q2w-qgis2web .leaflet-layerstree-header-name {
 }
 
 body.q2w-qgis2web .leaflet-layerstree-header-name table {
+  width: 100%;
+  table-layout: fixed;
   font-weight: 400;
   font-size: 11px;
 }
 
-.q2w-label-halo,
-body.q2w-labels-halo .leaflet-tooltip {
+body.q2w-qgis2web .leaflet-layerstree-header > span:first-child {
+  display: none !important;
+}
+
+body.q2w-qgis2web .leaflet-layerstree-opened,
+body.q2w-qgis2web .leaflet-layerstree-closed,
+body.q2w-qgis2web .leaflet-layerstree-header-space {
+  display: none !important;
+}
+
+body.q2w-qgis2web .leaflet-layerstree-header,
+body.q2w-qgis2web .leaflet-layerstree-header-label {
+  gap: 8px;
+}
+
+body.q2w-qgis2web .leaflet-layerstree-children {
+  margin-left: 4px;
+  padding-left: 8px;
+}
+
+body.q2w-qgis2web .sp-layer-section-title {
+  margin: 10px 0 4px;
+  color: var(--q2w-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.q2w-label-halo {
   text-shadow:
     -1px -1px 0 var(--q2w-surface),
     1px -1px 0 var(--q2w-surface),
     -1px 1px 0 var(--q2w-surface),
     1px 1px 0 var(--q2w-surface);
+}
+
+body.q2w-labels-halo .leaflet-tooltip {
+  background: rgba(15, 21, 32, 0.86) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: var(--q2w-radius-xs) !important;
+  box-shadow: 0 1px 3px rgba(15, 21, 32, 0.22) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  padding: 3px 6px !important;
+  text-shadow: none !important;
 }
 
 body.q2w-labels-box .leaflet-tooltip {

@@ -2,15 +2,25 @@ import { spawn } from "node:child_process";
 import { once } from "node:events";
 import { chromium } from "@playwright/test";
 
-const port = 4173;
-const baseUrl = `http://127.0.0.1:${port}`;
+let baseUrl;
 const server = spawn(process.execPath, ["-e", `
   const http = require('node:http');
   const fs = require('node:fs');
   const path = require('node:path');
   const root = path.join(process.cwd(), 'site');
-  const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml' };
-  http.createServer((req, res) => {
+  const requestedPort = Number.parseInt(process.env.Q2W_CHECK_PORT || '0', 10);
+  const types = {
+    '.html': 'text/html; charset=utf-8',
+    '.css': 'text/css; charset=utf-8',
+    '.js': 'text/javascript; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
+    '.svg': 'image/svg+xml',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.webp': 'image/webp'
+  };
+  const server = http.createServer((req, res) => {
     const url = new URL(req.url, 'http://127.0.0.1');
     let filePath = path.join(root, decodeURIComponent(url.pathname));
     if (url.pathname.endsWith('/')) filePath = path.join(filePath, 'index.html');
@@ -20,8 +30,20 @@ const server = spawn(process.execPath, ["-e", `
       res.writeHead(200, { 'content-type': types[path.extname(filePath)] || 'application/octet-stream' });
       res.end(data);
     });
-  }).listen(${port}, '127.0.0.1', () => console.log('ready'));
+  });
+  server.on('error', (error) => {
+    console.error(error.stack || error.message || String(error));
+    process.exit(1);
+  });
+  server.listen(Number.isNaN(requestedPort) ? 0 : requestedPort, '127.0.0.1', () => {
+    const address = server.address();
+    console.log(JSON.stringify({ port: address.port }));
+  });
 `], { stdio: ["ignore", "pipe", "pipe"] });
+let serverStderr = "";
+server.stderr.on("data", (chunk) => {
+  serverStderr += chunk.toString();
+});
 
 async function expectLandingRevealWorks(page, baseUrl) {
   await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
@@ -118,8 +140,8 @@ async function expectInteractiveDocs(page, baseUrl) {
 
   await page.goto(`${baseUrl}/docs/basemap.html`, { waitUntil: "networkidle" });
   const basemapBox = await page.locator(".q2w-basemap-panel").boundingBox();
-  if (!basemapBox || basemapBox.height > 260) {
-    throw new Error(`Basemap selector must be compact; got height ${basemapBox?.height}.`);
+  if (!basemapBox || basemapBox.height > 420 || basemapBox.width > 500) {
+    throw new Error(`Basemap selector must remain a contained picker; got ${JSON.stringify(basemapBox)}.`);
   }
   await page.locator('[data-doc-basemap="Esri Terrain"]').click();
   if (!((await page.locator('[data-doc-basemap="Esri Terrain"]').getAttribute("class")) || "").includes("q2w-basemap--active")) {
@@ -127,6 +149,12 @@ async function expectInteractiveDocs(page, baseUrl) {
   }
   if (!((await page.locator("[data-doc-basemap-label]").textContent()) || "").includes("Esri Terrain")) {
     throw new Error("Basemap docs preview must update active basemap label.");
+  }
+  if (!((await page.locator("[data-doc-basemap-source]").textContent()) || "").includes("Esri World Terrain")) {
+    throw new Error("Basemap docs preview must update active source label.");
+  }
+  if (!((await page.locator("[data-doc-basemap-tiles]").getAttribute("class")) || "").includes("doc-map-preview__tiles--terrain")) {
+    throw new Error("Basemap docs preview must swap the visible tile stage when a selector is clicked.");
   }
 }
 
@@ -153,16 +181,24 @@ async function expectRealExampleChrome(page, baseUrl) {
   }
 
   await page.locator("#welcomeStart").click().catch(() => {});
-  await page.locator(".leaflet-control-layers-toggle").click();
   await page.waitForSelector(".leaflet-control-layers-expanded");
+  if ((await page.locator(".sp-layers-title").count()) !== 1) {
+    throw new Error("Real categorized example layer control must expose one centered q2w panel title.");
+  }
   const layerMetrics = await page.locator(".leaflet-control-layers-expanded").evaluate((el) => {
     const list = el.querySelector(".leaflet-control-layers-list");
     const hiddenRootHeader = getComputedStyle(el.querySelector(".leaflet-layerstree-header.leaflet-layerstree-nevershow")).display;
+    const nativeToggle = el.querySelector(".leaflet-control-layers-toggle");
+    const nativeToggleDisplay = nativeToggle ? getComputedStyle(nativeToggle).display : "none";
+    const treeSymbols = Array.from(el.querySelectorAll(".leaflet-layerstree-opened, .leaflet-layerstree-closed"))
+      .map((node) => getComputedStyle(node).display);
     return {
       width: el.getBoundingClientRect().width,
       listWidth: list ? list.getBoundingClientRect().width : 0,
       scrollWidth: list ? list.scrollWidth : 0,
       hiddenRootHeader,
+      nativeToggleDisplay,
+      visibleTreeSymbolCount: treeSymbols.filter((display) => display !== "none").length,
     };
   });
   if (layerMetrics.width > 360) {
@@ -174,16 +210,36 @@ async function expectRealExampleChrome(page, baseUrl) {
   if (layerMetrics.hiddenRootHeader !== "none") {
     throw new Error("Real categorized example must hide the empty qgis2web layer-tree root header.");
   }
+  if (layerMetrics.nativeToggleDisplay !== "none") {
+    throw new Error("Real categorized example layer control must hide the native Leaflet toggle when the q2w title is present.");
+  }
+  if (layerMetrics.visibleTreeSymbolCount !== 0) {
+    throw new Error("Real categorized example layer control must not show qgis2web tree minus/plus symbols.");
+  }
+  await page.locator(".sp-layers-title").click();
+  if (await page.locator(".leaflet-control-layers-list").isVisible()) {
+    throw new Error("Real categorized example q2w layer title must collapse the layer list.");
+  }
+  await page.locator(".sp-layers-title").click();
 }
 
 let browser;
 try {
-  await Promise.race([
+  const [readyChunk] = await Promise.race([
     once(server.stdout, "data"),
-    new Promise((_, reject) => setTimeout(() => reject(new Error("Timed out starting preview server")), 5000)),
+    new Promise((_, reject) => {
+      server.once("exit", (code) => reject(new Error(`Preview server exited with code ${code}.\n${serverStderr}`)));
+      setTimeout(() => reject(new Error(`Timed out starting preview server.\n${serverStderr}`)), 5000);
+    }),
   ]);
+  const ready = JSON.parse(readyChunk.toString());
+  baseUrl = `http://127.0.0.1:${ready.port}`;
 
-  browser = await chromium.launch({ headless: true });
+  try {
+    browser = await chromium.launch({ headless: true });
+  } catch (error) {
+    throw new Error(`Unable to launch Playwright Chromium. Run "npx playwright install chromium" and retry.\n${error.message}`);
+  }
   const page = await browser.newPage();
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));

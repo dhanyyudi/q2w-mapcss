@@ -13,6 +13,8 @@
   display: flex; align-items: center; gap: 16px;
 }
 .cs-nav__brand { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+.cs-nav__brand a { color: var(--q2w-text); text-decoration: none; }
+.cs-nav__brand a:hover { color: var(--q2w-accent); }
 .cs-nav__mark { width: 24px; height: 24px; border-radius: var(--q2w-radius-xs); background: var(--q2w-accent); color: var(--q2w-accent-fg); display: grid; place-items: center; font-size: 11px; font-weight: 700; }
 .cs-nav__links { display: flex; gap: 4px; flex-wrap: wrap; margin-left: 16px; }
 .cs-nav__links a { font-size: 12px; padding: 6px 10px; border-radius: var(--q2w-radius-xs); color: var(--q2w-text-muted); text-decoration: none; }
@@ -90,6 +92,72 @@
     linear-gradient(135deg, #5a7a5a 0%, #4a6a4a 50%, #3d5a3d 100%);
 }
 
+/* Shared component-card map previews. */
+.ln-card__preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(135deg, rgba(255,255,255,0.18), rgba(15,21,32,0.05)),
+    var(--q2w-card-tile, url("https://a.basemaps.cartocdn.com/rastertiles/voyager/5/16/12.png"));
+  background-position: var(--q2w-card-bg-pos, center);
+  background-size: var(--q2w-card-bg-size, cover);
+  filter: saturate(1.04) contrast(1.02);
+  transform: scale(1.02);
+}
+
+.ln-card__preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.22));
+  pointer-events: none;
+}
+
+.ln-card__preview > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ln-card__preview--osm,
+.ln-card__preview--header,
+.ln-card__preview--control {
+  --q2w-card-tile: url("https://a.basemaps.cartocdn.com/rastertiles/voyager/6/32/24.png");
+}
+
+.ln-card__preview--light,
+.ln-card__preview--search,
+.ln-card__preview--basemap,
+.ln-card__preview--sheet {
+  --q2w-card-tile: url("https://b.basemaps.cartocdn.com/rastertiles/voyager/5/15/12.png");
+  --q2w-card-bg-pos: 48% 52%;
+}
+
+.ln-card__preview--terrain,
+.ln-card__preview--popup,
+.ln-card__preview--legend,
+.ln-card__preview--toast,
+.ln-card__preview--footer {
+  --q2w-card-tile: url("https://c.basemaps.cartocdn.com/rastertiles/voyager/6/31/25.png");
+  --q2w-card-bg-pos: 42% 58%;
+}
+
+.ln-card__preview--dark,
+.ln-card__preview--modal {
+  --q2w-card-tile: url("https://a.basemaps.cartocdn.com/rastertiles/voyager/6/32/24.png");
+}
+
+.ln-card__preview--dark::after,
+.ln-card__preview--modal::after {
+  background: rgba(15,21,32,0.42);
+}
+
+.ln-card__preview--quiet::after,
+.ln-card__preview--layer::after,
+.ln-card__preview--compass::after {
+  background: rgba(255,255,255,0.30);
+}
+
 /* Real-map docs preview stage */
 .doc-map-preview {
   position: relative;
@@ -106,30 +174,36 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05)),
-    url("https://tile.openstreetmap.org/13/6564/4242.png");
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0)),
+    url("https://a.basemaps.cartocdn.com/rastertiles/voyager/5/16/12.png");
   background-size: cover;
   background-position: center;
-  filter: saturate(0.92) contrast(0.96);
-  transform: scale(1.04);
+  filter: saturate(1.06) contrast(1.04);
+  transform: scale(1.01);
+}
+
+.doc-map-preview__tiles--osm {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0)),
+    url("https://a.basemaps.cartocdn.com/rastertiles/voyager/5/16/12.png");
 }
 
 .doc-map-preview__tiles--light {
   background-image:
-    linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.2)),
-    url("https://a.basemaps.cartocdn.com/light_all/13/6564/4242.png");
+    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03)),
+    url("https://b.basemaps.cartocdn.com/rastertiles/voyager/6/31/24.png");
 }
 
 .doc-map-preview__tiles--terrain {
   background-image:
-    linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.04)),
-    url("https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/13/4242/6564");
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01)),
+    url("https://c.basemaps.cartocdn.com/rastertiles/voyager/6/32/25.png");
 }
 
 .doc-map-preview__tiles--imagery {
   background-image:
-    linear-gradient(180deg, rgba(15,21,32,0.1), rgba(15,21,32,0.18)),
-    url("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/13/4242/6564");
+    linear-gradient(180deg, rgba(15,21,32,0.01), rgba(15,21,32,0.07)),
+    url("https://a.basemaps.cartocdn.com/rastertiles/voyager/7/64/49.png");
 }
 
 .doc-map-preview__overlay {
@@ -141,6 +215,72 @@
     linear-gradient(135deg, rgba(15,122,120,0.08), rgba(15,21,32,0.02));
   pointer-events: none;
 }
+
+.doc-map-preview__overlay--basemap {
+  background:
+    linear-gradient(90deg, rgba(15,21,32,0.14), transparent 30%, transparent 62%, rgba(15,21,32,0.22)),
+    linear-gradient(180deg, rgba(15,21,32,0.08), transparent 34%, rgba(15,21,32,0.16));
+}
+
+.doc-map-preview__scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.doc-map-preview__road,
+.doc-map-preview__parcel,
+.doc-map-preview__label,
+.doc-map-preview__pin {
+  position: absolute;
+}
+
+.doc-map-preview__road {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 0 0 2px rgba(15,21,32,0.06);
+}
+
+.doc-map-preview__road--primary { left: 7%; right: 18%; top: 36%; transform: rotate(-9deg); }
+.doc-map-preview__road--secondary { left: 16%; right: 10%; top: 61%; transform: rotate(11deg); height: 8px; }
+.doc-map-preview__road--minor { left: 42%; right: 26%; top: 19%; transform: rotate(74deg); height: 6px; opacity: 0.88; }
+
+.doc-map-preview__parcel {
+  border: 1px solid rgba(15,21,32,0.16);
+  background: rgba(255,255,255,0.18);
+  border-radius: 6px;
+}
+
+.doc-map-preview__parcel--a { left: 17%; top: 22%; width: 18%; height: 14%; transform: rotate(-6deg); }
+.doc-map-preview__parcel--b { left: 39%; top: 45%; width: 16%; height: 12%; transform: rotate(7deg); }
+.doc-map-preview__parcel--c { left: 63%; top: 29%; width: 14%; height: 11%; transform: rotate(-8deg); }
+.doc-map-preview__parcel--d { left: 56%; top: 62%; width: 18%; height: 13%; transform: rotate(9deg); }
+
+.doc-map-preview__label {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--q2w-surface) 92%, transparent);
+  border: 1px solid var(--q2w-border);
+  color: var(--q2w-text-muted);
+  font-size: 10px;
+  font-family: var(--q2w-font-mono);
+  box-shadow: var(--q2w-shadow-sm);
+}
+
+.doc-map-preview__label--a { left: 14%; top: 14%; }
+.doc-map-preview__label--b { right: 12%; bottom: 16%; }
+
+.doc-map-preview__pin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--q2w-accent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--q2w-accent) 24%, transparent);
+}
+
+.doc-map-preview__pin--a { left: 34%; top: 52%; }
+.doc-map-preview__pin--b { left: 68%; top: 38%; background: var(--q2w-warning); box-shadow: 0 0 0 6px color-mix(in srgb, var(--q2w-warning) 24%, transparent); }
 
 .doc-map-preview__controls {
   position: relative;

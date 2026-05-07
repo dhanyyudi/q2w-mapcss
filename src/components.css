@@ -57,6 +57,20 @@ html, body {
   letter-spacing: 0.02em;
   flex: none;
 }
+.q2w-header__logo--image {
+  width: 58px;
+  height: 36px;
+  padding: 4px 6px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--q2w-border);
+}
+.q2w-header__logo--image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 .q2w-header__title {
   font-weight: 600;
   font-size: 14px;
@@ -120,10 +134,14 @@ html, body {
   top: 14px;
   left: 0;
   right: auto;
+  width: max-content;
   border-left: 0;
   border-radius: 0 var(--q2w-radius-full) var(--q2w-radius-full) 0;
   padding-left: 14px;
   max-width: calc(100vw - 180px);
+}
+.q2w-header--pill-left .q2w-header__actions {
+  margin-left: 16px;
 }
 .q2w-header--pill-center {
   left: 50%;
@@ -172,6 +190,8 @@ html, body {
 [data-theme="dark"] .q2w-footer { background: rgba(20, 27, 41, 0.92); }
 .q2w-footer__group { display: flex; align-items: center; gap: 8px; }
 .q2w-footer__group + .q2w-footer__group::before { content: ""; width: 1px; height: 12px; background: var(--q2w-border); }
+.q2w-footer a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+.q2w-footer a:hover { color: var(--q2w-text); }
 .q2w-footer__push { margin-left: auto; }
 .q2w-footer__coord { font-family: var(--q2w-font-mono); font-size: 10.5px; }
 .q2w-footer--compact { height: 28px; min-height: 28px; font-size: 10.5px; padding: 0 10px; }
@@ -672,7 +692,7 @@ html, body {
 /* ---------- Basemap --------------------------------------- */
 .q2w-basemap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .q2w-basemap-grid--compact { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.q2w-basemap-grid--tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.q2w-basemap-grid--tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .q2w-basemap {
   border: 1.5px solid var(--q2w-border);
   border-radius: var(--q2w-radius-sm);
@@ -687,16 +707,19 @@ html, body {
 .q2w-basemap:hover { border-color: var(--q2w-accent); }
 .q2w-basemap--active { border-color: var(--q2w-accent); box-shadow: 0 0 0 2px var(--q2w-accent-soft); }
 .q2w-basemap__thumb { height: 56px; position: relative; overflow: hidden; }
-.q2w-basemap__label { padding: 4px 8px; font-size: 11px; font-weight: 500; background: var(--q2w-surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.q2w-basemap__label { padding: 4px 8px; font-size: 11px; font-weight: 600; background: var(--q2w-surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .q2w-basemap__meta { padding: 8px 10px; display: grid; align-content: center; gap: 2px; background: var(--q2w-surface); min-width: 0; }
 .q2w-basemap__source { font-size: 10px; color: var(--q2w-text-faint); font-family: var(--q2w-font-mono); }
 .q2w-basemap--tile { display: grid; grid-template-columns: 72px 1fr; align-items: stretch; min-height: 64px; }
 .q2w-basemap--tile .q2w-basemap__thumb { height: 100%; min-height: 64px; }
+.q2w-basemap--preview { display: grid; grid-template-rows: 68px auto; min-height: 112px; }
+.q2w-basemap--preview .q2w-basemap__thumb { height: 68px; border-bottom: 1px solid var(--q2w-border); }
+.q2w-basemap--preview .q2w-basemap__meta { min-height: 44px; padding: 7px 9px; }
 .q2w-basemap-panel {
-  width: min(420px, 100%);
+  width: min(430px, 100%);
   display: grid;
-  gap: 12px;
-  padding: 14px;
+  gap: 10px;
+  padding: 12px;
   border: 1px solid var(--q2w-border);
   border-radius: var(--q2w-radius-lg);
   background: color-mix(in srgb, var(--q2w-surface) 94%, transparent);
@@ -704,29 +727,74 @@ html, body {
   backdrop-filter: blur(14px);
 }
 .q2w-basemap-panel__head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.q2w-basemap-panel--preview { gap: 14px; }
 .q2w-basemap-panel__title { font-size: 13px; font-weight: 700; color: var(--q2w-text); }
 .q2w-basemap-panel__sub { font-size: 11px; color: var(--q2w-text-muted); margin-top: 2px; }
 .q2w-basemap-panel__active { font-family: var(--q2w-font-mono); font-size: 10px; color: var(--q2w-accent); background: var(--q2w-accent-soft); border-radius: var(--q2w-radius-full); padding: 3px 7px; white-space: nowrap; }
+.q2w-basemap-panel__foot { display: flex; justify-content: space-between; gap: 10px; padding-top: 2px; font-size: 11px; color: var(--q2w-text-muted); }
+.q2w-basemap-panel__foot strong { color: var(--q2w-text); font-family: var(--q2w-font-mono); font-weight: 600; }
 .q2w-basemap-demo { display: grid; gap: 12px; width: 100%; }
 .q2w-basemap-demo__caption { font-size: 12px; color: var(--q2w-text-muted); }
 
 /* swatch backgrounds for thumbs */
 .q2w-bm-streets,
-.q2w-bm-osm { background: linear-gradient(135deg, #e8e2d4 0%, #d6cdb6 100%); position: relative; }
-.q2w-bm-streets::before, .q2w-bm-streets::after,
-.q2w-bm-osm::before, .q2w-bm-osm::after {
-  content: ""; position: absolute; background: #fff;
-}
-.q2w-bm-streets::before, .q2w-bm-osm::before { left: 10%; top: 30%; right: 5%; height: 3px; transform: rotate(8deg); }
-.q2w-bm-streets::after, .q2w-bm-osm::after  { left: 20%; top: 60%; right: 15%; height: 2px; transform: rotate(-12deg); }
-
+.q2w-bm-osm,
 .q2w-bm-satellite,
-.q2w-bm-esri-imagery { background: linear-gradient(135deg, #2a3f1f 0%, #4a6936 50%, #1f2e15 100%); }
-.q2w-bm-dark { background: #1b2230; }
+.q2w-bm-esri-imagery,
 .q2w-bm-light,
-.q2w-bm-carto-light { background: #f5f5f0; border: 1px solid var(--q2w-border); }
+.q2w-bm-carto-light,
 .q2w-bm-terrain,
-.q2w-bm-esri-terrain { background: linear-gradient(135deg, #c6b98b 0%, #9d8659 45%, #6f7f59 100%); }
+.q2w-bm-esri-terrain,
+.q2w-bm-voyager { position: relative; isolation: isolate; background-size: cover; background-position: center; }
+.q2w-bm-streets::before,
+.q2w-bm-osm::before,
+.q2w-bm-light::before,
+.q2w-bm-carto-light::before,
+.q2w-bm-terrain::before,
+.q2w-bm-esri-terrain::before,
+.q2w-bm-satellite::before,
+.q2w-bm-esri-imagery::before,
+.q2w-bm-voyager::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 58% 48%, transparent 0 28%, rgba(255,255,255,0.24) 29% 30%, transparent 31% 100%),
+    repeating-linear-gradient(90deg, rgba(15,21,32,0.08) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(0deg, rgba(15,21,32,0.06) 0 1px, transparent 1px 18px);
+  opacity: 0.62;
+}
+.q2w-bm-streets,
+.q2w-bm-osm {
+  background-image:
+    linear-gradient(135deg, rgba(232,226,212,0.08), rgba(214,205,182,0.12)),
+    url("https://tile.openstreetmap.org/2/2/1.png"),
+    linear-gradient(135deg, #e8e2d4 0%, #d6cdb6 100%);
+}
+.q2w-bm-light,
+.q2w-bm-carto-light {
+  background-image:
+    linear-gradient(135deg, rgba(255,255,255,0.16), rgba(224,229,222,0.12)),
+    url("https://a.basemaps.cartocdn.com/light_all/2/2/1.png"),
+    linear-gradient(135deg, #f7f6ef 0%, #e2e6dd 100%);
+  border: 1px solid var(--q2w-border);
+}
+.q2w-bm-terrain,
+.q2w-bm-esri-terrain {
+  background-image:
+    linear-gradient(135deg, rgba(198,185,139,0.12), rgba(111,127,89,0.12)),
+    url("https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/2/1/2"),
+    linear-gradient(135deg, #c6b98b 0%, #9d8659 45%, #6f7f59 100%);
+}
+.q2w-bm-satellite,
+.q2w-bm-esri-imagery {
+  background-image:
+    linear-gradient(135deg, rgba(20,35,18,0.08), rgba(15,21,32,0.18)),
+    url("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/2/1/2"),
+    linear-gradient(135deg, #2a3f1f 0%, #4a6936 50%, #1f2e15 100%);
+}
+.q2w-bm-dark { background: #1b2230; }
 .q2w-bm-voyager { background: linear-gradient(135deg, #f1eee8 0%, #d9d2c3 100%); }
 
 /* ---------- Loading --------------------------------------- */
@@ -913,11 +981,11 @@ html, body {
 
 /* Compass and scale controls */
 .q2w-compass {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--q2w-surface);
-  border: 1px solid var(--q2w-border);
+  border: 1.5px solid color-mix(in srgb, var(--q2w-accent) 52%, var(--q2w-border));
   box-shadow: var(--q2w-shadow-sm);
   position: relative;
   cursor: pointer;
@@ -926,13 +994,49 @@ html, body {
   color: var(--q2w-text);
 }
 .q2w-compass__needle {
-  width: 6px;
-  height: 32px;
-  background: linear-gradient(180deg, var(--q2w-danger) 0 50%, var(--q2w-text-muted) 50% 100%);
+  width: 10px;
+  height: 34px;
+  background: linear-gradient(180deg, var(--q2w-danger) 0 48%, var(--q2w-text-muted) 52% 100%);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  transform: rotate(var(--q2w-compass-bearing, 24deg));
+  transform-origin: center;
+  filter: drop-shadow(0 1px 1px rgba(15, 21, 32, 0.18));
 }
-.q2w-compass__n { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 700; font-family: var(--q2w-font-mono); color: var(--q2w-text-muted); }
-.q2w-compass--ring { box-shadow: inset 0 0 0 4px var(--q2w-surface-soft), var(--q2w-shadow-sm); }
+.q2w-compass__n {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+  min-width: 16px;
+  padding: 1px 4px;
+  border-radius: var(--q2w-radius-full);
+  background: var(--q2w-danger);
+  color: #fff;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 800;
+  font-family: var(--q2w-font-mono);
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(15, 21, 32, 0.24);
+}
+.q2w-compass--ring {
+  background:
+    radial-gradient(circle, var(--q2w-surface) 0 54%, transparent 55%),
+    conic-gradient(
+      from -1deg,
+      color-mix(in srgb, var(--q2w-accent) 72%, transparent) 0 2deg,
+      transparent 2deg 88deg,
+      color-mix(in srgb, var(--q2w-text-muted) 44%, transparent) 88deg 92deg,
+      transparent 92deg 178deg,
+      color-mix(in srgb, var(--q2w-text-muted) 44%, transparent) 178deg 182deg,
+      transparent 182deg 268deg,
+      color-mix(in srgb, var(--q2w-text-muted) 44%, transparent) 268deg 272deg,
+      transparent 272deg 360deg
+    ),
+    var(--q2w-surface);
+  box-shadow: inset 0 0 0 4px var(--q2w-surface-soft), var(--q2w-shadow-sm);
+}
 .q2w-compass--button { border-radius: var(--q2w-radius-md); width: auto; min-width: 92px; height: 42px; padding: 0 12px; display: inline-flex; gap: 8px; font-family: var(--q2w-font-mono); font-size: 11px; }
 .q2w-compass--button .q2w-compass__needle { width: 14px; height: 24px; }
 .q2w-compass--bearing { width: auto; height: auto; border-radius: var(--q2w-radius-md); padding: 8px 10px; display: grid; gap: 3px; font-family: var(--q2w-font-mono); font-size: 10px; text-align: center; }
@@ -1187,4 +1291,3 @@ html, body {
   outline: 2px solid var(--q2w-accent);
   outline-offset: 0;
 }
-

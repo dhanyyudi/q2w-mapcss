@@ -64,11 +64,47 @@
 
     const basemap = event.target.closest('[data-doc-basemap]');
     if (basemap) {
-      const root = basemap.closest('.q2w-basemap-demo') || basemap.closest('.q2w-basemap-grid');
+      event.preventDefault();
+      const stage = basemap.closest('.doc-map-preview');
+      const root = basemap.closest('.q2w-basemap-panel') || basemap.closest('.q2w-basemap-demo') || basemap.closest('.q2w-basemap-grid');
       root?.querySelectorAll('[data-doc-basemap]').forEach((item) => item.classList.remove('q2w-basemap--active'));
       basemap.classList.add('q2w-basemap--active');
       const label = root?.querySelector('[data-doc-basemap-label]') || document.querySelector('[data-doc-basemap-label]');
       if (label) label.textContent = basemap.dataset.docBasemap || basemap.textContent.trim();
+      const source = root?.querySelector('[data-doc-basemap-source]') || document.querySelector('[data-doc-basemap-source]');
+      if (source) source.textContent = basemap.dataset.docSource || basemap.dataset.docBasemap || basemap.textContent.trim();
+
+      const tiles = stage?.querySelector('[data-doc-basemap-tiles]') || stage?.querySelector('.doc-map-preview__tiles');
+      const nextTile = basemap.dataset.docTile;
+      if (tiles && nextTile) {
+        tiles.classList.remove('doc-map-preview__tiles--osm', 'doc-map-preview__tiles--light', 'doc-map-preview__tiles--terrain', 'doc-map-preview__tiles--imagery');
+        tiles.classList.add(`doc-map-preview__tiles--${nextTile}`);
+      }
+      return;
+    }
+
+    const mapZoom = event.target.closest('[data-doc-map-zoom]');
+    if (mapZoom) {
+      event.preventDefault();
+      event.stopPropagation();
+      const root = mapZoom.closest('[data-doc-map-control]');
+      if (!root) return;
+      const action = mapZoom.dataset.docMapZoom;
+      const current = Number(root.dataset.docZoom || 13);
+      const next = action === 'reset'
+        ? 13
+        : Math.max(10, Math.min(16, current + (action === 'in' ? 1 : -1)));
+      root.dataset.docZoom = String(next);
+      root.querySelectorAll('[data-doc-map-zoom-label]').forEach((el) => {
+        el.textContent = `z ${next}`;
+      });
+      const stage = root.closest('.ln-card__preview, .doc-map-preview, .doc-preview');
+      if (stage) {
+        const scale = 1 + ((next - 13) * 0.12);
+        stage.style.setProperty('--q2w-card-bg-size', `${Math.max(0.82, scale) * 100}%`);
+        stage.style.setProperty('--q2w-card-bg-pos', next > 13 ? '54% 48%' : '48% 52%');
+      }
+      flash(mapZoom, action === 'reset' ? '⌂' : mapZoom.textContent.trim(), mapZoom.textContent.trim());
       return;
     }
   });

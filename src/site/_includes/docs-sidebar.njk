@@ -80,8 +80,10 @@
   .doc-side__link { display: block; padding: 6px 0; font-size: 13px; color: var(--q2w-text-muted); text-decoration: none; border-radius: 4px; }
   .doc-side__link:hover { color: var(--q2w-text); }
   .doc-side__link.is-active { color: var(--q2w-accent); font-weight: 600; }
-  .doc-side__themes { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
-  .doc-side__themes .theme-toggle { width: 30px; height: 30px; }
+  .doc-side__themes { display: flex; align-items: center; gap: 5px; flex-wrap: nowrap; margin-top: 14px; }
+  .doc-side__themes .theme-toggle { width: 28px; height: 28px; flex: 0 0 auto; }
+  .doc-side__themes .cs-mono { font-size: 10px; }
+  .doc-side__themes .cs-theme-dot { width: 16px; height: 16px; flex: 0 0 auto; }
 </style>
 <script>
   (function() {

@@ -157,6 +157,7 @@ for (const forbidden of [
 }
 
 const leakedDocs = [
+  "site/docs/index.html",
   "site/docs/audit.md",
   "site/docs/audit-2.md",
   "site/docs/audit-3.md",
@@ -341,20 +342,29 @@ assertIncludes("site/docs/draw.html", drawDoc, [
 
 const basemapDoc = readOutput("site/docs/basemap.html");
 assertIncludes("site/docs/basemap.html", basemapDoc, [
-  "doc-map-preview__tiles--light",
+  "doc-map-preview__tiles--osm",
+  "data-doc-basemap-tiles",
+  "q2w-basemap-panel--preview",
+  "q2w-basemap--preview",
+  "data-doc-basemap-source",
+  "Southeast Asia preview",
   "data-doc-basemap=\"OSM Streets\"",
   "data-doc-basemap=\"Carto Light\"",
   "data-doc-basemap=\"Esri Terrain\"",
   "data-doc-basemap=\"Esri Imagery\"",
-  "tile.openstreetmap.org",
-  "basemaps.cartocdn.com/light_all",
-  "World_Terrain_Base",
-  "World_Imagery",
+  "data-doc-tile=\"osm\"",
+  "data-doc-tile=\"light\"",
+  "data-doc-tile=\"terrain\"",
+  "data-doc-tile=\"imagery\"",
 ]);
 assertNotIncludes("site/docs/basemap.html", basemapDoc, [
   "id=\"docs-basemap-map\"",
   "L.map(mapEl",
   "height: 220px",
+  "Kejaksan",
+  "ZNT sample",
+  "doc-map-preview__parcel",
+  "doc-map-preview__road",
 ]);
 
 const compassDoc = readOutput("site/docs/compass.html");
@@ -498,8 +508,9 @@ const docsVariantRequirements = {
   ],
   "site/docs/basemap.html": [
     "q2w-basemap-panel",
+    "q2w-basemap-panel--preview",
     "q2w-basemap-grid--tiles",
-    "q2w-basemap--tile",
+    "q2w-basemap--preview",
     "q2w-basemap--active",
     "q2w-bm-osm",
     "q2w-bm-esri-terrain",
@@ -602,9 +613,15 @@ assertIncludes("dist/q2w-mapcss.css", css, [
   ".q2w-draw__status",
   ".q2w-bm-osm",
   ".q2w-bm-esri-terrain",
+  "tile.openstreetmap.org/2/2/1.png",
+  "basemaps.cartocdn.com/light_all/2/2/1.png",
+  "World_Terrain_Base/MapServer/tile/2/1/2",
+  "World_Imagery/MapServer/tile/2/1/2",
   ".q2w-basemap-panel",
+  ".q2w-basemap-panel--preview",
+  ".q2w-basemap-panel__foot",
   ".q2w-basemap-grid--tiles",
-  ".q2w-basemap--tile",
+  ".q2w-basemap--preview",
   ".q2w-compass--ring",
   ".q2w-compass--button",
   ".q2w-compass--bearing",
@@ -621,7 +638,17 @@ const showcaseCss = readOutput("dist/q2w-mapcss.showcase.css");
 assertIncludes("dist/q2w-mapcss.showcase.css", showcaseCss, [
   ".doc-map-preview",
   ".doc-map-preview__tiles",
+  ".doc-map-preview__tiles--osm",
+  ".doc-map-preview__tiles--terrain",
+  ".doc-map-preview__tiles--imagery",
+  ".ln-card__preview::before",
+  "basemaps.cartocdn.com/rastertiles/voyager/5/16/12.png",
+  "basemaps.cartocdn.com/rastertiles/voyager/6/32/25.png",
+  "basemaps.cartocdn.com/rastertiles/voyager/7/64/49.png",
   ".doc-map-preview__controls",
+  ".doc-map-preview__scene",
+  ".doc-map-preview__road",
+  ".doc-map-preview__parcel",
 ]);
 
 const mustContain = [
